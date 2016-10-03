@@ -76,25 +76,30 @@
 
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO products (name, price, purchase_quantity, inventory, photo) VALUES ('{$this->getName()}', {$this->getPrice()}, {$this->getPurchaseQuantity()}, {$this->getInventory()}, {$this_getPhoto()});");
+            $GLOBALS['DB']->exec("INSERT INTO products (name, price, purchase_quantity, inventory, photo) VALUES ('{$this->getName()}', {$this->getPrice()}, {$this->getPurchaseQuantity()}, {$this->getInventory()}, '{$this->getPhoto()}');");
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
-        function getAll()
+        static function getAll()
         {
             $products = array();
-            $return_products = $GLOBALS['DB']->query("SELECT * FROM products;");
-            foreach($return_products as $product) {
+            $returned_products = $GLOBALS['DB']->query("SELECT * FROM products;");
+            foreach($returned_products as $product) {
                 $name = $product['name'];
                 $price = $product['price'];
                 $purchase_quantity = $product['purchase_quantity'];
                 $inventory = $product['inventory'];
                 $photo = $product['photo'];
-                $id = $id['id'];
+                $id = $product['id'];
                 $new_product = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
-                array_push($product, $new_product);
+                array_push($products, $new_product);
             }
             return $products;
+        }
+
+        static function deleteAll()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM products;");
         }
     }
  ?>

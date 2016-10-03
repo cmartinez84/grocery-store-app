@@ -7,7 +7,7 @@
 
     require_once "src/Product.php";
 
-    $server = 'mysql:host=localhost:8889;dbname=shopper_test';
+    $server = 'mysql:host=localhost;dbname=shopper_test';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
@@ -21,97 +21,165 @@
 
         function testSetName()
         {
-            $name = "apple";
-            $price = 1.00;
-            $purchase_quantity = 2;
-            $inventory = 5;
-            $photo = "";
-            $id = 1;
-            $test_name = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
-            $test_name -> setName("granny smith");
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = 1;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product -> setName("granny smith");
 
-            $result = $test_name->getName();
+            $result = $test_product->getName();
 
-            $this->assertEquals("granny smith", $result);
+            $this->assertEquals("Granny Smith", $result);
         }
 
         function testSetPrice()
         {
-            $name = "apple";
-            $price = 1.00;
-            $purchase_quantity = 2;
-            $inventory = 5;
-            $photo = "";
-            $id = 1;
-            $test_name = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
-            $test_name -> setPrice(1.89);
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = 1;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product -> setPrice(1.89);
 
-            $result = $test_name->getPrice();
+            $result = $test_product->getPrice();
 
             $this->assertEquals(1.89, $result);
         }
 
         function testSetPurchaseQuantity()
         {
-            $name = "apple";
-            $price = 1.00;
-            $purchase_quantity = 2;
-            $inventory = 5;
-            $photo = "";
-            $id = 1;
-            $test_name = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
-            $test_name -> setPurchaseQuantity(3);
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = 1;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product -> setPurchaseQuantity(3);
 
-            $result = $test_name->getPurchaseQuantity();
+            $result = $test_product->getPurchaseQuantity();
 
             $this->assertEquals(3, $result);
         }
 
         function testSetInventory()
         {
-            $name = "apple";
-            $price = 1.00;
-            $purchase_quantity = 2;
-            $inventory = 5;
-            $photo = "";
-            $id = 1;
-            $test_name = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
-            $test_name -> setInventory(4);
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = 1;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product -> setInventory(4);
 
-            $result = $test_name->getInventory();
+            $result = $test_product->getInventory();
 
             $this->assertEquals(4, $result);
         }
 
         function testSetPhoto()
         {
-            $name = "apple";
-            $price = 1.00;
-            $purchase_quantity = 2;
-            $inventory = 5;
-            $photo = "";
-            $id = 1;
-            $test_name = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
-            $test_name -> setName("apple.jpeg");
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = 1;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product -> setPhoto("apple.jpeg");
 
-            $result = $test_name->getPhoto();
+            $result = $test_product->getPhoto();
 
             $this->assertEquals("apple.jpeg", $result);
         }
 
-        function getId()
+        function testGetId()
         {
-            $name = "apple";
-            $price = 1.00;
-            $purchase_quantity = 2;
-            $inventory = 5;
-            $photo = "";
-            $id = 1;
-            $test_name = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = 1;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
 
-            $result = $test_name->getId();
+            $result = $test_product->getId();
 
             $this->assertEquals(1, $result);
         }
+
+        function testSave()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product= new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $result = Product::getAll();
+
+            $this->assertEquals($test_product, $result[0]);
+        }
+
+        function testGetAll()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $test_name2 = "lettuce";
+            $test_price2 = .75;
+            $test_purchase_quantity2 = 1;
+            $test_inventory2 = 5;
+            $test_photo2 = "";
+            $test_id2 = null;
+            $test_product2 = new Product($test_name2, $test_price2, $test_purchase_quantity2, $test_inventory2, $test_photo2, $test_id2);
+            $test_product2->save();
+
+            $result = Product::getAll();
+
+            $this->assertEquals([$test_product, $test_product2], $result);
+        }
+
+        function testDeleteAll()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $test_name2 = "lettuce";
+            $test_price2 = .75;
+            $test_purchase_quantity2 = 1;
+            $test_inventory2 = 5;
+            $test_photo2 = "";
+            $test_id2 = null;
+            $test_product2 = new Product($test_name2, $test_price2, $test_purchase_quantity2, $test_inventory2, $test_photo2, $test_id2);
+            $test_product2->save();
+
+            Product::deleteAll();
+            $result = Product::getAll();
+
+            $this->assertEquals([], $result);
+        }
+
     }
 ?>
