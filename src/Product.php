@@ -126,6 +126,23 @@
             return $found_product;
         }
 
+        static function searchProducts($search_string)
+        {
+            $products = array();
+            $returned_products = $GLOBALS['DB']->query("SELECT * FROM products WHERE name LIKE '%{$search_string}%';");
+            foreach($returned_products as $product) {
+                $name = $product['name'];
+                $price = $product['price'];
+                $purchase_quantity = $product['purchase_quantity'];
+                $inventory = $product['inventory'];
+                $photo = $product['photo'];
+                $id = $product['id'];
+                $new_product = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
+                array_push($products, $new_product);
+            }
+            return $products;
+        }
+
         function inStock($purchase_quantity)
         {
             if ($this->getInventory() < $purchase_quantity)
