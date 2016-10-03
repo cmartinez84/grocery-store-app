@@ -123,6 +123,23 @@
             $this->assertEquals($test_category2, $result);
         }
 
+        function testSearchCategories()
+        {
+            $test_name = "organic apple";
+            $test_id = null;
+            $test_category = new Category($test_name, $test_id);
+            $test_category->save();
+
+            $test_name2 = "apples";
+            $test_id2 = null;
+            $test_category2 = new Category($test_name2, $test_id2);
+            $test_category2->save();
+
+            $result = Category::searchCategories("apple");
+
+            $this->assertEquals([$test_category, $test_category2], $result);
+        }
+
         function testAddProduct()
         {
             $test_name = "fruit";

@@ -69,6 +69,19 @@
             return $found_category;
         }
 
+        static function searchCategories($search_string)
+        {
+            $categories = array();
+            $returned_categories = $GLOBALS['DB']->query("SELECT * FROM categories WHERE name LIKE '%{$search_string}%';");
+            foreach($returned_categories as $category) {
+                $name = $category['name'];
+                $id = $category['id'];
+                $new_category = new Category($name, $id);
+                array_push($categories, $new_category);
+            }
+            return $categories;
+        }
+
         function addProduct($product)
         {
             $GLOBALS['DB']->exec("INSERT INTO products_categories (product_id, category_id) VALUES ({$product->getId()}, {$this->getId()});");
