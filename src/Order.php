@@ -4,17 +4,23 @@
         private $id;
         private $user_id;
         private $product_id;
-        private $purchase_total;
-        private $purchase_date;
-        private $quantity;
+        // private $receipt;
+        private $item;
+        private $purchase_quantity;
+        private $purchase_price;
+        private $purchase_subtotal;
+        private $order_date;
+        private $delivery_date_time;
 
-        function __construct($user_id, $product_id, $purchase_total, $purchase_date, $quantity, $id = null)
+        function __construct($user_id, $product_id, $purchase_quantity, $purchase_price, $purchase_subtotal, $order_date, $delivery_date_time, $id = null)
         {
             $this->user_id = $user_id;
             $this->product_id = $product_id;
-            $this->purchase_total = $purchase_total;
-            $this->purchase_date = $purchase_date;
-            $this->quantity = $quantity;
+            $this->purchase_quantity = $purchase_quantity;
+            $this->purchase_price = $purchase_price;
+            $this->purchase_subtotal = $purchase_subtotal;
+            $this->order_date = $order_date;
+            $this->delivery_date_time = $delivery_date_time;
             $this->id = $id;
         }
 
@@ -30,47 +36,65 @@
 
         function getProductId()
         {
-            return $this->product_id;
+            return $this->user_id;
         }
 
-        function setProductId($new_product_id)
+        function getPurchaseQuantity()
         {
-            $this->product_id = $new_product_id;
+            return $this->purchase_quantity;
         }
 
-        function getPurchaseTotal()
+        function setPurchaseQuantity($new_purchase_quantity)
         {
-            return $this->purchase_total;
+            $this->purchase_quantity = $new_purchase_quantity;
         }
 
-        function setPurchaseTotal($new_purchase_total)
+        function getPurchasePrice()
         {
-            $this->purchase_total = $new_purchase_total;
+            return $this->purchase_price;
         }
 
-        function getPurchaseDate()
+        function setPurchasePrice($new_purchase_price)
         {
-            return $this->purchase_date;
+            $this->purchase_price = $new_purchase_price;
         }
 
-        function setPurchaseDate($new_purchase_date)
+        function getPurchaseSubtotal()
         {
-            $this->purchase_date = $new_purchase_date;
+            return $this->purchase_subtotal;
         }
 
-        function getQuantity()
+        function setPurchaseSubtotal($new_purchase_subtotal)
         {
-            return $this->quantity;
+            $this->purchase_subtotal = $new_purchase_subtotal;
         }
 
-        function setQuantity($new_quantity)
+        function getOrderDate()
         {
-            $this->quantity = $new_quantity;
+            return $this->order_date;
+        }
+
+        function setOrderDate($new_order_date)
+        {
+            $this->order_date = $new_order_date;
+        }
+
+        function getDeliveryDateTime()
+        {
+            return $this->delivery_date_time;
+        }
+
+        function setDeliveryDateTime($new_delivery_date_time)
+        {
+            $this->delivery_date_time = $new_delivery_date_time;
         }
 //methods
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO orders (user_id, product_id, purchase_total, purchase_date, quantity) VALUES ({$this->getUserId()}, {$this->getProductId()}, {$this->getPurchaseTotal()}, '{$this->getPurchaseDate()}', {$this->getQuantity()});");
+            $GLOBALS['DB']->exec("INSERT INTO orders (user_id, product_id, purchase_quantity, purchase_price, purchase_subtotal, order_date, delivery_date_time) VALUES ({$this->getUserId()}, '{$this->getProductId()}',
+            '{$this->getPurchaseQuantity()}',
+            '{$this->getPurchasePrice()}',
+            '{$this->getPurchaseSubtotal()}', '{$this->getOrderDate()}', '{$this->getDeliveryDateTime()}');");
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
@@ -79,13 +103,21 @@
             $GLOBALS['DB']->exec("DELETE FROM orders WHERE id = {$this->getId()};");
         }
 
-        function update($new_product_id, $new_purchase_total, $new_quantity)
+        function userUpdate($new_purchase_quantity, $new_order_date, $new_delivery_date_time)
         {
-            $GLOBALS['DB']->exec("UPDATE orders SET product_id = '{$new_product_id}', purchase_total = '{$new_purchase_total}', quantity = '{$new_quantity}' WHERE id = {$this->getId()};");
-            $this->setProductId($new_product_id);
-            $this->setPurchaseTotal($new_purchase_total);
+            $GLOBALS['DB']->exec("UPDATE orders SET purchase_quantity = '{$new_purchase_quantity}',
+            order_date = '{$new_order_date}',
+            delivery_date_time = '{$new_delivery_date_time}'
+            WHERE id = {$this->getId()};");
+            $this->setPurchaseQuantity($new_);
+            $this->setPurchaseSubtotal($new_purchase_subtotal);
             $this->setQuantity($new_quantity);
         }
+
+        // function addPurchase($product_id, $purchase_quantity, $purchase_price, $purchase_subtotal)
+        // {
+        //     $GLOBALS['DB']->exec("UPDATE orders SET product_id = CONCAT(product_id, ','+'{$product_id}'), purchase_quantity = CONCAT(purchase_quantity, ','+'{$purchase_quantity}'), purchase_price = CONCAT(purchase_price, ','+'{$purchase_price}'), purchase_subtotal = CONCAT(purchase_subtotal, ','+'{$purchase_subtotal}');");
+        // }
 
 //static methods
         static function getAll()
@@ -95,11 +127,13 @@
             foreach ($returned_orders as $order) {
                 $user_id = $order['user_id'];
                 $product_id = $order['product_id'];
-                $purchase_total = $order['purchase_total'];
-                $purchase_date = $order['purchase_date'];
-                $quantity = $order['quantity'];
+                $purchase_price = $order['purchase_price'];
+                $purchase_quantity = $order['purchase_quantity'];
+                $purchase_subtotal = $order['purchase_subtotal'];
+                $order_date = $order['order_date'];
+                $delivery_date_time = $order['delivery_date_time'];
                 $id = $order['id'];
-                $new_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity, $id);
+                $new_order = new Order($user_id, $product_id, $purchase_quantity, $purchase_price, $purchase_subtotal, $order_date, $delivery_date_time, $id);
                 array_push($orders, $new_order);
             }
             return $orders;

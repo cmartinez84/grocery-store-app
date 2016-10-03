@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <ul>
+            {% for order in orders %}
+                <li>{{ order.getProduct }}</li>
+            {% endfor %}
+
+            Cart qty - {{ order.getQuantity }}
+            Cart total - {{ order.getPurchaseTotal }}
+        </ul>
+
+
+    </body>
+</html>
