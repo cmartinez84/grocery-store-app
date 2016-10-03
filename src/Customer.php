@@ -134,6 +134,14 @@
             }
             return $customer;
         }
+        //this will be used to both search by letter to display customer convienitly and to search for a customer name
+        static function searchNameBystring($beginsWith){
+            $found_customer = $GLOBALS['DB']->query("SELECT * FROM customer WHERE name LIKE '{$beginsWith}%';");
+        }
+        static function searchEmailBystring($beginsWith){
+            $found_customer = $GLOBALS['DB']->query("SELECT * FROM customer WHERE email LIKE '{$beginsWith}%';");
+        }
+
 
 
 
