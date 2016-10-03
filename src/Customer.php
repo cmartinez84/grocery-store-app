@@ -92,7 +92,7 @@
         }
         function delete()
         {
-            $GLOBALS['DB']->exec("DELETE FROM customers WHERE id='{$this->getID}';");
+            $GLOBALS['DB']->exec("DELETE FROM customers WHERE id='{$this->getId()}';");
         }
         function pay($purchase_total)
         {
@@ -139,7 +139,7 @@
                     $found_customer = $customer;
                 }
             }
-            return $customer;
+            return $found_customer;
         }
         //this will be used to both search by letter to display customer convienitly and to search for a customer name
         static function searchNameBystring($beginsWith){
