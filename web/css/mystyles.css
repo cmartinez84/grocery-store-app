@@ -1,0 +1,57 @@
+body{
+    /*background: url('/img/background2.jpg') center right no-repeat;
+    background-size: contain;
+    background-attachment: fixed;*/
+    background-color: 	black;
+}
+h1{
+    font-family: 'Permanent Marker', cursive;
+    text-shadow:  1px 1px 3px black;
+    color: white;
+    text-shadow: 0px 0px 11px white !important;
+}
+.home-button{
+    font-size: 5em;
+    position: fixed;
+}
+.navbar{
+    background: black;
+    color: white;
+}
+.navbar-nav >li>a {
+    color: white !important;
+}
+.panel{
+    display: none;
+    background: white;
+}
+
+.accordian{
+    background: #eb6E80;
+    color: white;
+}
+.accordian:hover{
+    box-shadow: inset 0px 0px 1px 2px rgba(255, 255, 255, 0.3);
+    background: #EB6EC5;
+}
+
+button.delete:hover{
+}
+strong, label{
+    display: block;
+}
+div.panel, button.accordian, button.delete{
+    margin: 0 auto;
+}
+.outline{
+    border: 7px solid white;
+}
+.edit input{
+    background: #fce9eb;
+}
+.edit input:focus{
+    background: white;
+}
+.rotateIcon{
+    transform: rotate(180deg);
+}
