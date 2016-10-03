@@ -7,7 +7,7 @@
 
     require_once "src/Product.php";
 
-    $server = 'mysql:host=localhost;dbname=shopper_test';
+    $server = 'mysql:host=localhost;dbname=shoppR_test';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);

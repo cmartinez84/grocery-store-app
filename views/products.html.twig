@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Products</title>
+    </head>
+    <body>
+        <h1>Enter / Modify Products Information</h1>
+        <div class="container">
+            {% if products is not empty %}
+                <h2>Here is a list of the current products:</h2>
+                {% for product in products %}
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h3>Name</h3>
+                            {{ product.getName }}
+                        </div>
+                        <div class="col-sm-2">
+                            <h3>Price</h3>
+                            {{ product.getPrice }}
+                        </div>
+                        <div class="col-sm-2">
+                            <h3>Inventory</h3>
+                            {{ product.getInventory }}
+                        </div>
+                        <div class="col-sm-4">
+                            <h3>Photo</h3>
+                            {{ product.getPhoto }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form action="/products_add" method="post">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input id="name" name="name" class="form-control" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input id="price" name="price" class="form-control" type="float" min=0 required>
+                </div>
+                <div class="form-group">
+                    <label for="inventory">Inventory:</label>
+                    <input id="inventory" name="inventory" class="form-control" type="number" required>
+                </div>
+                <div class="form-group">
+                    <label for="photo">Photo:</label>
+                    <input id="photo" name="photo" class="form-control" type="text">
+                </div>
+                <button class="btn btn-info">Add Product</button>
+            </form>
+        </div>
+    </body>
+</html>
