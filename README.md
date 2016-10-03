@@ -39,11 +39,14 @@ _._
 * _Begin MySql Shell by running $ /Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot_
 * _CREATE DATABASE shopper_
 * _USE shopper_
+* _CREATE TABLE products (id serial PRIMARY KEY, name VARCHAR(255), price FLOAT, purchase_quantity INT, inventory INT, category VARCHAR(255), photo BLOB)_
+* _CREATE TABLE categories(id serial PRIMARY KEY, name VARCHAR(255))_
+* _CREATE TABLE products_categories(id serial PRIMARY KEY, product_id INT, category_id INT)_
 * _CREATE TABLE products (id serial PRIMARY KEY, name VARCHAR(255), price FLOAT, purchase_quantity INT, inventory INT, category VARCHAR(255), photo VARCHAR(255))_
-<!-- * _CREATE TABLE clients(id, serial PRIMARY KEY, name VARCHAR(255), last_appointment VARCHAR(255), next_appointment VARCHAR(255))_ -->
-*_CREATE TABLE customers (id serial PRIMARY KEY, name VARCHAR(255), email VARCHAR(255), address VARCHAR(255), password VARCHAR(255), funds INT)_
+* _CREATE TABLE customers (id serial PRIMARY KEY, name VARCHAR(255), email VARCHAR(255), address VARCHAR(255), password VARCHAR(255), funds INT)_
 
 
+>>>>>>> f59e328331e696c2cdf36f4e6f484f9a587bb18d
 
 * _Alternatively, unzip the database contained at the top level of this folder and import from phpmyadmin (http://localhost:8888/phpmyadmin/)_
 * _in phpmyadmin, you may also  have to create another database for use with phpunit tests files by going to Operations> Copy Database To> and remaning database "shopper_test" and choosing "structure only"_
