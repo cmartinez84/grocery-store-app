@@ -10,10 +10,12 @@ _._
 
 ## Specifications
 | Behavior | Input Ex. | Output Ex. |
+| --- | --- | --- |
 | Application will return inputted product information, such as name, price, purchase_quantity, inventory, category and photo | "Apple" | "Apple" |
 | Application will show all products entered | "Apple", "Orange" | "Apple", "Orange"  |
 | Product information can be updated, such as name, price, purchase_quantity, inventory, category and photo | "apple" | "granny smith" |
 | All products can be deleted |  "Apple", "Orange"  | "" |
+| The user will be informed that there is not enough inventory if the purchase_quantity is greater than the inventory |  "Apple", 3  | "Not enough inventory" |
 | The price and purchase_quantity will be multiplied to return a price for an individual product |  "Apple", 1.00, 2 | 2.00 |
 | The price derived for each product will be added together to return a total price for the customer |  2.00, 3.95 | 5.95 |
 
