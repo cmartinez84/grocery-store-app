@@ -98,7 +98,7 @@
         {
             $this->funds +=$new_funds;
             $GLOBALS['DB']->exec("UPDATE customers SET funds ={$this->getFunds()} WHERE
-             id={$this-getFunds};");
+             id={$this->getFunds()};");
         }
 
         static function deleteAll()
