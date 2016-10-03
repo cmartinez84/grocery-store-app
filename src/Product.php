@@ -111,5 +111,38 @@
         {
             $GLOBALS['DB']->exec("DELETE FROM products;");
         }
+
+        static function find($search_id)
+        {
+            $found_product = null;
+            $products = Product::getAll();
+            foreach ($products as $product) {
+                $product_id = $product->getId();
+                if ($product_id  = $search_id)
+                {
+                    $found_product = $product;
+                }
+            }
+            return $found_product;
+        }
+
+        function inStock($purchase_quantity)
+        {
+            if ($this->getInventory() < $purchase_quantity)
+            {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function calculateProductPrice()
+        {
+            // if (inStock($purchase_quantity))
+            // {
+                return $this->getPrice() * $this->getPurchaseQuantity();
+            // }
+        }
     }
- ?>
+
+?>
