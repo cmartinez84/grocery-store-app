@@ -11,7 +11,7 @@
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
-    class BookTest extends PHPUnit_Framework_TestCase
+    class OrderTest extends PHPUnit_Framework_TestCase
     {
         protected function teardown()
         {
@@ -24,7 +24,7 @@
             $user_id = 1;
             $product_id = 1;
             $purchase_total = 40;
-            $purchase_date = 2016-10-01;
+            $purchase_date = "2016-10-01";
             $quantity = 5;
             $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity, $id);
 
@@ -32,12 +32,77 @@
             $this->assertEquals(true, is_numeric($result));
         }
 
+        function test_getUserId()
+        {
+            $user_id = 1;
+            $product_id = 1;
+            $purchase_total = 40;
+            $purchase_date = "2016-10-01";
+            $quantity = 5;
+            $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity);
+
+            $result = $test_order->getUserId();
+            $this->assertEquals($user_id, $result);
+        }
+
+        function test_getProductId()
+        {
+            $user_id = 1;
+            $product_id = 1;
+            $purchase_total = 40;
+            $purchase_date = "2016-10-01";
+            $quantity = 5;
+            $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity);
+
+            $result = $test_order->getProductId();
+            $this->assertEquals($product_id, $result);
+        }
+
+        function test_getPurchaseTotal()
+        {
+            $user_id = 1;
+            $product_id = 1;
+            $purchase_total = 40;
+            $purchase_date = "2016-10-01";
+            $quantity = 5;
+            $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity);
+
+            $result = $test_order->getPurchaseTotal();
+            $this->assertEquals($purchase_total, $result);
+        }
+
+        function test_getPurchaseDate()
+        {
+            $user_id = 1;
+            $product_id = 1;
+            $purchase_total = 40;
+            $purchase_date = "2016-10-01";
+            $quantity = 5;
+            $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity);
+
+            $result = $test_order->getPurchaseDate();
+            $this->assertEquals($purchase_date, $result);
+        }
+
+        function test_getQuantity()
+        {
+            $user_id = 1;
+            $product_id = 1;
+            $purchase_total = 40;
+            $purchase_date = "2016-10-01";
+            $quantity = 5;
+            $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity);
+
+            $result = $test_order->getQuantity();
+            $this->assertEquals($quantity, $result);
+        }
+
         function test_save()
         {
             $user_id = 1;
             $product_id = 1;
             $purchase_total = 40;
-            $purchase_date = 2016-10-01;
+            $purchase_date = "2016-10-01";
             $quantity = 5;
             $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity);
 
@@ -52,7 +117,7 @@
             $user_id = 1;
             $product_id = 1;
             $purchase_total = 40;
-            $purchase_date = 2016-10-01;
+            $purchase_date = "2016-10-01";
             $quantity = 5;
             $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity);
             $user_id2 = 2;
@@ -69,37 +134,57 @@
             $this->assertEquals([$test_order, $test_order2], $result);
         }
 
-        // function test_find()
-        // {
-        //     $title = "Prisoner of Azkaban";
-        //     $test_book = new Book($title);
-        //     $test_book->save();
-        //     $title2 = "Sorcerer's Stone";
-        //     $test_book2 = new Book($title);
-        //     $test_book2->save();
-        //     $search_id = $test_book->getId();
-        //     $result = Book::find($search_id);
-        //     $this->assertEquals($test_book, $result);
-        // }
-        // function test_delete()
-        // {
-        //     $title = "Prisoner of Azkaban";
-        //     $test_book = new Book($title);
-        //     $test_book->save();
-        //     $title2 = "Sorcerer's Stone";
-        //     $test_book2 = new Book($title);
-        //     $test_book2->save();
-        //     $test_book->delete();
-        //     $result = Book::getAll();
-        //     $this->assertEquals([$test_book2], $result);
-        // }
+        function test_find()
+        {
+            $user_id = 1;
+            $product_id = 1;
+            $purchase_total = 40;
+            $purchase_date = "2016-10-01";
+            $quantity = 5;
+            $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity);
+            $user_id2 = 2;
+            $product_id2 = 2;
+            $purchase_total2 = 35;
+            $purchase_date2 = 2016-09-30;
+            $quantity2 = 7;
+            $test_order2 = new Order($user_id2, $product_id2, $purchase_total2, $purchase_date2, $quantity2);
+
+            $test_order->save();
+            $test_order2->save();
+            $search_id = $test_order->getId();
+            $result = Order::find($search_id);
+
+            $this->assertEquals($test_order, $result);
+        }
+
+        function test_delete()
+        {
+            $user_id = 1;
+            $product_id = 1;
+            $purchase_total = 40;
+            $purchase_date = "2016-10-01";
+            $quantity = 5;
+            $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity);
+            $user_id2 = 2;
+            $product_id2 = 2;
+            $purchase_total2 = 35;
+            $purchase_date2 = 2016-09-30;
+            $quantity2 = 7;
+            $test_order2 = new Order($user_id2, $product_id2, $purchase_total2, $purchase_date2, $quantity2);
+
+            $test_order->save();
+            $test_order2->save();
+            $test_order->delete();
+            $result = Order::getAll();
+            $this->assertEquals([$test_order2], $result);
+        }
 
         function test_deleteAll()
         {
             $user_id = 1;
             $product_id = 1;
             $purchase_total = 40;
-            $purchase_date = 2016-10-01;
+            $purchase_date = "2016-10-01";
             $quantity = 5;
             $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity);
             $user_id2 = 2;
@@ -117,20 +202,29 @@
             $this->assertEquals([], $result);
         }
 
-        // function test_update()
-        // {
-        //     $title = "Prisoner of Azkaban";
-        //     $test_book = new Book($title);
-        //     $test_book->save();
-        //     $new_title = "Order of the Phoenix";
-        //     $test_book->update($new_title);
-        //     $result = $test_book->getTitle();
-        //     $this->assertEquals($new_title, $result);
-        // }
+        function test_updateAllFields()
+        {
+            $user_id = 1;
+            $product_id = 1;
+            $purchase_total = 40;
+            $purchase_date = "2016-10-01";
+            $quantity = 5;
+            $test_order = new Order($user_id, $product_id, $purchase_total, $purchase_date, $quantity);
+            $test_order->save();
+            $new_product_id = 2;
+            $new_purchase_total = 46;
+            $new_quantity = 7;
+
+            $test_order->update($new_product_id, $new_purchase_total, $new_quantity);
+            $result = array($test_order->getProductId(), $test_order->getPurchaseTotal(), $test_order->getQuantity());
+
+            $this->assertEquals([$new_product_id, $new_purchase_total, $new_quantity], $result);
+        }
+
         // function test_addAuthor()
         // {
         //     $title = "Prisoner of Azkaban";
-        //     $test_book = new Book($title);
+        //     $test_order = new Book($title);
         //     $test_book->save();
         //     $name = "JK Rowling";
         //     $test_author = new Author($name);
@@ -138,6 +232,7 @@
         //     $test_book->addAuthor($test_author->getId());
         //     $this->assertEquals([$test_author], $test_book->getAuthors());
         // }
+
         // function test_getAuthors()
         // {
         //     $title = "Prisoner of Azkaban";
@@ -153,6 +248,7 @@
         //     $test_book->addAuthor($test_author2->getId());
         //     $this->assertEquals([$test_author, $test_author2], $test_book->getAuthors());
         // }
+
         // function test_searchBooks()
         // {
         //     $title = "Prisoner of Azkaban";
@@ -173,6 +269,7 @@
         //     $result = Book::searchBooks($search_input);
         //     $this->assertEquals([[$test_book, [$test_author]],[$test_book2, [$test_author]]], $result);
         // }
+
         // function test_searchAuthors()
         // {
         //     $title = "Prisoner of Azkaban";
