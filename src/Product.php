@@ -97,6 +97,16 @@
             return $products;
         }
 
+        function updateProduct($new_name, $new_price, $new_purchase_quantity, $new_inventory, $new_photo)
+        {
+            $GLOBALS['DB']->exec("UPDATE products SET name = '{$new_name}', price = {$new_price}, purchase_quantity={$new_purchase_quantity}, inventory = {$new_inventory}, photo = '{$new_photo}' WHERE id = {$this->getId()};");
+            $this->setName($new_name);
+            $this->setPrice($new_price);
+            $this->setPurchaseQuantity($new_purchase_quantity);
+            $this->setInventory($new_inventory);
+            $this->setPhoto($new_photo);
+        }
+
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM products;");

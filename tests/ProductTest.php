@@ -155,6 +155,116 @@
             $this->assertEquals([$test_product, $test_product2], $result);
         }
 
+        function testUpdateName()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $new_test_name = "Granny Smith";
+            $new_test_price = 1.25;
+            $new_test_purchase_quantity = 1;
+            $new_test_inventory = 3;
+            $new_test_photo = "apple.jpeg";
+
+            $test_product -> updateProduct($new_test_name, $new_test_price, $new_test_purchase_quantity, $new_test_inventory, $new_test_photo);
+
+            $this->assertEquals("Granny Smith", $test_product->getName());
+        }
+
+        function testUpdatePrice()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $new_test_name = "Granny Smith";
+            $new_test_price = 1.25;
+            $new_test_purchase_quantity = 1;
+            $new_test_inventory = 3;
+            $new_test_photo = "apple.jpeg";
+
+            $test_product -> updateProduct($new_test_name, $new_test_price, $new_test_purchase_quantity, $new_test_inventory, $new_test_photo);
+
+            $this->assertEquals(1.25, $test_product->getPrice());
+        }
+
+        function testUpdatePurchaseQuantity()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $new_test_name = "Granny Smith";
+            $new_test_price = 1.25;
+            $new_test_purchase_quantity = 1;
+            $new_test_inventory = 3;
+            $new_test_photo = "apple.jpeg";
+
+            $test_product -> updateProduct($new_test_name, $new_test_price, $new_test_purchase_quantity, $new_test_inventory, $new_test_photo);
+
+            $this->assertEquals(1, $test_product->getPurchaseQuantity());
+        }
+
+        function testUpdateInventory()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $new_test_name = "Granny Smith";
+            $new_test_price = 1.25;
+            $new_test_purchase_quantity = 1;
+            $new_test_inventory = 3;
+            $new_test_photo = "apple.jpeg";
+
+            $test_product -> updateProduct($new_test_name, $new_test_price, $new_test_purchase_quantity, $new_test_inventory, $new_test_photo);
+
+            $this->assertEquals(3, $test_product->getInventory());
+        }
+
+        function testUpdatePhoto()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $new_test_name = "Granny Smith";
+            $new_test_price = 1.25;
+            $new_test_purchase_quantity = 1;
+            $new_test_inventory = 3;
+            $new_test_photo = "apple.jpeg";
+
+            $test_product -> updateProduct($new_test_name, $new_test_price, $new_test_purchase_quantity, $new_test_inventory, $new_test_photo);
+
+            $this->assertEquals("apple.jpeg", $test_product->getPhoto());
+        }
+
         function testDeleteAll()
         {
             $test_name = "apple";

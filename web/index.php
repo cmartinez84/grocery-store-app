@@ -2,7 +2,7 @@
     $website = require_once __DIR__.'/../app/app.php';
     $website->run();
  ?>
- <!-- <!DOCTYPE html>
+ <!DOCTYPE html>
  <html>
    <head>
       <link href="https://fonts.googleapis.com/css?family=Anton|Open+Sans|Pacifico|Permanent+Marker" rel="stylesheet">
@@ -15,4 +15,4 @@
    <body>
 
    </body>
- </html> -->
+ </html>
