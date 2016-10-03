@@ -12,12 +12,21 @@ _._
 | Behavior | Input Ex. | Output Ex. |
 | --- | --- | --- |
 | Application will return inputted product information, such as name, price, purchase_quantity, inventory, category and photo | "Apple" | "Apple" |
-| Application will show all products entered | "Apple", "Orange" | "Apple", "Orange"  |
+| Application will return all products entered | "Apple", "Orange" | "Apple", "Orange"  |
 | Product information can be updated, such as name, price, purchase_quantity, inventory, category and photo | "apple" | "granny smith" |
 | All products can be deleted |  "Apple", "Orange"  | "" |
+| Application will return a product the user searches for | "Apple", "Orange" | "Apple" |
 | The user will be informed that there is not enough inventory if the purchase_quantity is greater than the inventory |  "Apple", 3  | "Not enough inventory" |
 | The price and purchase_quantity will be multiplied to return a price for an individual product |  "Apple", 1.00, 2 | 2.00 |
-| The price derived for each product will be added together to return a total price for the customer |  2.00, 3.95 | 5.95 |
+| Application will return inputted category | "fruit" | "fruit" |
+| Application will return all categories entered | "fruit", "meat" | "fruit", "meat" |
+| Product name can be updated | "fruit" | "produce" |
+| All categories can be deleted | "fruit", "meat" | "" |
+| Application will return a category the user searches for | "fruit", "meat" | "fruit" |
+| A product can be added to a category | "fruit", "apple" | "apple" |
+| All products will be returned for a category | "fruit", "apple", "banana" | "apple", "banana" |
+| A category can be added to a product | "fruit", "apple" | "fruit" |
+| All categories will be returned for a product | "apple", "fruit", "organic" |"fruit", "organic" |
 
 
 

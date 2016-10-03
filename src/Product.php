@@ -126,6 +126,47 @@
             return $found_product;
         }
 
+        static function searchProducts($search_string)
+        {
+            $products = array();
+            $returned_products = $GLOBALS['DB']->query("SELECT * FROM products WHERE name LIKE '%{$search_string}%';");
+            foreach($returned_products as $product) {
+                $name = $product['name'];
+                $price = $product['price'];
+                $purchase_quantity = $product['purchase_quantity'];
+                $inventory = $product['inventory'];
+                $photo = $product['photo'];
+                $id = $product['id'];
+                $new_product = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
+                array_push($products, $new_product);
+            }
+            return $products;
+        }
+
+        function addCategory($category)
+        {
+            $GLOBALS['DB']->exec("INSERT INTO products_categories (product_id, category_id) VALUES ({$this->getId()}, {$category->getId()});");
+        }
+
+        function getCategories()
+        {
+            $categories = array();
+            $returned_categories = $GLOBALS['DB']->query("SELECT categories.* FROM products JOIN products_categories ON (products_categories.product_id = products.id) JOIN categories ON (categories.id = products_categories.category_id) WHERE products.id = {$this->getId()};");
+            foreach($returned_categories as $category) {
+                $name = $category['name'];
+                $id = $category['id'];
+                $new_category = new Category($name, $id);
+                array_push($categories, $new_category);
+            }
+            return $categories;
+        }
+
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM products WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM products_categories WHERE product_id = {$this->getId()};");
+        }
+
         function inStock($purchase_quantity)
         {
             if ($this->getInventory() < $purchase_quantity)

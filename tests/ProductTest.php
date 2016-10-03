@@ -6,6 +6,8 @@
     */
 
     require_once "src/Product.php";
+    require_once "src/Category.php";
+
 
     $server = 'mysql:host=localhost;dbname=shoppR_test';
     $username = 'root';
@@ -17,6 +19,7 @@
     {
         protected function tearDown(){
             Product::deleteAll();
+            Category::deleteAll();
         }
 
         function testSetName()
@@ -314,6 +317,106 @@
             $result = Product::find($test_product2->getId());
 
             $this->assertEquals($test_product2, $result);
+        }
+
+        function testSearchProducts()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $test_name2 = "apples";
+            $test_price2 = .75;
+            $test_purchase_quantity2 = 1;
+            $test_inventory2 = 5;
+            $test_photo2 = "";
+            $test_id2 = null;
+            $test_product2 = new Product($test_name2, $test_price2, $test_purchase_quantity2, $test_inventory2, $test_photo2, $test_id2);
+            $test_product2->save();
+
+            $result = Product::searchProducts("appl");
+
+            $this->assertEquals([$test_product, $test_product2], $result);
+        }
+
+        function testAddCategory()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $test_name = "fruit";
+            $test_id = null;
+            $test_category = new Category($test_name, $test_id);
+            $test_category->save();
+
+            $test_product -> addCategory($test_category);
+
+            $this->assertEquals([$test_category], $test_product->getCategories());
+        }
+
+        function testGetCategories()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $test_name = "fruit";
+            $test_id = null;
+            $test_category = new Category($test_name, $test_id);
+            $test_category->save();
+
+            $test_name2 = "organic";
+            $test_id2 = null;
+            $test_category2 = new Category($test_name2, $test_id2);
+            $test_category2->save();
+
+            $test_product -> addCategory($test_category);
+            $test_product -> addCategory($test_category2);
+
+
+            $this->assertEquals([$test_category, $test_category2], $test_product->getCategories());
+        }
+
+        function testDeleteProduct()
+        {
+            $test_name = "apple";
+            $test_price = 1.00;
+            $test_purchase_quantity = 2;
+            $test_inventory = 5;
+            $test_photo = "";
+            $test_id = null;
+            $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
+            $test_product->save();
+
+            $test_name2 = "apples";
+            $test_price2 = .75;
+            $test_purchase_quantity2 = 1;
+            $test_inventory2 = 5;
+            $test_photo2 = "";
+            $test_id2 = null;
+            $test_product2 = new Product($test_name2, $test_price2, $test_purchase_quantity2, $test_inventory2, $test_photo2, $test_id2);
+            $test_product2->save();
+
+            $test_product->delete();
+            $result = Product::getAll();
+
+            $this->assertEquals([$test_product2], $result);
         }
 
         function testInStock()
