@@ -67,26 +67,32 @@
             ('{$this->getName()}',
             '{$this->getEmail()}',
             '{$this->getAddress()}',
-            '{$this->getEmail()}',
-            '{$this->getFunds()}'
+            '{$this->getPassword()}',
+            {$this->getFunds()}
             );");
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
         //this will update all customer info at one time. this should only be used to update funds due to an error. for adding funds to customer, please use "addFunds" function
         function update($new_name, $new_email, $new_address, $new_password, $new_funds)
         {
-        $GLOBALS['DB']-exec("UPDATE customers SET
-            name= '{$new_name}',
-            email = '{$new_email}',
-            address = '{$new_address}',
-            password = '{$new_passwprd}',
-            funds = '{$new_funds}'
-            WHERE id={$this->getId()};
-             ");
+            $GLOBALS['DB']->exec("UPDATE customers SET
+                name= '{$new_name}',
+                email = '{$new_email}',
+                address = '{$new_address}',
+                password = '{$new_password}',
+                funds = '{$new_funds}'
+                WHERE id= {$this->getId()};
+                 ");
+
+            $this->name = $new_name;
+            $this->email = $new_email;
+            $this->address = $new_address;
+            $this->password = $new_password;
+            $this->funds = $new_funds;
         }
         function delete()
         {
-            $GLOBALS['DB']->exec("DELETE FROM customers WHERE id='{$this->getID}';");
+            $GLOBALS['DB']->exec("DELETE FROM customers WHERE id='{$this->getId()}';");
         }
         function pay($purchase_total)
         {
@@ -99,7 +105,7 @@
             $this->funds +=$new_funds;
             $GLOBALS['DB']->exec("UPDATE customers SET funds ={$this->getFunds()} WHERE
              id={$this->getFunds()};");
-        }
+         }
 
         static function deleteAll()
         {
@@ -117,11 +123,12 @@
                 $address = $customer['address'];
                 $password = $customer['password'];
                 $funds = $customer['funds'];
-                $new_customer = Customer($id, $name, $email, $address, $password, $funds);
-                $array_push($customers, $new_customer);
+                $new_customer = new Customer($id, $name, $email, $address, $password, $funds);
+                array_push($customers, $new_customer);
             }
             return $customers;
         }
+
         static function find($search_id)
         {
             $all_customers = Customer::getAll();
@@ -132,23 +139,40 @@
                     $found_customer = $customer;
                 }
             }
-            return $customer;
+            return $found_customer;
         }
         //this will be used to both search by letter to display customer convienitly and to search for a customer name
         static function searchNameBystring($beginsWith){
-            $found_customer = $GLOBALS['DB']->query("SELECT * FROM customer WHERE name LIKE '{$beginsWith}%';");
+            $returned_customers = $GLOBALS['DB']->query("SELECT * FROM customers WHERE name LIKE '{$beginsWith}%';");
+            $found_customers = array();
+            foreach ($returned_customers as $customer) {
+                $id = $customer['id'];
+                $name = $customer['name'];
+                $email = $customer['email'];
+                $address = $customer['address'];
+                $password = $customer['password'];
+                $funds = $customer['funds'];
+                $new_customer = new Customer($id, $name, $email, $address, $password, $funds);
+                array_push($found_customers, $new_customer);
+            }
+            return $found_customers;
         }
+
         static function searchEmailBystring($beginsWith){
-            $found_customer = $GLOBALS['DB']->query("SELECT * FROM customer WHERE email LIKE '{$beginsWith}%';");
+            $returned_customers = $GLOBALS['DB']->query("SELECT * FROM customers WHERE email LIKE '{$beginsWith}%';");
+            $found_customers = array();
+            foreach ($returned_customers as $customer) {
+                $id = $customer['id'];
+                $name = $customer['name'];
+                $email = $customer['email'];
+                $address = $customer['address'];
+                $password = $customer['password'];
+                $funds = $customer['funds'];
+                $new_customer = new Customer($id, $name, $email, $address, $password, $funds);
+                array_push($found_customers, $new_customer);
+            }
+            return $found_customers;
         }
-
-
-
-
-
-
-
-
 
     }
  ?>
