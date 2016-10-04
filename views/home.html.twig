@@ -3,6 +3,54 @@
 
     <body>
         <div class="container">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
+                    </div>
+                <div class="collapse navbar-collapse" id="nav">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <form class="navbar-form navbar-left" action='/search_books' method='post'>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search" name='search_input'>
+                                    <button type="submit" class="btn btn-default"><span class='glyphicon glyphicon-search'></span></button>
+                                </div>
+                            </form>
+                        </li>
+                        <li>
+                            <form class="form-inline navbar-form" action='/patron' method='post'>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="New username" name='username'>
+                                </div>
+                                <button type="submit" class="btn btn-default">Sign Up</button>
+                            </form>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <form class="form-inline navbar-form" action='/patron/login' method='post'>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Username" name='username'>
+                                        </div>
+                                        <button type="submit" class="btn btn-default">Go</button>
+                                    </form>
+                                </li>
+                                <li><a href="/products">Admin View</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </nav>
+
             <br>
             <div class="jumbotron text-center">
                 <h1>Shoppr</h1>
@@ -12,11 +60,13 @@
 
             <div class="row">
                 <div class="col-sm-2 well">
+                    <h4>Click to choose a category:</h4>
                     {% if categories is not empty %}
                     <ul>
                         {% for category in categories %}
                             <li><a href="/category/{{ category.getId }}">{{ category.getName }}</a></li>
                         {% endfor %}
+                        <li><a href="/">All</a></li>
                     </ul>
                     {% endif %}
                 </div>
@@ -26,20 +76,15 @@
                         <div class="row">
                             {% if category is empty %}
                                 {% for product in products %}
-                                    <div class="col-sm-3 card">
-                                        <img class="card-img-top" src="..." alt="Card image cap">
-                                        <div class="card-block">
-                                            <h4 class="card-title">{{ product.getName }}</h4>
-                                            <p class="card-text">Price per - ${{ product.getPrice }}</p>
+                                    <div class="col-sm-3 panel well">
+                                        <div class="panel-body">
+                                            <img src="/uploads/{{ product.getPhoto }}" alt="Card image cap">
+                                            <h4>{{ product.getName }}</h4>
+                                            <p>Price per - ${{ product.getPrice }}</p>
                                             <form class="" action="/order/{{ product.getId }}" method="post">
-                                                <label for=""></label>
                                                 <div class='form-group'>
                                                     <label>Purchase quantity:</label>
-                                                    <select class='form-control' name='product_id'>
-                                                        {% for product in products %}
-                                                            <option value='{{ product.getId }}'>{{ product.getInventory }}</option>
-                                                        {% endfor %}
-                                                    </select>
+                                                    <input type="number" name="product_id" max='{{product.getInventory}}' class='form-control'>
                                                 </div>
                                                 <a href="/product" class="btn btn-primary">Add to cart!</a>
                                             </form>
@@ -49,20 +94,15 @@
 
                             {% else %}
                                 {% for product in categoryProducts %}
-                                    <div class="col-sm-3 card">
-                                        <img class="card-img-top" src="..." alt="Card image cap">
-                                        <div class="card-block">
-                                            <h4 class="card-title">{{ product.getName }}</h4>
-                                            <p class="card-text">Price per - ${{ product.getPrice }}</p>
+                                    <div class="col-sm-3 panel">
+                                        <div class="panel-body">
+                                            <img src="/uploads/{{ product.getPhoto }}" alt="Card image cap">
+                                            <h4>{{ product.getName }}</h4>
+                                            <p>Price per - ${{ product.getPrice }}</p>
                                             <form class="" action="/order/{{ product.getId }}" method="post">
-                                                <label for=""></label>
                                                 <div class='form-group'>
                                                     <label>Purchase quantity:</label>
-                                                    <select class='form-control' name='product_id'>
-                                                        {% for product in products %}
-                                                            <option value='{{ product.getId }}'>{{ product.getInventory }}</option>
-                                                        {% endfor %}
-                                                    </select>
+                                                    <input type="number" name="product_id" max='{{product.getInventory}}' class='form-control'>
                                                 </div>
                                                 <a href="/product" class="btn btn-primary">Add to cart!</a>
                                             </form>
@@ -80,16 +120,13 @@
                 <div class="col-sm-2 well">
                     {% if categories is not empty %}
                     <ul>
-                        {% for category in categories %}
-                            <a href="/category/{{ category.getId }}">{{ category.getName }}</a>
-                        {% endfor %}
+                        <li>Cart stuff by Evan and Chris</li>
                     </ul>
                     {% endif %}
                 </div>
 
             </div>
 
->>>>>>> e4ea276bf28ecc26be1c60dab4d7ac1c1bdb220c
         </div>
     </body>
 </html>
