@@ -3,25 +3,19 @@
     {
         private $id;
         private $user_id;
-        private $product_id;
-        // private $receipt;
-        private $item;
-        private $purchase_quantity;
-        private $purchase_price;
-        private $purchase_subtotal;
+        private $cart;
         private $order_date;
         private $delivery_date_time;
+        private $total;
 
-        function __construct($user_id, $product_id, $purchase_quantity, $purchase_price, $purchase_subtotal, $order_date, $delivery_date_time, $id = null)
+        function __construct($id, $user_id, $order_date, $delivery_date_time)
         {
+            $this->id = $id;
             $this->user_id = $user_id;
-            $this->product_id = $product_id;
-            $this->purchase_quantity = $purchase_quantity;
-            $this->purchase_price = $purchase_price;
-            $this->purchase_subtotal = $purchase_subtotal;
+            $this->cart = array();
             $this->order_date = $order_date;
             $this->delivery_date_time = $delivery_date_time;
-            $this->id = $id;
+            $this->total = 0;
         }
 
         function getId()
@@ -33,40 +27,9 @@
         {
             return $this->user_id;
         }
-
-        function getProductId()
+        function getCart()
         {
-            return $this->user_id;
-        }
-
-        function getPurchaseQuantity()
-        {
-            return $this->purchase_quantity;
-        }
-
-        function setPurchaseQuantity($new_purchase_quantity)
-        {
-            $this->purchase_quantity = $new_purchase_quantity;
-        }
-
-        function getPurchasePrice()
-        {
-            return $this->purchase_price;
-        }
-
-        function setPurchasePrice($new_purchase_price)
-        {
-            $this->purchase_price = $new_purchase_price;
-        }
-
-        function getPurchaseSubtotal()
-        {
-            return $this->purchase_subtotal;
-        }
-
-        function setPurchaseSubtotal($new_purchase_subtotal)
-        {
-            $this->purchase_subtotal = $new_purchase_subtotal;
+            return $this->cart;
         }
 
         function getOrderDate()
@@ -83,36 +46,55 @@
         {
             return $this->delivery_date_time;
         }
+        function getTotal()
+        {
+            return $this->total;
+        }
 
         function setDeliveryDateTime($new_delivery_date_time)
         {
             $this->delivery_date_time = $new_delivery_date_time;
         }
 //methods
+    //essentially, this save function is only used when writing to databse at checkout. it wil have  the total and "cart" will be a link to a text file of the receipt/invoice, may be renamed "checkout"?
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO orders (user_id, product_id, purchase_quantity, purchase_price, purchase_subtotal, order_date, delivery_date_time) VALUES ({$this->getUserId()}, '{$this->getProductId()}',
-            '{$this->getPurchaseQuantity()}',
-            '{$this->getPurchasePrice()}',
-            '{$this->getPurchaseSubtotal()}', '{$this->getOrderDate()}', '{$this->getDeliveryDateTime()}');");
-            $this->id = $GLOBALS['DB']->lastInsertId();
+            $GLOBALS['DB']->exec("INSERT INTO orders (user_id, order_date, delivery_date_time, total) VALUES (
+                {$this->getUserId()},
+                '{$this->getOrderDate()}',
+                '{$this->getDeliveryDateTime()}',
+                '{$this->getTotal()}'
+                );");
+                $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
         function delete()
         {
             $GLOBALS['DB']->exec("DELETE FROM orders WHERE id = {$this->getId()};");
         }
-
-        function userUpdate($new_purchase_quantity, $new_order_date, $new_delivery_date_time)
-        {
-            $GLOBALS['DB']->exec("UPDATE orders SET purchase_quantity = '{$new_purchase_quantity}',
-            order_date = '{$new_order_date}',
-            delivery_date_time = '{$new_delivery_date_time}'
-            WHERE id = {$this->getId()};");
-            $this->setPurchaseQuantity($new_);
-            $this->setPurchaseSubtotal($new_purchase_subtotal);
-            $this->setQuantity($new_quantity);
+        // im thinking this function can add one item at a time, we can refactor it to take the whole order, or we can have two seperate functions.
+        function addProductToCart($product){
+            array_push($this->cart, $product);
         }
+        // this function will add together all contents of the cart, both returning the total and adding it to the Order instance. perhasp this function can also be called checkout? or can be woven into a checkout funciton which does many things, including changing inventory, and customer funds
+        function getCartTotal()
+        {
+            foreach($this->cart as $product)
+            {
+                $this->total += $product->getPurchasePrice();
+            }
+        }
+        //commented out by chris
+        // function userUpdate($new_purchase_quantity, $new_order_date, $new_delivery_date_time)
+        // {
+        //     $GLOBALS['DB']->exec("UPDATE orders SET purchase_quantity = '{$new_purchase_quantity}',
+        //     order_date = '{$new_order_date}',
+        //     delivery_date_time = '{$new_delivery_date_time}'
+        //     WHERE id = {$this->getId()};");
+        //     $this->setPurchaseQuantity($new_);
+        //     $this->setPurchaseSubtotal($new_purchase_subtotal);
+        //     $this->setQuantity($new_quantity);
+        // }
 
         // function addPurchase($product_id, $purchase_quantity, $purchase_price, $purchase_subtotal)
         // {
@@ -125,15 +107,11 @@
             $returned_orders = $GLOBALS['DB']->query("SELECT * FROM orders");
             $orders= array();
             foreach ($returned_orders as $order) {
+                $id = $order['id'];
                 $user_id = $order['user_id'];
-                $product_id = $order['product_id'];
-                $purchase_price = $order['purchase_price'];
-                $purchase_quantity = $order['purchase_quantity'];
-                $purchase_subtotal = $order['purchase_subtotal'];
                 $order_date = $order['order_date'];
                 $delivery_date_time = $order['delivery_date_time'];
-                $id = $order['id'];
-                $new_order = new Order($user_id, $product_id, $purchase_quantity, $purchase_price, $purchase_subtotal, $order_date, $delivery_date_time, $id);
+                $new_order = new Order($id, $user_id, $order_date, $delivery_date_time);
                 array_push($orders, $new_order);
             }
             return $orders;
@@ -146,8 +124,6 @@
 
         static function find($search_id)
         {
-            // $found_order = $GLOBALS['DB']->query("SELECT * FROM orders WHERE $id = {$search_id};");
-
             $returned_orders = Order::getAll();
             foreach($returned_orders as $order) {
                 if($order->getId() == $search_id) {

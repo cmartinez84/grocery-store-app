@@ -9,7 +9,7 @@
     require_once "src/Category.php";
 
 
-    $server = 'mysql:host=localhost;dbname=shoppr';
+    $server = 'mysql:host=localhost:8889;dbname=shoppr';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
