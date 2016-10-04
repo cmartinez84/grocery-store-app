@@ -130,5 +130,23 @@
    });
 //end Administration portion
 
+
+
+
+
+//homepage & customer view (pre-log-in)
+$app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../views'
+));
+
+$app->get("/", function() use ($app) {
+    return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null));
+});
+
+$app->get("/category/{id}", function($id) use ($app) {
+    $found_category = Category::find($id);
+    return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => $found_category, 'categoryProducts' => $found_category->getProducts()));
+});
+
+
     return $app;
 ?>

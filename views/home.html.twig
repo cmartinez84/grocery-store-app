@@ -12,11 +12,13 @@
 
             <div class="row">
                 <div class="col-sm-2 well">
+                    <h4>Click to choose a category:</h4>
                     {% if categories is not empty %}
                     <ul>
                         {% for category in categories %}
                             <li><a href="/category/{{ category.getId }}">{{ category.getName }}</a></li>
                         {% endfor %}
+                        <li><a href="/">All</a></li>
                     </ul>
                     {% endif %}
                 </div>
@@ -26,20 +28,15 @@
                         <div class="row">
                             {% if category is empty %}
                                 {% for product in products %}
-                                    <div class="col-sm-3 card">
-                                        <img class="card-img-top" src="..." alt="Card image cap">
-                                        <div class="card-block">
-                                            <h4 class="card-title">{{ product.getName }}</h4>
-                                            <p class="card-text">Price per - ${{ product.getPrice }}</p>
+                                    <div class="col-sm-3 panel well">
+                                        <div class="panel-body">
+                                            <img src="/uploads/{{ product.getPhoto }}" alt="Card image cap">
+                                            <h4>{{ product.getName }}</h4>
+                                            <p>Price per - ${{ product.getPrice }}</p>
                                             <form class="" action="/order/{{ product.getId }}" method="post">
-                                                <label for=""></label>
                                                 <div class='form-group'>
                                                     <label>Purchase quantity:</label>
-                                                    <select class='form-control' name='product_id'>
-                                                        {% for product in products %}
-                                                            <option value='{{ product.getId }}'>{{ product.getInventory }}</option>
-                                                        {% endfor %}
-                                                    </select>
+                                                    <input type="number" name="product_id" max='{{product.getInventory}}' class='form-control'>
                                                 </div>
                                                 <a href="/product" class="btn btn-primary">Add to cart!</a>
                                             </form>
@@ -49,20 +46,15 @@
 
                             {% else %}
                                 {% for product in categoryProducts %}
-                                    <div class="col-sm-3 card">
-                                        <img class="card-img-top" src="..." alt="Card image cap">
-                                        <div class="card-block">
-                                            <h4 class="card-title">{{ product.getName }}</h4>
-                                            <p class="card-text">Price per - ${{ product.getPrice }}</p>
+                                    <div class="col-sm-3 panel">
+                                        <div class="panel-body">
+                                            <img src="/uploads/{{ product.getPhoto }}" alt="Card image cap">
+                                            <h4>{{ product.getName }}</h4>
+                                            <p>Price per - ${{ product.getPrice }}</p>
                                             <form class="" action="/order/{{ product.getId }}" method="post">
-                                                <label for=""></label>
                                                 <div class='form-group'>
                                                     <label>Purchase quantity:</label>
-                                                    <select class='form-control' name='product_id'>
-                                                        {% for product in products %}
-                                                            <option value='{{ product.getId }}'>{{ product.getInventory }}</option>
-                                                        {% endfor %}
-                                                    </select>
+                                                    <input type="number" name="product_id" max='{{product.getInventory}}' class='form-control'>
                                                 </div>
                                                 <a href="/product" class="btn btn-primary">Add to cart!</a>
                                             </form>
@@ -80,16 +72,13 @@
                 <div class="col-sm-2 well">
                     {% if categories is not empty %}
                     <ul>
-                        {% for category in categories %}
-                            <a href="/category/{{ category.getId }}">{{ category.getName }}</a>
-                        {% endfor %}
+                        <li>Cart stuff by Evan and Chris</li>
                     </ul>
                     {% endif %}
                 </div>
 
             </div>
 
->>>>>>> e4ea276bf28ecc26be1c60dab4d7ac1c1bdb220c
         </div>
     </body>
 </html>
