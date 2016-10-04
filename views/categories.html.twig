@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Categories</title>
+    </head>
+    <body>
+        <h1>Enter Categories</h1>
+        <div class="container">
+            {% if categories is not empty %}
+                <h2>Here is a list of the current categories:</h2>
+
+                {% for category in categories %}
+                    <li>{{ category.getName }}</li>
+                {% endfor %}
+            {% endif %}
+
+            <form action="/categories_add" method="post">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input id="name" name="name" class="form-control" type="text" required>
+                </div>
+                <button class="btn btn-info">Add Category</button>
+            </form>
+
+            <form action="categories_delete">
+                <button class="btn btn-danger">Delete all categories</button>
+            </form>
+
+            <h2><a href='/'>Home</a></h2>
+            <h2><a href='/products'>Go to Products</a></h2>
+        </div>
+    </body>
+</html>

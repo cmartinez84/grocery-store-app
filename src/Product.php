@@ -91,10 +91,13 @@
                 $inventory = $product['inventory'];
                 $photo = $product['photo'];
                 $id = $product['id'];
+
                 $new_product = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
                 array_push($products, $new_product);
             }
+
             return $products;
+
         }
 
         function updateProduct($new_name, $new_price, $new_purchase_quantity, $new_inventory)
@@ -108,7 +111,8 @@
 
         static function deleteAll()
         {
-            $GLOBALS['DB']->exec("DELETE FROM products;");
+            $GLOBALS['DB']->exec("DELETE FROM categories;");
+            $GLOBALS['DB']->exec("DELETE FROM products_categories;");
         }
 
         static function find($search_id)
@@ -117,7 +121,7 @@
             $products = Product::getAll();
             foreach ($products as $product) {
                 $product_id = $product->getId();
-                if ($product_id  = $search_id)
+                if ($product_id  == $search_id)
                 {
                     $found_product = $product;
                 }
