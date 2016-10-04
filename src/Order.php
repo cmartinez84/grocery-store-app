@@ -8,7 +8,7 @@
         private $delivery_date_time;
         private $total;
 
-        function __construct($id, $user_id, $order_date, $delivery_date_time)
+        function __construct($id = null, $user_id, $order_date, $delivery_date_time)
         {
             $this->id = $id;
             $this->user_id = $user_id;
@@ -56,7 +56,7 @@
             $this->delivery_date_time = $new_delivery_date_time;
         }
 //methods
-    //essentially, this save function is only used when writing to databse at checkout. it wil have  the total and "cart" will be a link to a text file of the receipt/invoice, may be renamed "checkout"?
+    //essentially, this save function is only used when writing to database at checkout. it will have  the total and "cart" will be a link to a text file of the receipt/invoice, may be renamed "checkout"?
         function save()
         {
             $GLOBALS['DB']->exec("INSERT INTO orders (user_id, order_date, delivery_date_time, total) VALUES (
@@ -72,12 +72,14 @@
         {
             $GLOBALS['DB']->exec("DELETE FROM orders WHERE id = {$this->getId()};");
         }
+
         // im thinking this function can add one item at a time, we can refactor it to take the whole order, or we can have two seperate functions.
         // product enters cart in object format
         function addProductToCart($product){
             array_push($this->cart, $product);
         }
-        // this function will add together all contents of the cart, both returning the total and adding it to the Order instance. perhasp this function can also be called checkout? or can be woven into a checkout funciton which does many things, including changing inventory, and customer funds
+
+        // this function will add together all contents of the cart, both returning the total and adding it to the Order instance. perhaps this function can also be called checkout? or can be woven into a checkout funciton which does many things, including changing inventory, and customer funds
 
         // cart total relies on calculateProductPrice total, adding them together with loop
         function getCartTotal()
