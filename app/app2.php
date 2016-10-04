@@ -1,8 +1,8 @@
 <?php
 
     require_once __DIR__."/../vendor/autoload.php";
-    require_once __DIR__."/../src/Stylist.php";
-    require_once __DIR__."/../src/Client.php";
+    require_once __DIR__."/../src/Customer.php";
+    require_once __DIR__."/../src/Order.php";
     date_default_timezone_set('America/Los_Angeles');
 
     use Symfony\Component\Debug\Debug;
@@ -10,10 +10,10 @@
 
     use Symfony\Component\HttpFoundation\Request;  Request::enableHttpMethodParameterOverride();
 
-    // session_start();
-    // if (empty($_SESSION['current_user'])) {
-    //     $_SESSION['current_user'] = null;
-    // }
+    session_start();
+    if (empty($_SESSION['current_user'])) {
+        $_SESSION['current_user'] = null;
+    }
 
     $total = 0;
     $b = 0;
@@ -30,7 +30,7 @@
 
     $app['debug'] = true;
 
-    $server = 'mysql:host=localhost;dbname=shoppr';
+    $server = 'mysql:host=localhost:8889;dbname=shoppr';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);

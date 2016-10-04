@@ -44,9 +44,10 @@ _._
 * _CREATE TABLE products_categories(id serial PRIMARY KEY, product_id INT, category_id INT)_
 * _CREATE TABLE products (id serial PRIMARY KEY, name VARCHAR(255), price FLOAT, purchase_quantity INT, inventory INT, category VARCHAR(255), photo VARCHAR(255))_
 * _CREATE TABLE customers (id serial PRIMARY KEY, name VARCHAR(255), email VARCHAR(255), address VARCHAR(255), password VARCHAR(255), funds INT)_
+* _CREATE TABLE orders (id serial PRIMARY KEY, product_id INT, purchase_quantity INT, purchase_price INT, purchase_subtotal INT, order_date DATE, delivery_date_time VARCHAR(255))_;
 
 
->>>>>>> f59e328331e696c2cdf36f4e6f484f9a587bb18d
+
 
 * _Alternatively, unzip the database contained at the top level of this folder and import from phpmyadmin (http://localhost:8888/phpmyadmin/)_
 * _in phpmyadmin, you may also  have to create another database for use with phpunit tests files by going to Operations> Copy Database To> and remaning database "shopper_test" and choosing "structure only"_

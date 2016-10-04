@@ -7,7 +7,7 @@
 
     require_once "src/Order.php";
 
-    $server = 'mysql:host=localhost;dbname=shoppr_test';
+    $server = 'mysql:host=localhost:8889;dbname=shoppr';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
@@ -15,7 +15,7 @@
     {
         protected function teardown()
         {
-            Order::deleteAll();
+            // Order::deleteAll();
         }
 
         function test_getId()
