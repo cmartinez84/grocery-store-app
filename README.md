@@ -12,12 +12,21 @@ _._
 | Behavior | Input Ex. | Output Ex. |
 | --- | --- | --- |
 | Application will return inputted product information, such as name, price, purchase_quantity, inventory, category and photo | "Apple" | "Apple" |
-| Application will show all products entered | "Apple", "Orange" | "Apple", "Orange"  |
+| Application will return all products entered | "Apple", "Orange" | "Apple", "Orange"  |
 | Product information can be updated, such as name, price, purchase_quantity, inventory, category and photo | "apple" | "granny smith" |
 | All products can be deleted |  "Apple", "Orange"  | "" |
+| Application will return a product the user searches for | "Apple", "Orange" | "Apple" |
 | The user will be informed that there is not enough inventory if the purchase_quantity is greater than the inventory |  "Apple", 3  | "Not enough inventory" |
 | The price and purchase_quantity will be multiplied to return a price for an individual product |  "Apple", 1.00, 2 | 2.00 |
-| The price derived for each product will be added together to return a total price for the customer |  2.00, 3.95 | 5.95 |
+| Application will return inputted category | "fruit" | "fruit" |
+| Application will return all categories entered | "fruit", "meat" | "fruit", "meat" |
+| Product name can be updated | "fruit" | "produce" |
+| All categories can be deleted | "fruit", "meat" | "" |
+| Application will return a category the user searches for | "fruit", "meat" | "fruit" |
+| A product can be added to a category | "fruit", "apple" | "apple" |
+| All products will be returned for a category | "fruit", "apple", "banana" | "apple", "banana" |
+| A category can be added to a product | "fruit", "apple" | "fruit" |
+| All categories will be returned for a product | "apple", "fruit", "organic" |"fruit", "organic" |
 
 
 
@@ -30,11 +39,14 @@ _._
 * _Begin MySql Shell by running $ /Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot_
 * _CREATE DATABASE shopper_
 * _USE shopper_
+* _CREATE TABLE products (id serial PRIMARY KEY, name VARCHAR(255), price FLOAT, purchase_quantity INT, inventory INT, category VARCHAR(255), photo BLOB)_
+* _CREATE TABLE categories(id serial PRIMARY KEY, name VARCHAR(255))_
+* _CREATE TABLE products_categories(id serial PRIMARY KEY, product_id INT, category_id INT)_
 * _CREATE TABLE products (id serial PRIMARY KEY, name VARCHAR(255), price FLOAT, purchase_quantity INT, inventory INT, category VARCHAR(255), photo VARCHAR(255))_
-<!-- * _CREATE TABLE clients(id, serial PRIMARY KEY, name VARCHAR(255), last_appointment VARCHAR(255), next_appointment VARCHAR(255))_ -->
-*_CREATE TABLE customers (id serial PRIMARY KEY, name VARCHAR(255), email VARCHAR(255), address VARCHAR(255), password VARCHAR(255), funds INT)_
+* _CREATE TABLE customers (id serial PRIMARY KEY, name VARCHAR(255), email VARCHAR(255), address VARCHAR(255), password VARCHAR(255), funds INT)_
 
 
+>>>>>>> f59e328331e696c2cdf36f4e6f484f9a587bb18d
 
 * _Alternatively, unzip the database contained at the top level of this folder and import from phpmyadmin (http://localhost:8888/phpmyadmin/)_
 * _in phpmyadmin, you may also  have to create another database for use with phpunit tests files by going to Operations> Copy Database To> and remaning database "shopper_test" and choosing "structure only"_
