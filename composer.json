@@ -2,7 +2,6 @@
     "require": {
         "phpunit/phpunit": "4.5.*",
         "silex/silex": "~1.1",
-        "twig/twig":"~1.0",
-        "dompdf/dompdf": "dev-master"
+        "twig/twig":"~1.0"
     }
 }

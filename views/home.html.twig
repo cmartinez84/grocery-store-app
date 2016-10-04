@@ -1,11 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>ShoppR</title>
-  </head>
-  <body>
-      <h1>Home Page</h1>
-      <a href="/products">Enter / Modify Products</a>
-  </body>
+    <body>
+        <div class="container">
+            <br>
+            <div class="jumbotron text-center">
+                <h1>Shoppr</h1>
+            </div>
+
+            <!-- <a href="/products">Enter / Modify Products</a> -->
+
+            <div class="row">
+                <div class="col-sm-2 well">
+                    {% if categories is not empty %}
+                    <ul>
+                        {% for category in categories %}
+                            <li><a href="/category/{{ category.getId }}">{{ category.getName }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <div class="col-sm-8">
+                    {% if products is not empty %}
+                        <div class="row">
+                            {% if category is empty %}
+                                {% for product in products %}
+                                    <div class="col-sm-3 card">
+                                        <img class="card-img-top" src="..." alt="Card image cap">
+                                        <div class="card-block">
+                                            <h4 class="card-title">{{ product.getName }}</h4>
+                                            <p class="card-text">Price per - ${{ product.getPrice }}</p>
+                                            <form class="" action="/order/{{ product.getId }}" method="post">
+                                                <label for=""></label>
+                                                <div class='form-group'>
+                                                    <label>Purchase quantity:</label>
+                                                    <select class='form-control' name='product_id'>
+                                                        {% for product in products %}
+                                                            <option value='{{ product.getId }}'>{{ product.getInventory }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <a href="/product" class="btn btn-primary">Add to cart!</a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            {% else %}
+                                {% for product in categoryProducts %}
+                                    <div class="col-sm-3 card">
+                                        <img class="card-img-top" src="..." alt="Card image cap">
+                                        <div class="card-block">
+                                            <h4 class="card-title">{{ product.getName }}</h4>
+                                            <p class="card-text">Price per - ${{ product.getPrice }}</p>
+                                            <form class="" action="/order/{{ product.getId }}" method="post">
+                                                <label for=""></label>
+                                                <div class='form-group'>
+                                                    <label>Purchase quantity:</label>
+                                                    <select class='form-control' name='product_id'>
+                                                        {% for product in products %}
+                                                            <option value='{{ product.getId }}'>{{ product.getInventory }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <a href="/product" class="btn btn-primary">Add to cart!</a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                    {% else %}
+                        <h5>Sorry ... no known inventory! D-:</h5>
+                    {% endif %}
+                </div>
+
+                <div class="col-sm-2 well">
+                    {% if categories is not empty %}
+                    <ul>
+                        {% for category in categories %}
+                            <a href="/category/{{ category.getId }}">{{ category.getName }}</a>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+    </body>
 </html>

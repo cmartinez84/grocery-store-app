@@ -2,7 +2,7 @@
 
     require_once __DIR__."/../vendor/autoload.php";
     //dompdf
-    require_once __DIR__."/../vendor/dompdf/autoload.inc.php";
+    // require_once __DIR__."/../vendor/dompdf/autoload.inc.php";
 
 
     require_once __DIR__."/../src/Customer.php";
@@ -35,7 +35,7 @@
 
     $app['debug'] = true;
 
-    $server = 'mysql:host=localhost;dbname=shoppr';
+    $server = 'mysql:host=localhost:8889;dbname=shoppr';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
@@ -67,11 +67,9 @@
       return $app['twig']->render('order.html.twig', array('orders' => Order::getAll()));
     });
 
-    // $app->post("/", function() use ($app) {
-    //     $new_Stylist = new Stylist(null, $_POST['name'], $_POST['date_began'], $_POST['specialty']);
-    //     $new_Stylist->save();
-    //   return $app['twig']->render('home.html.twig', array('stylists' => Stylist::getAll()));
-    // });
+    $app->post("/", function() use ($app) {
+      return $app['twig']->render('order.html.twig', array('orders' => Order::getAll()));
+    });
     //
     // $app->patch("/{id}/edit", function($id) use ($app) {
     //     $found_stylist= Stylist::find($id);
