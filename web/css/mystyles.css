@@ -2,7 +2,7 @@ body{
     /*background: url('/img/background2.jpg') center right no-repeat;
     background-size: contain;
     background-attachment: fixed;*/
-    background-color: 	black;
+    /*background-color: 	black;*/
 }
 h1{
     font-family: 'Permanent Marker', cursive;
@@ -54,4 +54,9 @@ div.panel, button.accordian, button.delete{
 }
 .rotateIcon{
     transform: rotate(180deg);
+}
+
+img {
+    height: 4vh;
+    width: auto;
 }

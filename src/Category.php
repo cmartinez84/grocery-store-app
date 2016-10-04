@@ -53,6 +53,7 @@
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM categories;");
+            $GLOBALS['DB']->exec("DELETE FROM products_categories;");
         }
 
         static function find($search_id)
@@ -61,7 +62,7 @@
             $categories = Category::getAll();
             foreach ($categories as $category) {
                 $category_id = $category->getId();
-                if ($category_id  = $search_id)
+                if ($category_id == $search_id)
                 {
                     $found_category = $category;
                 }

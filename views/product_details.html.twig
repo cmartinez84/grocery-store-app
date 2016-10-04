@@ -6,16 +6,8 @@
     <body>
         <h1>Enter / Modify Products Information</h1>
         <div class="container">
-            {% if categories is not empty %}
-                <h2>Here is a list of the current categories assigned to {{ product.getName }}:</h2>
-                <ul>
-                    {% for category in categories %}
-                        <li><a href="/category/{{ category.getId }}">{{ category.getId }}</a></li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
 
-            <form action="/product_update/{{ product.getId }}" method="post">
+            <form action="/product_update/{{ product.getId }}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_method" value="patch">
                 <div class="form-group">
                     <label for="name">Name:</label>
@@ -30,33 +22,37 @@
                     <input id="inventory" name="inventory" class="form-control" type="number" value="{{ product.getInventory }}" required>
                 </div>
                 <div class="form-group">
-                    {% if product.getPhoto is empty %}
-                        <img src="/uploads/images.jpeg">
-                    {% else %}
-                        <img src="/uploads/{{ product.getPhoto }}">
-                    {% endif %}
+                    <img src="/uploads/{{ product.getPhoto }}">
+                    <input type="file" name="file" />
                 </div>
-                <button class="btn btn-info">Update Product</button>
-            </form>
 
-            <form action="/upload_file/{{ product.getId }}" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" />
-                <button type="submit" name="btn-upload">upload</button>
-            </form>
 
-            <form action="/product_add_category/{{ product.getId }}" method="post">
+                {% for category in categories %}
+                    <li>{{ category.getName }}</li>
+                {% endfor %}
+
                 <div class="form-group">
                     <label for="category_id">Add Category:</label>
-                    <select id="category_id" name="category_id" type="text" required>
+                    <select id="category_id" name="category_id" type="text">
                         <option></option>
                         {% for category in all_categories %}
                             <option value="{{ category.getId }}">{{ category.getName }}</option>
                         {% endfor %}
                     </select>
                 </div>
+
+                <button class="btn btn-info">Update Product</button>
             </form>
 
-            <p><a href='/'>Home</a></p>
+            <form action="/product_delete/{{ product.getId }}" method="post">
+                <input type="hidden" value="delete" name="_method">
+                <button class="btn btn-danger">Delete Product</button>
+            </form>
+
+            <h2><a href='/'>Home</a></h2>
+            <h2><a href='/products'>Go back to Products</a></h2>
+
+            <h2><a href='/categories'>Go to Categories</a></h2>
         </div>
     </body>
 </html>
