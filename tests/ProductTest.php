@@ -438,17 +438,18 @@
         function testCalculateProductPrice()
         {
             $test_name = "apple";
-            $test_price = 1.00;
+            $test_price = 2.00;
             $test_purchase_quantity = 3;
             $test_inventory = 5;
             $test_photo = "";
             $test_id = null;
             $test_product = new Product($test_name, $test_price, $test_purchase_quantity, $test_inventory, $test_photo, $test_id);
             $test_product->save();
+            ////removed argument for this functino because the purchase price is already stored in object,
+            //// when adding quantity, lets set the quantity in the object rather than feeding it as an argument -chris
+            $result = $test_product->calculateProductPrice();
 
-            $result = $test_product->calculateProductPrice($test_purchase_quantity);
-
-            $this->assertEquals(3.00, $result);
+            $this->assertEquals(6.00, $result);
         }
     }
 ?>

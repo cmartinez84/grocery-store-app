@@ -73,16 +73,21 @@
             $GLOBALS['DB']->exec("DELETE FROM orders WHERE id = {$this->getId()};");
         }
         // im thinking this function can add one item at a time, we can refactor it to take the whole order, or we can have two seperate functions.
+        // product enters cart in object format
         function addProductToCart($product){
             array_push($this->cart, $product);
         }
         // this function will add together all contents of the cart, both returning the total and adding it to the Order instance. perhasp this function can also be called checkout? or can be woven into a checkout funciton which does many things, including changing inventory, and customer funds
+
+        // cart total relies on calculateProductPrice total, adding them together with loop
         function getCartTotal()
         {
-            foreach($this->cart as $product)
+            $all_products = $this->cart;
+            foreach($all_products as $product)
             {
-                $this->total += $product->getPurchasePrice();
+                $this->total += ($product->calculateProductPrice());
             }
+            return $this->total;
         }
         //commented out by chris
         // function userUpdate($new_purchase_quantity, $new_order_date, $new_delivery_date_time)
