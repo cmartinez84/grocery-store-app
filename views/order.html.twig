@@ -2,12 +2,18 @@
 <html>
     <body>
         <ul>
-            {% for order in orders %}
-                <li>{{ order.getProduct }}</li>
-            {% endfor %}
-
-            Cart qty - {{ order.getQuantity }}
-            Cart total - {{ order.getPurchaseTotal }}
+            {% if orders %}
+                {% for order in orders %}
+                    <li>{{ order.getProduct }}</li>
+                    Cart qty - {{ order.getQuantity }}
+                    Cart total - {{ order.getPurchaseTotal }}
+                {% endfor %}
+            {% endif %}
+            <form class="" action="/test/pdf" method="post">
+                <h1>Test save php copy of receipt accept-charset</h1>
+                <h1>This will generate a receipt for pre written pdfile and save it to a directory</h1>
+                <button type="submit" name="button">SUBMIT</button>
+            </form>
         </ul>
 
 

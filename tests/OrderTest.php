@@ -182,6 +182,7 @@
             $result = $test_order->getCart();
             $this->assertEquals([$test_product], $result);
         }
+
         function test_getCartTotal()
         {
             $id = null;

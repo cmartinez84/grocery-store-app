@@ -1,30 +1,35 @@
 <?php
 
     require_once __DIR__."/../vendor/autoload.php";
+    //dompdf
+    require_once __DIR__."/../vendor/dompdf/autoload.inc.php";
+
+
     require_once __DIR__."/../src/Customer.php";
     require_once __DIR__."/../src/Order.php";
+    require_once __DIR__."/../src/Product.php";
+    require_once __DIR__."/../src/Category.php";
+
     date_default_timezone_set('America/Los_Angeles');
 
     use Symfony\Component\Debug\Debug;
     Debug::enable();
 
     use Symfony\Component\HttpFoundation\Request;  Request::enableHttpMethodParameterOverride();
-
-    session_start();
-    if (empty($_SESSION['current_user'])) {
-        $_SESSION['current_user'] = null;
-    }
-
-    $total = 0;
-    $b = 0;
-    foreach ($_SESSION['cart_items'] as $item) {
-        $product_id = $cart_item['product_id'];
-        $purchase_quantity = $cart_item['purchase_quantity'];
-        $purchase_price = $cart_item['price'];
-        $purchase_subtotal = $purchase_quantity * $purchase_price;
-    }
-
-
+    use Dompdf\Dompdf;
+    // session_start();
+    // if (empty($_SESSION['current_user'])) {
+    //     $_SESSION['current_user'] = null;
+    // }
+    //
+    // $total = 0;
+    // $b = 0;
+    // foreach ($_SESSION['cart_items'] as $item) {
+    //     $product_id = $cart_item['product_id'];
+    //     $purchase_quantity = $cart_item['purchase_quantity'];
+    //     $purchase_price = $cart_item['price'];
+    //     $purchase_subtotal = $purchase_quantity * $purchase_price;
+    // }
 
     $app = new Silex\Application();
 
@@ -39,6 +44,26 @@
     ));
 
     $app->get("/", function() use ($app) {
+      return $app['twig']->render('order.html.twig', array('orders' => Order::getAll()));
+    });
+
+    $app->post("/test/pdf", function() use ($app) {
+        $new_order = new Order(null, $user_id=34, $order_date="11-11-1999", $delivery_date_time="11:00 11-11-1999");
+        var_dump($new_order);
+
+
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml('http://webtricksandtreats.com/html-to-pdf-php/');
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream("hi.pdf");
       return $app['twig']->render('order.html.twig', array('orders' => Order::getAll()));
     });
 
