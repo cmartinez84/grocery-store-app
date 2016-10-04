@@ -9,7 +9,7 @@
     require_once "src/Product.php";
 
 
-    $server = 'mysql:host=localhost;dbname=shoppr_test';
+    $server = 'mysql:host=localhost:8889;dbname=shoppr_test';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
@@ -142,13 +142,13 @@
             $user_id = 1;
             $order_date = "2016-10-01";
             $delivery_date_time = "2016-10-02";
-            $test_order = new Order($user_id, $order_date, $delivery_date_time);
+            $test_order = new Order($id, $user_id, $order_date, $delivery_date_time);
             $test_order->save();
 
             $user_id2 = 1;
             $order_date2 = "2016-10-01";
             $delivery_date_time2 = "2016-10-02";
-            $test_order2 = new Order($user_id2, $order_date2, $delivery_date_time2);
+            $test_order2 = new Order($id, $user_id2, $order_date2, $delivery_date_time2);
             $test_order2->save();
 
             Order::deleteAll();

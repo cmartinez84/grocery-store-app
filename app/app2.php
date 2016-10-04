@@ -65,11 +65,9 @@
       return $app['twig']->render('receipt.html.twig', array('new_order' => $_SESSION['new_order'], $found_customer->getUser()));
     });
 
-    // $app->post("/", function() use ($app) {
-    //     $new_Stylist = new Stylist(null, $_POST['name'], $_POST['date_began'], $_POST['specialty']);
-    //     $new_Stylist->save();
-    //   return $app['twig']->render('home.html.twig', array('stylists' => Stylist::getAll()));
-    // });
+    $app->post("/", function() use ($app) {
+      return $app['twig']->render('order.html.twig', array('orders' => Order::getAll()));
+    });
     //
     // $app->patch("/{id}/edit", function($id) use ($app) {
     //     $found_stylist= Stylist::find($id);

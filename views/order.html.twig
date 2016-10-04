@@ -2,11 +2,11 @@
 <html>
     <body>
         <ul>
-            {% if orders %}
+            {% if orders is not empty %}
                 {% for order in orders %}
-                    <li>{{ order.getProduct }}</li>
-                    Cart qty - {{ order.getQuantity }}
-                    Cart total - {{ order.getPurchaseTotal }}
+                    <li>{{ product.getProduct }}</li>
+                    Cart qty - {{ product.getPurchaseQuantity }}
+                    Cart total - {{ order.getCartTotal }}
                 {% endfor %}
             {% endif %}
             <form class="" action="/test/receipt" method="post">
@@ -14,7 +14,10 @@
                 <h1>This will generate a receipt for pre written pdfile and save it to a directory</h1>
                 <button type="submit" name="button">SUBMIT</button>
             </form>
+
+            
         </ul>
+
 
 
     </body>

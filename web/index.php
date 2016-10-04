@@ -1,9 +1,12 @@
 <?php
 
 
-    // $website = require_once __DIR__.'/../app/app99.php';
+
+    $website = require_once __DIR__.'/../app/app99.php';
+    $website = require_once __DIR__.'/../app/app.php';
     $website = require_once __DIR__.'/../app/app2.php';
-    // $website = require_once __DIR__.'/../app/app2.php';
+    $website = require_once __DIR__.'/../app/appape.php';
+>>>>>>> e4ea276bf28ecc26be1c60dab4d7ac1c1bdb220c
     $website->run();
  ?>
  <!DOCTYPE html>
