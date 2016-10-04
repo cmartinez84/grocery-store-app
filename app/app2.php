@@ -2,7 +2,7 @@
 
     require_once __DIR__."/../vendor/autoload.php";
     //dompdf
-    require_once __DIR__."/../vendor/dompdf/autoload.inc.php";
+    // require_once __DIR__."/../vendor/dompdf/autoload.inc.php";
 
 
     require_once __DIR__."/../src/Customer.php";
@@ -11,6 +11,9 @@
     require_once __DIR__."/../src/Category.php";
 
     date_default_timezone_set('America/Los_Angeles');
+
+
+
 
     use Symfony\Component\Debug\Debug;
     Debug::enable();
@@ -35,7 +38,7 @@
 
     $app['debug'] = true;
 
-    $server = 'mysql:host=localhost;dbname=shoppr';
+    $server = 'mysql:host=localhost:8889;dbname=shoppr';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
@@ -47,24 +50,19 @@
       return $app['twig']->render('order.html.twig', array('orders' => Order::getAll()));
     });
 
-    $app->post("/test/pdf", function() use ($app) {
+    $app->post("/test/receipt", function() use ($app) {
         $new_order = new Order(null, $user_id=34, $order_date="11-11-1999", $delivery_date_time="11:00 11-11-1999");
-        var_dump($new_order);
+        $new_product = new Product("apples", "1.00", 3, 4, "", 333);
+        $new_product2  = new Product("bananas", "2.00", 3, 6, "", 3);
+        $new_product3  = new Product("cucumbers", "2.00", 3, 6, "", 44);
+        $new_order->addProductToCart($new_product);
+        $new_order->addProductToCart($new_product2);
+        $new_order->addProductToCart($new_product3);
+        $_SESSION['new_order'] = $new_order;
 
+        $found_customer = Customer::($new_order->getUserId());
 
-        // instantiate and use the dompdf class
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml('http://webtricksandtreats.com/html-to-pdf-php/');
-
-        // (Optional) Setup the paper size and orientation
-        $dompdf->setPaper('A4', 'landscape');
-
-        // Render the HTML as PDF
-        $dompdf->render();
-
-        // Output the generated PDF to Browser
-        $dompdf->stream("hi.pdf");
-      return $app['twig']->render('order.html.twig', array('orders' => Order::getAll()));
+      return $app['twig']->render('receipt.html.twig', array('new_order' => $_SESSION['new_order'], $found_customer->getUser()));
     });
 
     // $app->post("/", function() use ($app) {

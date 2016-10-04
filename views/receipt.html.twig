@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Products</title>
+    </head>
+    <body>
+        <h1>Here is your receipt. Thank you for shopping with us</h1>
+            {{new_order.getId}}
+            {{new_order.getUserId}}
+
+            {% if new_order.getCart is not empty %}
+            <ul>
+                {%for product in new_order.getCart %}
+                <li><span> {{product.getPurchaseQuantity}} <span> {{ product.getName}} <span> ${{product.calculateProductPrice}}.00</span></li>
+                    <li> @ {{product.getPrice}} each</li>
+                {% endfor %}
+            </ul>
+            <p>{{new_order.getCartTotal}}</p>
+            {%  endif %}
+    </body>
+</html>
