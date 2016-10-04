@@ -26,10 +26,6 @@
     $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../views'
     ));
 
-    $app->get("/", function() use ($app) {
-        return $app['twig']->render('home.html.twig');
-    });
-
 // Administration portion
     $app->get("/products", function() use ($app) {
         return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll()));
@@ -135,9 +131,6 @@
 
 
 //homepage & customer view (pre-log-in)
-$app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../views'
-));
-
 $app->get("/", function() use ($app) {
     return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null));
 });
