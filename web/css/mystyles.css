@@ -4,7 +4,7 @@ body{
     background-attachment: fixed;*/
     /*background-color: 	black;*/
 }
-h1{
+/*h1{
     font-family: 'Permanent Marker', cursive;
     text-shadow:  1px 1px 3px black;
     color: white;
@@ -54,8 +54,12 @@ div.panel, button.accordian, button.delete{
 }
 .rotateIcon{
     transform: rotate(180deg);
-}
+}*/
 
+.product-table .row {
+    padding: 2%;
+    border: dotted;
+}
 img {
     height: 4vh;
     width: auto;
