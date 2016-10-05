@@ -84,7 +84,7 @@
             $products = array();
             $returned_products = $GLOBALS['DB']->query("SELECT * FROM products;");
             foreach($returned_products as $product) {
-                $name = $product['name'];
+                $name = ucwords($product['name']);
                 $price = $product['price'];
                 $purchase_quantity = $product['purchase_quantity'];
                 $inventory = $product['inventory'];
@@ -133,7 +133,7 @@
             $products = array();
             $returned_products = $GLOBALS['DB']->query("SELECT * FROM products WHERE name LIKE '%{$search_string}%';");
             foreach($returned_products as $product) {
-                $name = $product['name'];
+                $name = ucwords($product['name']);
                 $price = $product['price'];
                 $purchase_quantity = $product['purchase_quantity'];
                 $inventory = $product['inventory'];
@@ -155,7 +155,7 @@
             $categories = array();
             $returned_categories = $GLOBALS['DB']->query("SELECT categories.* FROM products JOIN products_categories ON (products_categories.product_id = products.id) JOIN categories ON (categories.id = products_categories.category_id) WHERE products.id = {$this->getId()};");
             foreach($returned_categories as $category) {
-                $name = $category['name'];
+                $name = ucwords($category['name']);
                 $id = $category['id'];
                 $new_category = new Category($name, $id);
                 array_push($categories, $new_category);
@@ -181,10 +181,7 @@
 
         function calculateProductPrice()
         {
-            // if (inStock($purchase_quantity))
-            // {
-                return $this->getPrice() * $this->getPurchaseQuantity();
-            // }
+            return $this->getPrice() * $this->getPurchaseQuantity();
         }
     }
 
