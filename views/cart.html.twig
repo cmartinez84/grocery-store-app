@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Shopping Cart</title>
+    </head>
+    <body>
+        <div class="cart">
+            <h3>Cart Items:</h3>
+            {% if cart is not empty %}
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h3>Name</h3>
+                    </div>
+                    <div class="col-sm-2">
+                        <h3>Price</h3>
+                    </div>
+                    <div class="col-sm-2">
+                        <h3>Quantity</h3>
+                    </div>
+                    <div class="col-sm-4">
+                        <h3>Total</h3>
+                    </div>
+                </div>
+                {% for product in cart %}
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <a href="/product_details/{{ product.getId }}">{{ product.getName }}</a>
+                        </div>
+                        <div class="col-sm-2">
+                            {{ product.getPrice }}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ product.getPurchaseQuantity }}
+                        </div>
+                        <div class="col-sm-4">
+                        		{{ product.calculateProductPrice }}
+                        </div>
+
+                    </div>
+                    <form class="edit" action="/cart/edit" method="post">
+                            <input name="product" type="hidden" value="{{product.id}}">
+                            <input name="_method" type="hidden" value="patch">
+                            <input class="form" type="hidden" name="product_id" value={{product.id}}>
+                            <div><label for="">Quantity</label>
+                            <input class="form" type="text" name="purchased_quantity" value="">
+                            <button class="form btn btn-success" type="submit" name="button"> Edit</button>
+                    </form>
+                    <form class="delete" action="/delete/{{product.id}}" method="post">
+                            <input name="_method" type="hidden" value="delete">
+                            <button class="btn btn-danger delete" type="submit" name="button">Delete </button>
+                    </form>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </body>
+</html>
