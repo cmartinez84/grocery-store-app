@@ -78,6 +78,14 @@
         function addProductToCart($product){
             array_push($this->cart, $product);
         }
+        function deleteProductFromCart($product_id)
+        {
+            foreach ($this->cart as $index => $product) {
+                if($product->getId() == $product_id)
+                unset($this->cart[$index]);
+            }
+        }
+
 
         // this function will add together all contents of the cart, both returning the total and adding it to the Order instance. perhaps this function can also be called checkout? or can be woven into a checkout funciton which does many things, including changing inventory, and customer funds
 
@@ -85,28 +93,16 @@
         function getCartTotal()
         {
             $all_products = $this->cart;
+            $total = 0;
             foreach($all_products as $product)
             {
-                $this->total += ($product->calculateProductPrice());
+                $total += ($product->calculateProductPrice());
             }
-            return $this->total;
-        }
-        //commented out by chris
-        // function userUpdate($new_purchase_quantity, $new_order_date, $new_delivery_date_time)
-        // {
-        //     $GLOBALS['DB']->exec("UPDATE orders SET purchase_quantity = '{$new_purchase_quantity}',
-        //     order_date = '{$new_order_date}',
-        //     delivery_date_time = '{$new_delivery_date_time}'
-        //     WHERE id = {$this->getId()};");
-        //     $this->setPurchaseQuantity($new_);
-        //     $this->setPurchaseSubtotal($new_purchase_subtotal);
-        //     $this->setQuantity($new_quantity);
-        // }
+            $this->total = $total;
 
-        // function addPurchase($product_id, $purchase_quantity, $purchase_price, $purchase_subtotal)
-        // {
-        //     $GLOBALS['DB']->exec("UPDATE orders SET product_id = CONCAT(product_id, ','+'{$product_id}'), purchase_quantity = CONCAT(purchase_quantity, ','+'{$purchase_quantity}'), purchase_price = CONCAT(purchase_price, ','+'{$purchase_price}'), purchase_subtotal = CONCAT(purchase_subtotal, ','+'{$purchase_subtotal}');");
-        // }
+            return $total;
+        }
+
 
 //static methods
         static function getAll()

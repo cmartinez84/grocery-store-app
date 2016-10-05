@@ -82,12 +82,13 @@
                                             <h4>{{ product.getName }}</h4>
                                             <p>Price per - ${{ product.getPrice }}</p>
                                             <p>{{ product.getInventory }} in stock</p>
-                                            <form class="" action="/order/{{ product.getId }}" method="post">
+                                            <form class="" action="/addToCart" method="post">
                                                 <div class='form-group'>
                                                     <label>Purchase quantity:</label>
-                                                    <input type="number" name="product_id" max='{{product.getInventory}}' class='form-control'>
+                                                    <input type="number" name="purchase_quantity" min=0 max='{{product.getInventory}}' class='form-control' required>
+                                                    <input type="hidden" name="product_id" value="{{product.getId}}">
                                                 </div>
-                                                <a href="/product" class="btn btn-primary">Add to cart!</a>
+                                                <button class="btn btn-info" type="submit" class="btn btn-primary">Add to cart!</button>
                                             </form>
                                         </div>
                                     </div>
@@ -104,10 +105,10 @@
                                             <form class="" action="/order/{{ product.getId }}" method="post">
                                                 <div class='form-group'>
                                                     <label>Purchase quantity:</label>
-                                                    <input type="number" name="purchase_quantity" max='{{product.getInventory}}' class='form-control'>
+                                                    <input type="number" name="purchase_quantity" min=0 max='{{product.getInventory}}' class='form-control'>
                                                     <input type="hidden" name="product_id" value="{{product.getId}}">
                                                 </div>
-                                                <button type="success class="btn btn-primary">Add to cart!</a>
+                                                <button class="btn btn-info" type="submit" class="btn btn-primary">Add to cart!</button>
                                             </form>
                                         </div>
                                     </div>
@@ -120,14 +121,30 @@
                     {% endif %}
                 </div>
                 <!-- cart area -->
+                <div class="col-sm-2">
+                    <form class="" action="/cart" method="post">
+                        <label for="">Make New Shopping Cart</label>
+                        <button class="btn btn-success" type="submit" name="button">Start <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                    </form>
+                    {% if order is not empty %}
+                    <ul>
+                        {% for product in order.getCart %}
+                        <li>{{product.getName}} cost: ${{product.calculateProductPrice}}</li>
+                        <li>{{product.getPurchaseQuantity}}@ ${{product.getPrice}} each
+                        <form class="trash" action="/deleteProductFromCart" method="post">
+                            <input type="hidden" name="_method" value="delete">
+                            <input type="hidden" name="product_id" value="{{product.getId}}">
+                            <button class=" btn-danger btn-xs" type="submit" name="button">
+                                <span class= "glyphicon glyphicon-trash"></span></button>
+                        </form></li>
+                        {% endfor %}
+                    </ul>
+                    <p><strong>Total:</strong> ${{order.getTotal}}0</p>
 
-                <form class="" action="/cart" method="post">
-                    <label for="">Make New Shopping Cart</label>
-                    <button class="btn btn-success" type="submit" name="button">Start <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                </form>
-                {% if order is not empty %}
-                    <span>This is the current order number {{order.getId}}</span>
-                {% endif %}
+
+                    {% endif %}
+                </div>
+
             </div>
 
         </div>
