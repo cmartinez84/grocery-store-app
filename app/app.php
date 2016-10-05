@@ -18,17 +18,13 @@
 
     $app['debug'] = true;
 
-    $server = 'mysql:host=localhost;dbname=shoppr';
+    $server = 'mysql:host=localhost:8889;dbname=shoppr';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
 
     $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../views'
     ));
-
-    $app->get("/", function() use ($app) {
-        return $app['twig']->render('home.html.twig');
-    });
 
 // Administration portion
     $app->get("/products", function() use ($app) {
@@ -129,6 +125,21 @@
        return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll()));
    });
 //end Administration portion
+
+
+
+
+
+//homepage & customer view (pre-log-in)
+$app->get("/", function() use ($app) {
+    return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null));
+});
+
+$app->get("/category/{id}", function($id) use ($app) {
+    $found_category = Category::find($id);
+    return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => $found_category, 'categoryProducts' => $found_category->getProducts()));
+});
+
 
     return $app;
 ?>

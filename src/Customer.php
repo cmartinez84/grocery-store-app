@@ -106,6 +106,45 @@
             $GLOBALS['DB']->exec("UPDATE customers SET funds ={$this->getFunds()} WHERE
              id={$this->getFunds()};");
          }
+         //returns false and will not be constructed
+         function isNewMemberFree(){
+             $queryString = "SELECT * FROM customers WHERE email='{$this->getEmail()}';";
+             $memberQuery = $GLOBALS['DB']->query($queryString);
+             echo $memberQuery->rowCount();
+                if($memberQuery->rowCount() >= 1)
+                {
+                    //notify member taken
+                }
+                else {
+                    $this->save();
+                    echo "not taken, saved";
+                    return true;
+                }
+         }
+
+         //for loggin in
+         static function logIn($email, $password)
+         {
+             $queryString = "SELECT * FROM customers WHERE email='{$email}';";
+             $memberQuery = $GLOBALS['DB']->query($queryString);
+             $result = $memberQuery->fetch(PDO::FETCH_ASSOC);
+             if($result == false)
+             {
+                 echo "nobody found with";
+             }
+             else {
+
+                 $found_customer = Customer::find($result['id']);
+                 var_dump( $result);
+                 $_SESSION['customer'] = $found_customer;
+                }
+         }
+
+        //  static function logOut()
+        //  {
+        //      session_destroy();
+        //  }
+
 
         static function deleteAll()
         {
