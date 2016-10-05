@@ -14,17 +14,27 @@
 
     use Symfony\Component\HttpFoundation\Request;  Request::enableHttpMethodParameterOverride();
 
+    if(empty($_SESSION['order']))
+    {
+        $_SESSION['order'] = null;
+    }
     $app = new Silex\Application();
 
     $app['debug'] = true;
 
-    $server = 'mysql:host=localhost;dbname=shoppr';
+    $server = 'mysql:host=localhost:8889;dbname=shoppr';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
 
     $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../views'
     ));
+    //home page
+
+    $app->get("/", function() use ($app) {
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'] ));
+    });
+
 
 // Administration portion
     $app->get("/products", function() use ($app) {
@@ -128,22 +138,26 @@
 
 
 
+//////cart shit
 
-//homepage & customer view (pre-log-in)
-$app->get("/", function() use ($app) {
-    return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null));
+
+
+
+//will create new cart
+$app->post("/cart", function () use ($app){
+    $new_order = new Order(null, 3, "11-11-1999", "1-14-1999");
+    $_SESSION['order'] = $new_order;
+    var_dump( $_SESSION['order'] );
+    return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'] ));
+});
+$app->post("/addToCrat", function () use ($app){
+    $new_product = Product::find($_POST['product_id']);
+    $_SESSION['order']->addProductToCart($new_product);
+    var_dump( $_SESSION['order']);
+    return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'] ));
 });
 
-$app->get("/category/{id}", function($id) use ($app) {
-    $found_category = Category::find($id);
-    return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => $found_category, 'categoryProducts' => $found_category->getProducts()));
-});
 
-$app->post("/search_products", function() use ($app) {
-    $product = Product::searchProducts($_POST['search_input']);
-
-    return $app['twig']->render('home.html.twig', array('products' => $product, 'categories' => Category::getAll(), 'category' => null, 'categoryProducts' => null));
-});
 
     return $app;
 ?>

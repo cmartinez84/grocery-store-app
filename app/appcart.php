@@ -18,37 +18,41 @@
 
     $app['debug'] = true;
 
-    $server = 'mysql:host=localhost;dbname=shoppr';
+    $server = 'mysql:host=localhost:8889;dbname=shoppr';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
 
     $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../views'
     ));
+    session_start();
+    if(empty($_SESSION['order']))
+    {
+        $_SESSION['order'] = null;
+    }
 
+    $app->get("/", function() use ($app) {
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'] ));
+    });
 
-$app->get("/cart", function () use ($app){
-    $newOrder = Order::find($_SESSION['order']);
-
-    if($newOrder) $cart = $newOrder->getCart();
-      else $cart = null;
-    return $app['twig']->render('cart.html.twig', array('cart' => $cart));
+    $app->post("/cart", function () use ($app){
+        $new_order = new Order(null, 3, "11-11-1999", "1-14-1999");
+        $_SESSION['order'] = $new_order;
+        var_dump( $_SESSION['order'] );
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'] ));
   });
 
-   $app->post("/cart", function () use ($app){
-     $product = Product::find($_POST['product_id']);
-     $product->setPurchaseQuantity($_POST['quantity']);
 
-     if(!empty($_SESSION['order'])) $newOrder = Order::find($_SESSION['order']);
-        else $newOrder = new Order(null, $_SESSION['user_id']);
+   //
+   // $app->post("/cart", function () use ($app){
+   //   $product = Product::find($_POST['product_id']);
+   //   $product->setPurchaseQuantity($_POST['quantity']);
+   //   $newOrder->addProductToCart($product);
+   //   $newOrder->save();
+   //   $_SESSION['order'] = $newOder->id;
+   //   return $app['twig']->render('cart.html.twig', array('order' => $_SESSSION['order']));
+   // });
 
-     $newOrder->addProductToCart($product);
-     $newOrder->save();
-
-     $_SESSION['order'] = $newOder->id;
-
-     return $app['twig']->render('cart.html.twig', array('cart' => $cart));
-   });
 
     $app->patch("/cart/edit", function() use ($app) {
         $order = Order::find($_SESSION['order']);
@@ -57,26 +61,30 @@ $app->get("/cart", function () use ($app){
         $order->save();
 
         return $app['twig']->render('cart.html.twig', array('cart' => $order->cart));
-
-
    });
 
-   $app->delete("/cart/delete/{product_id}", function($product_id) use ($app) {
-       $order = Order::find($_SESSION['order']);
-       $order->deleteProductFromCart($product_id);
-       $order->save();
 
-       return $app['twig']->render('cart.html.twig', array('cart' => $order->cart));
+   $app->get("/category/{id}", function($id) use ($app) {
+       $found_category = Category::find($id);
+       return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => $found_category, 'categoryProducts' => $found_category->getProducts()));
    });
 
-   $app->post('login/', function () use ($app){
-       $row = ['DB']->query("SELECT * FROM users WHERE email = {$_POST['email']} AND password = '{$_POST['password']}';");
-       if($row) {
-           // Store logged in user in session
-           $_SESSION['user_id'] = $row->id;
-           return $app['twig']->render('home.html.twig', array('orders' => Order::getAll()));
-       }
+   $app->post("/search_products", function() use ($app) {
+       $product = Product::searchProducts($_POST['search_input']);
+
+       return $app['twig']->render('home.html.twig', array('products' => $product, 'categories' => Category::getAll(), 'category' => null, 'categoryProducts' => null));
    });
+   //delete an item from cart
+   //keep
+   // $app->delete("/cart/delete/{product_id}", function($product_id) use ($app) {
+   //     $order = Order::find($_SESSION['order']);
+   //     $order->deleteProductFromCart($product_id);
+   //     $order->save();
+   //
+   //     return $app['twig']->render('cart.html.twig', array('cart' => $order->cart));
+   // });
+
+
 
    return $app;
   ?>

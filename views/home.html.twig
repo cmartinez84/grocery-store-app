@@ -102,9 +102,10 @@
                                             <form class="" action="/order/{{ product.getId }}" method="post">
                                                 <div class='form-group'>
                                                     <label>Purchase quantity:</label>
-                                                    <input type="number" name="product_id" max='{{product.getInventory}}' class='form-control'>
+                                                    <input type="number" name="purchase_quantity" max='{{product.getInventory}}' class='form-control'>
+                                                    <input type="hidden" name="product_id" value="{{product.getId}}">
                                                 </div>
-                                                <a href="/product" class="btn btn-primary">Add to cart!</a>
+                                                <button type="success class="btn btn-primary">Add to cart!</a>
                                             </form>
                                         </div>
                                     </div>
@@ -116,17 +117,17 @@
                         <h5>Sorry ... no known inventory! D-:</h5>
                     {% endif %}
                 </div>
+                <!-- cart area -->
 
-                <div class="col-sm-2 well">
-                    {% if categories is not empty %}
-                    <ul>
-                        <li>Cart stuff by Evan and Chris</li>
-                    </ul>
-                    {% endif %}
-                </div>
-
+                <form class="" action="/cart" method="post">
+                    <label for="">Make New Shopping Cart</label>
+                    <button class="btn btn-success" type="submit" name="button">Start <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                </form>
+                {% if order is not empty %}
+                    <span>This is the current order number {{order.getId}}</span>
+                {% endif %}
             </div>
 
         </div>
     </body>
-</html>
+<!-- </html> -->
