@@ -106,6 +106,10 @@
             $GLOBALS['DB']->exec("UPDATE customers SET funds ={$this->getFunds()} WHERE
              id={$this->getFunds()};");
          }
+         //the follwoing block contains both instance and static methods, but they are grouped together by the process of registration
+         ////////////////         ////////////////         ////////////////         ////////////////         ////////////////
+
+
          //returns false and will not be constructed
          function isNewMemberFree(){
              $queryString = "SELECT * FROM customers WHERE email='{$this->getEmail()}';";
@@ -114,12 +118,42 @@
                 if($memberQuery->rowCount() >= 1)
                 {
                     //notify member taken
+                    echo "member taken";
+                    return false;
                 }
                 else {
-                    $this->save();
-                    echo "not taken, saved";
-                    return true;
+                    $email = $this->email;
+                    echo "email:" . $email;
+                    // $this->save();
+                    // Generate Random Number sequence as confirmation code
+                    $random= md5(uniqid(rand()));
+                    $confirmation_code = substr($random,0, 6);
+                    $serialized_new_customer = serialize($this);
+                    //email new customer with confirmation code:
+                    $to = $email; $subject = 'Shoppr.com confirmation code for shoppr.com'; $message = 'thank you for signing up with Shoppr.com. In order to complete your registration, please go to our website and enter your confirmation code exactly as written in this email. confirmation code:' . $confirmation_code; $headers = 'From: shoppr_admin@shoppr.com' . "\r\n" . 'Reply-To: shoppr_admin@shoppr.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion(); mail($to, $subject, $message, $headers, '-fwebmaster@example.com');
+                    //insert confirmation code with serialized information
+                    $GLOBALS['DB']->exec("INSERT INTO confirmation_staging (customer_serialized, confirmation_code) VALUES ('{$serialized_new_customer}', '{$confirmation_code}');");
+                return true;
                 }
+         }
+
+         static function register_new_member($confirmation_code)
+         {
+            $confirm_query= $GLOBALS['DB']->query("SELECT * FROM confirmation_staging WHERE confirmation_code = '{$confirmation_code}';");
+             $result = $confirm_query->fetch(PDO::FETCH_ASSOC);
+             if($result == false)
+             {
+                 //tell customer their confirmation code was incorrect
+                 echo "customer was not found";
+                 return false;
+             }
+             else{
+                 //unseriazlie customer and save it;
+                 echo "customer was created";
+                 $unserialized_customer = unserialize($result['customer_serialized']);
+                //  var_dump($unserialized_customer);
+                 $unserialized_customer->save();
+             }
          }
 
          //for loggin in
@@ -139,11 +173,6 @@
                  $_SESSION['customer'] = $found_customer;
                 }
          }
-
-        //  static function logOut()
-        //  {
-        //      session_destroy();
-        //  }
 
 
         static function deleteAll()

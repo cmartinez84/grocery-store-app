@@ -8,8 +8,18 @@
         <h4>This is special text only a customer can see because the session variable isset. This will disappear when you click log out</h4>
         {% endif %}
         <div class="well col-sm-4">
+            <form class="" action="/customer/confirmation" method="post">
+                <h3>Enter Your confirmation code here:</h3>
+                <label for="">Email:</label>
+                <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com">
+                <label for="">Confirmation Code:</label>
+                <input class="form-control" type="text" name="confirmation_code" value="" placeholder="confirmation_code">
+                <button  class="btn btn-success" type="submit" name="button">Confirm</button>
+            </form>
+        </div>
+        <div class="well col-sm-4">
             <h3>Log In</h3>
-            <form class=" " action="/logIn" method="post">
+            <form class=" " action="/customer/logIn" method="post">
                 <label for="">Email:</label>
                 <input class="form-control" type="text" name="email" value="" placeholder="julioqt@email.com">
                 <label>Password</label>
@@ -19,7 +29,7 @@
                     <label class="accordian"> Not a member? <a href="#">Sign-Up</a> today!</label>
                 </div>
             </form>
-            <form class="" action="/logOut" method="post">
+            <form class="" action="/customer/logOut" method="post">
                 <label for="">Logging Out Will Delete Your Shopping cart as well, are you sure you want to do that?</label>
                 <button class="form-control  btn-danger" type="submit" name="button">Log Out</button>
             </form>
@@ -28,7 +38,7 @@
 
         <div class="well col-sm-4">
             <h3>Enter New Customer Information</h3>
-                <form class="" action="/member/add" method="post">
+                <form class="" action="/customer/add" method="post">
                     <label for="">Name:</label>
                     <input class="form-control" type="text" name="name" value="" placeholder="Charles Day">
                     <label for="">Email:</label>
@@ -43,7 +53,7 @@
                 </form>
             </div>
             <div class="well col-sm-4">
-                <form class="" action="index.html" method="post">
+                <form class="" action="/customer/confirmation" method="post">
                     <h3>Add Funds to your Account with a fake credit card</h3>
                     <label for="">How much would you like to load today?</label>
                     <input type="number" name="name" value="" placeholder="0.00" required>
@@ -64,9 +74,6 @@
                     <input type="text" name="payment_method" value="" placeholder="XXXXX">
                     <button class="btn-success" type="submit" name="button"><span class="glyphicon glyphicon-plus-sign"placeholder="XXXXXX"></span>Add Funds</button>
                 </form>
-
-
-
             </div>
         </div>
     </body>

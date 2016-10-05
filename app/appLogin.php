@@ -28,27 +28,34 @@
     $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../views'
     ));
 
-    $app->get("/", function() use ($app) {
+    $app->get("/customer", function() use ($app) {
         return $app['twig']->render('login.html.twig', array('customer'=> $_SESSION['customer']));
     });
 
-    $app->post("/member/add", function() use ($app) {
+    $app->post("/customer/add", function() use ($app) {
         $new_customer = new Customer (null, $_POST['name'], $_POST['email'], $_POST['address'], $_POST['password'], $funds=0);
+        $_SESSSION['new_order'] = $new_customer;
         $new_customer->isNewMemberFree();//this will also run save function if not free
-        var_dump($_SESSION['customer']);
+        // $serialized_new_customer = serialize($new_customer);
+        // $new_customer->insert_in_confirmation_staging();
         return $app['twig']->render('login.html.twig', array('customer'=> $_SESSION['customer']));
     });
 
-    $app->post("/logIn", function() use ($app) {
+    $app->post("/customer/logIn", function() use ($app) {
         Customer::logIn($_POST['email'], $_POST['password']);
         return $app['twig']->render('login.html.twig', array('customer'=> $_SESSION['customer']));
     });
 
-    $app->post("/logOut", function() use ($app) {
+    $app->post("/customer/logOut", function() use ($app) {
         session_destroy();
         return $app['twig']->render('login.html.twig', array('customer'=> null));
     });
 
+    $app->post("/customer/confirmation", function() use ($app) {
+        $confirmation_code = $_POST['confirmation_code'];
+        Customer::register_new_member($confirmation_code);
+        return $app['twig']->render('login.html.twig', array('customer'=> null));
+    });
 
     return $app;
 ?>
