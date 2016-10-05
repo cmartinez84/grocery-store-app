@@ -102,15 +102,16 @@
         }
         function addFunds($new_funds)
         {
-            $this->funds +=$new_funds;
+            $this->funds += $new_funds;
             $GLOBALS['DB']->exec("UPDATE customers SET funds ={$this->getFunds()} WHERE
-             id={$this->getFunds()};");
+             id={$this->getId()};");
          }
+         
          //the follwoing block contains both instance and static methods, but they are grouped together by the process of registration
          ////////////////         ////////////////         ////////////////         ////////////////         ////////////////
 
 
-         //returns false and will not be constructed
+         //returns false and will not be constructed, true sends confirmation email
          function isNewMemberFree(){
              $queryString = "SELECT * FROM customers WHERE email='{$this->getEmail()}';";
              $memberQuery = $GLOBALS['DB']->query($queryString);
@@ -144,7 +145,7 @@
              if($result == false)
              {
                  //tell customer their confirmation code was incorrect
-                 echo "customer was not found";
+                 echo "your inforamation was not valid. please try again";
                  return false;
              }
              else{

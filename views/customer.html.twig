@@ -13,9 +13,7 @@
             {% endif %}
 
         </div>
-        <div class="well">
-            <h3>Information for {% if selected_customer %} {{selected_customer.getName}}{% endif %}</h3>
-        </div>
+
 
         <div class="well">
         <h3>Enter New Customer Information</h3>
@@ -36,31 +34,13 @@
         <div class="well">
             <h3>Editing Information:</h3>
             {% if selected_customer %}
-            <form class="" action="/" method="post">
-                <h3>Change information for {{selected_customer.getName}}</h3>
-                <label for="">Edit Name:</label>
-                <input class="form-control" type="text" name="name" value="{{selected_customer.getName}}">
-                <label for="">Edit Email:</label>
-                <input class="form-control" type="text" name="email" value="{{selected_customer.getEmail}}">
-                <label for="">Edit Address:</label>
-                <input class="form-control" type="text" name="address" value="{{selected_customer.getAddress}}">
-                <label for="">Edit Password:</label>
-                <input class="form-control" type="text" name="password" value="{{selected_customer.getPassword}}">
-                <label for="">Edit Funds:</label>
-                <input class="form-control" type="number" name="funds"  value="{{selected_customer.getFunds}}">
-                <button class="btn btn-success" type="submit" name="button">Update</button>
-            </form>
+
             {% endif %}
         </div>
         <div class="well
         ">
         {% if selected_customer%}
-            <form action="/delete" method="post">
-                <h3>Customer Deletes their own account</h3>
-                <input type="hidden" name="_method" value="delete">
-                <input type="hidden" name="customer_id" value="{{selected_customer.getId}}">
-                <button class="btn btn-danger" type="delete" name="button">Delete {{selected_customer.getName}}</button>
-            </form>
+            
             {% endif %}
         </div>
     </body>

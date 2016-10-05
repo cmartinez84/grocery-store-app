@@ -1,5 +1,5 @@
 <?php
-
+    ////this app is for esting out the receipt function. do not delete;
     require_once __DIR__."/../vendor/autoload.php";
     //dompdf
     // require_once __DIR__."/../vendor/dompdf/autoload.inc.php";

@@ -50,12 +50,29 @@
         session_destroy();
         return $app['twig']->render('login.html.twig', array('customer'=> null));
     });
-
+    //customer confirmation attempt
     $app->post("/customer/confirmation", function() use ($app) {
         $confirmation_code = $_POST['confirmation_code'];
         Customer::register_new_member($confirmation_code);
+        return $app['twig']->render('login.html.twig', array('customer'=> $_SESSION['customer']));
+    });
+
+    $app->post("/customer/addFunds", function() use ($app) {
+        $_SESSION['customer']->addFunds($_POST['new_funds']);
+        return $app['twig']->render('login.html.twig', array('customer'=> $_SESSION['customer']));
+    });
+    //edit customer info
+    $app->patch("/customer/edit", function() use ($app) {
+        $_SESSION['customer']->update($_POST['name'], $_POST['email'], $_POST['address'], $_POST['password'], $_POST['funds']);
+        return $app['twig']->render('login.html.twig', array('customer'=> $_SESSION['customer']));
+    });
+    // customer deletes their OWN account
+    $app->delete("/customer/delete", function() use ($app) {
+        $_SESSION['customer']->delete();
+        session_destroy();
         return $app['twig']->render('login.html.twig', array('customer'=> null));
     });
+
 
     return $app;
 ?>
