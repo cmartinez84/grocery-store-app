@@ -18,7 +18,7 @@
 
     $app['debug'] = true;
 
-    $server = 'mysql:host=localhost:8889;dbname=shoppr';
+    $server = 'mysql:host=localhost;dbname=shoppr';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
@@ -140,6 +140,11 @@ $app->get("/category/{id}", function($id) use ($app) {
     return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => $found_category, 'categoryProducts' => $found_category->getProducts()));
 });
 
+$app->post("/search_products", function() use ($app) {
+    $product = Product::searchProducts($_POST['search_input']);
+
+    return $app['twig']->render('home.html.twig', array('products' => $product, 'categories' => Category::getAll(), 'category' => null, 'categoryProducts' => null));
+});
 
     return $app;
 ?>
