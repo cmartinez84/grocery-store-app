@@ -10,6 +10,7 @@
         <h2>Shoppr Store</h2>
         <h2>5623 White Beach Lane</h2>
         <h2>Portland, Oregon, 97211</h2>
+
             {% if new_order.getCart is not empty %}
             <ul>
                 {%for product in new_order.getCart %}
@@ -22,4 +23,5 @@
             {%  endif %}
             <h3>Have a nice day!</h3>
    </body>
+
 </html>

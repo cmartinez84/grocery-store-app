@@ -14,3 +14,24 @@ $(function(){
 
     });
 });
+
+<a href="javascript:deleteProduct({$product->id})">Delete Product</a>
+
+function deleteProduct(id) {
+    $.ajax({
+        type:'DELETE',
+        url:'/cart/delete/'+id,
+        success:function(html) {
+            $('#cart').html(html);
+        }
+    });
+}
+/*function updateProduct() {
+    $.ajax({
+        type:'PATCH',
+        url:'/cart/edit',
+        success:function(html) {
+            $('#cart').html(html);
+        }
+    });
+}*/
