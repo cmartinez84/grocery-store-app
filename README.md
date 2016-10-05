@@ -47,6 +47,9 @@ _._
 * _CREATE TABLE orders (id serial PRIMARY KEY, product_id INT, purchase_quantity INT, purchase_price INT, purchase_subtotal INT, order_date DATE, delivery_date_time VARCHAR(255))_;
 
 
+* _CREATE TABLE confirmation_staging(id serial PRIMARY KEY, customer_serialized LONGTEXT, confirmation_code VARCHAR(255))_;
+
+
 
 
 * _Alternatively, unzip the database contained at the top level of this folder and import from phpmyadmin (http://localhost:8888/phpmyadmin/)_
