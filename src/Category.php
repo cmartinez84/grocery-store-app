@@ -36,7 +36,7 @@
             $categories = array();
             $returned_categories = $GLOBALS['DB']->query("SELECT * FROM categories;");
             foreach($returned_categories as $category) {
-                $name = $category['name'];
+                $name = ucwords($category['name']);
                 $id = $category['id'];
                 $new_category = new Category($name, $id);
                 array_push($categories, $new_category);
@@ -75,7 +75,7 @@
             $categories = array();
             $returned_categories = $GLOBALS['DB']->query("SELECT * FROM categories WHERE name LIKE '%{$search_string}%';");
             foreach($returned_categories as $category) {
-                $name = $category['name'];
+                $name = ucwords($category['name']);
                 $id = $category['id'];
                 $new_category = new Category($name, $id);
                 array_push($categories, $new_category);
@@ -93,7 +93,7 @@
             $products = array();
             $returned_products = $GLOBALS['DB']->query("SELECT products.* FROM categories JOIN products_categories ON (products_categories.category_id = categories.id) JOIN products ON (products.id = products_categories.product_id) WHERE categories.id = {$this->getId()};");
             foreach($returned_products as $product) {
-                $name = $product['name'];
+                $name = ucwords($product['name']);
                 $price = $product['price'];
                 $purchase_quantity = $product['purchase_quantity'];
                 $inventory = $product['inventory'];

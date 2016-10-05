@@ -35,7 +35,6 @@
         $name = $_POST['name'];
         $price = $_POST['price'];
         $inventory = $_POST['inventory'];
-        // $photo = $_POST['photo'];
         $product = new Product($name, $price, $purchase_quantity=0, $inventory);
         $product->save();
 
@@ -45,8 +44,8 @@
             $product->addCategory($category);
         }
 
-        // if(isset($_POST['btn-upload']))
-        // {
+        if ($_FILES['file']['name'] != "" || $_FILES['file']['name'] != null)
+        {
             $file = rand(1000,100000)."-".$_FILES['file']['name'];
             $file_loc = $_FILES['file']['tmp_name'];
             $file_size = $_FILES['file']['size'];
@@ -55,7 +54,7 @@
             move_uploaded_file($file_loc,$folder.$file);
             $GLOBALS['DB']->exec("INSERT INTO tbl_uploads(file,type,size) VALUES('{$file}','{$file_type}','{$file_size}')");
             $GLOBALS['DB']->exec("UPDATE products SET photo = '{$file}' WHERE id = {$product->getId()};");
-        // }
+        }
 
         return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll()));
     });
@@ -73,7 +72,7 @@
             $product->addCategory($category);
         }
 
-        if ($_FILES != "")
+        if ($_FILES['file']['name'] != "" || $_FILES['file']['name'] != null)
         {
             $file = rand(1000,100000)."-".$_FILES['file']['name'];
             $file_loc = $_FILES['file']['tmp_name'];
