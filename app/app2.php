@@ -38,7 +38,7 @@
 
     $app['debug'] = true;
 
-    $server = 'mysql:host=localhost:8889;dbname=shoppr';
+    $server = 'mysql:host=localhost;dbname=shoppr';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
