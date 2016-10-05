@@ -26,6 +26,23 @@
     $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../views'
     ));
 
+
+    //homepage & customer view (pre-log-in)
+    $app->get("/", function() use ($app) {
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null));
+    });
+
+    $app->get("/category/{id}", function($id) use ($app) {
+        $found_category = Category::find($id);
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => $found_category, 'categoryProducts' => $found_category->getProducts()));
+    });
+
+    $app->post("/search_products", function() use ($app) {
+        $product = Product::searchProducts($_POST['search_input']);
+
+        return $app['twig']->render('home.html.twig', array('products' => $product, 'categories' => Category::getAll(), 'category' => null, 'categoryProducts' => null));
+    });
+
 // Administration portion
     $app->get("/products", function() use ($app) {
         return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll()));
@@ -124,26 +141,6 @@
        return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll()));
    });
 //end Administration portion
-
-
-
-
-
-//homepage & customer view (pre-log-in)
-$app->get("/", function() use ($app) {
-    return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null));
-});
-
-$app->get("/category/{id}", function($id) use ($app) {
-    $found_category = Category::find($id);
-    return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => $found_category, 'categoryProducts' => $found_category->getProducts()));
-});
-
-$app->post("/search_products", function() use ($app) {
-    $product = Product::searchProducts($_POST['search_input']);
-
-    return $app['twig']->render('home.html.twig', array('products' => $product, 'categories' => Category::getAll(), 'category' => null, 'categoryProducts' => null));
-});
 
     return $app;
 ?>

@@ -82,7 +82,7 @@
         static function getAll()
         {
             $products = array();
-            $returned_products = $GLOBALS['DB']->query("SELECT * FROM products;");
+            $returned_products = $GLOBALS['DB']->query("SELECT * FROM products ORDER BY name;");
             foreach($returned_products as $product) {
                 $name = ucwords($product['name']);
                 $price = $product['price'];
@@ -94,9 +94,7 @@
                 $new_product = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
                 array_push($products, $new_product);
             }
-
             return $products;
-
         }
 
         function updateProduct($new_name, $new_price, $new_purchase_quantity, $new_inventory)
@@ -131,7 +129,7 @@
         static function searchProducts($search_string)
         {
             $products = array();
-            $returned_products = $GLOBALS['DB']->query("SELECT * FROM products WHERE name LIKE '%{$search_string}%';");
+            $returned_products = $GLOBALS['DB']->query("SELECT * FROM products WHERE name LIKE '%{$search_string}%' ORDER BY name;");
             foreach($returned_products as $product) {
                 $name = ucwords($product['name']);
                 $price = $product['price'];
@@ -153,7 +151,7 @@
         function getCategories()
         {
             $categories = array();
-            $returned_categories = $GLOBALS['DB']->query("SELECT categories.* FROM products JOIN products_categories ON (products_categories.product_id = products.id) JOIN categories ON (categories.id = products_categories.category_id) WHERE products.id = {$this->getId()};");
+            $returned_categories = $GLOBALS['DB']->query("SELECT categories.* FROM products JOIN products_categories ON (products_categories.product_id = products.id) JOIN categories ON (categories.id = products_categories.category_id) WHERE products.id = {$this->getId()}; ORDER BY name");
             foreach($returned_categories as $category) {
                 $name = ucwords($category['name']);
                 $id = $category['id'];

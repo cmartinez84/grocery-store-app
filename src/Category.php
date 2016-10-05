@@ -34,7 +34,7 @@
         static function getAll()
         {
             $categories = array();
-            $returned_categories = $GLOBALS['DB']->query("SELECT * FROM categories;");
+            $returned_categories = $GLOBALS['DB']->query("SELECT * FROM categories ORDER BY name;");
             foreach($returned_categories as $category) {
                 $name = ucwords($category['name']);
                 $id = $category['id'];
@@ -73,7 +73,7 @@
         static function searchCategories($search_string)
         {
             $categories = array();
-            $returned_categories = $GLOBALS['DB']->query("SELECT * FROM categories WHERE name LIKE '%{$search_string}%';");
+            $returned_categories = $GLOBALS['DB']->query("SELECT * FROM categories WHERE name LIKE '%{$search_string}%' ORDER BY name;");
             foreach($returned_categories as $category) {
                 $name = ucwords($category['name']);
                 $id = $category['id'];
@@ -91,7 +91,7 @@
         function getProducts()
         {
             $products = array();
-            $returned_products = $GLOBALS['DB']->query("SELECT products.* FROM categories JOIN products_categories ON (products_categories.category_id = categories.id) JOIN products ON (products.id = products_categories.product_id) WHERE categories.id = {$this->getId()};");
+            $returned_products = $GLOBALS['DB']->query("SELECT products.* FROM categories JOIN products_categories ON (products_categories.category_id = categories.id) JOIN products ON (products.id = products_categories.product_id) WHERE categories.id = {$this->getId()} ORDER BY name;");
             foreach($returned_products as $product) {
                 $name = ucwords($product['name']);
                 $price = $product['price'];
