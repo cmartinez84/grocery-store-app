@@ -205,6 +205,7 @@
             $customer_id = $_SESSION['customer']->getId();
             $order_date = date("Y-m-d");
             $new_order = new Order(null, $customer_id, $order_date, "0-0-0000");
+
             $_SESSION['order'] = $new_order;
         }
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'],'admin' => $_SESSION['admin']));

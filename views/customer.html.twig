@@ -117,9 +117,11 @@
                     <h5>Customer History:</h5>
                     {% if histories %}
                         {% for history in histories %}
+
                         <button class="accordian" type="button" name="button"><h3>Order Date {{history.getOrderDate}} Total ${{history.getCartTotal}}</h3></button>
                             <div class="hide">
-                                <h6>Here is what you bought on {{order.getOrderDate}}</h6>
+                                <h6>Expected delivery date: {{history.getDeliveryDateTime}}</h6>
+
                                 {% for product in history.getCart %}
                                 <ul>
                                     <li>{{product.getPurchaseQuantity}} {{product.getName}}s <br>
@@ -131,12 +133,24 @@
                         {% endfor %}
 
                     {% else %}
+<<<<<<< HEAD
                     <h1>you have no history with our company. Buy something <a href="/">HERE</a>
                     {% endif %}
                 </div>
             </div>    <!-- end row -->
 
             </div>
+=======
+                        <h1>you have no history with our company. Buy something <a href="/">HERE</a>
+                    {% endif %}
+
+                </div>
+            </div>    <!-- end row -->
+
+        </div>
+
+
+>>>>>>> order_delivery_date
         </div>
     </body>
 </html>
