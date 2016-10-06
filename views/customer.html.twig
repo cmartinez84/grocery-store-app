@@ -4,9 +4,7 @@
         <title>Customer Log In</title>
     </head>
     <body>
-        {% if customer %}
-        <h4>This is special text only a customer can see because the session variable isset. This will disappear when you click log out</h4>
-        {% endif %}
+        
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -19,10 +17,8 @@
                         </button>
                         <a class="navbar-brand" href="/profile"><span class="glyphicon glyphicon-home"></span></a>
                         {% if customer %}
-                        <h4> Hello, {{customer.getName}}</h4>
+                            <h4> Hello, {{customer.getName}}</h4>
                         {% endif %}
-
-
                     </div>
                     <div class="collapse navbar-collapse" id="nav">
                         <ul class="nav navbar-nav navbar-right">
