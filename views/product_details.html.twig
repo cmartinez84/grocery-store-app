@@ -4,59 +4,63 @@
         <title>Products</title>
     </head>
     <body>
-        <h1>Enter / Modify Products Information</h1>
         <div class="container">
+            {% if admin is null %}
+                <h3>You don't have permission to view this page </h3>
+                <img class="fingerwag" src="http://cdn.niketalk.com/6/6b/900x900px-LL-6b6bfbe9_no-no-no-very-bad-man-Babu-Bhatt-seinfeld-gifs-finger-wag.gif" alt="" />
+            {% else %}
+                <h1>Enter / Modify Products Information</h1>
+                <form action="/product_update/{{ product.getId }}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="_method" value="patch">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input id="name" name="name" class="form-control" type="text" value="{{ product.getName }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price:</label>
+                        <input id="price" name="price" class="form-control" type="float" min=0 value="{{ product.getPrice }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inventory">Inventory:</label>
+                        <input id="inventory" name="inventory" class="form-control" type="number" value="{{ product.getInventory }}" required>
+                    </div>
+                    <div class="form-group">
+                        <img src="/uploads/{{ product.getPhoto }}">
+                        <input type="file" name="file" />
+                    </div>
 
-            <form action="/product_update/{{ product.getId }}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="_method" value="patch">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input id="name" name="name" class="form-control" type="text" value="{{ product.getName }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="price">Price:</label>
-                    <input id="price" name="price" class="form-control" type="float" min=0 value="{{ product.getPrice }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="inventory">Inventory:</label>
-                    <input id="inventory" name="inventory" class="form-control" type="number" value="{{ product.getInventory }}" required>
-                </div>
-                <div class="form-group">
-                    <img src="/uploads/{{ product.getPhoto }}">
-                    <input type="file" name="file" />
-                </div>
 
+                    {% for category in categories %}
+                        <li>{{ category.getName }}</li>
+                    {% endfor %}
 
-                {% for category in categories %}
-                    <li>{{ category.getName }}</li>
-                {% endfor %}
+                    <div class="form-group">
+                        <label for="category_id">Add Category:</label>
+                        <select id="category_id" name="category_id" type="text">
+                            <option></option>
+                            {% for category in all_categories %}
+                                <option value="{{ category.getId }}">{{ category.getName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label for="category_id">Add Category:</label>
-                    <select id="category_id" name="category_id" type="text">
-                        <option></option>
-                        {% for category in all_categories %}
-                            <option value="{{ category.getId }}">{{ category.getName }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+                    <button class="btn btn-info">Update Product</button>
+                    </form>
 
-                <button class="btn btn-info">Update Product</button>
-            </form>
+                    <form action="/product_delete/{{ product.getId }}" method="post">
+                        <input type="hidden" value="delete" name="_method">
+                        <button class="btn btn-danger">Delete Product</button>
+                    </form>
+                    <h2><a href='/products'>Go back to Products</a></h2>
 
-            <form action="/product_delete/{{ product.getId }}" method="post">
-                <input type="hidden" value="delete" name="_method">
-                <button class="btn btn-danger">Delete Product</button>
-            </form>
-            <h2><a href='/products'>Go back to Products</a></h2>
+                    <h2><a href='/categories'>Go to Categories</a></h2>
 
-            <h2><a href='/categories'>Go to Categories</a></h2>
-
-            <br>
-            <form action="/logOut" method="post">
-                <button class="btn btn-danger">Logout of Admin View!</button>
-            </form>
-            <br>
+                    <br>
+                    <form action="/logOut" method="post">
+                        <button class="btn btn-danger">Logout of Admin View!</button>
+                    </form>
+                <br>
+            {% endif %}
         </div>
     </body>
 </html>

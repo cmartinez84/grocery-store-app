@@ -4,30 +4,40 @@
         <title>Categories</title>
     </head>
     <body>
-        <h1>Enter Categories</h1>
         <div class="container">
-            {% if categories is not empty %}
-                <h2>Here is a list of the current categories:</h2>
+            {% if admin is null %}
+                <h3>You don't have permission to view this page </h3>
+                <img class="fingerwag" src="http://cdn.niketalk.com/6/6b/900x900px-LL-6b6bfbe9_no-no-no-very-bad-man-Babu-Bhatt-seinfeld-gifs-finger-wag.gif" alt="" />
+            {% else %}
+                <h1>Enter Categories</h1>
+                {% if categories is not empty %}
+                    <h2>Here is a list of the current categories:</h2>
 
-                {% for category in categories %}
-                    <li>{{ category.getName }}</li>
-                {% endfor %}
+                    {% for category in categories %}
+                        <li>{{ category.getName }}</li>
+                    {% endfor %}
+                {% endif %}
+
+                <form action="/categories_add" method="post">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input id="name" name="name" class="form-control" type="text" required>
+                    </div>
+                    <button class="btn btn-info">Add Category</button>
+                </form>
+
+                <form action="categories_delete">
+                    <button class="btn btn-danger">Delete all categories</button>
+                </form>
+
+                <h2><a href='/products'>Go to Products</a></h2>
+
+                <br>
+                <form action="/logOut" method="post">
+                    <button class="btn btn-danger">Logout of Admin View!</button>
+                </form>
+                <br>
             {% endif %}
-
-            <form action="/categories_add" method="post">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input id="name" name="name" class="form-control" type="text" required>
-                </div>
-                <button class="btn btn-info">Add Category</button>
-            </form>
-
-            <form action="categories_delete">
-                <button class="btn btn-danger">Delete all categories</button>
-            </form>
-
-            <h2><a href='/'>Home</a></h2>
-            <h2><a href='/products'>Go to Products</a></h2>
         </div>
     </body>
 </html>
