@@ -59,9 +59,11 @@
     //essentially, this save function is only used when writing to database at checkout. it will have  the total and "cart" will be a link to a text file of the receipt/invoice, may be renamed "checkout"?
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO orders (user_id, order_date, delivery_date_time, total) VALUES (
+            $serialized_cart = serialize($this->cart);
+            $GLOBALS['DB']->exec("INSERT INTO orders (user_id, order_date, cart, delivery_date_time, total) VALUES (
                 {$this->getUserId()},
                 '{$this->getOrderDate()}',
+                '{$serialized_cart}',
                 '{$this->getDeliveryDateTime()}',
                 '{$this->getTotal()}'
                 );");
@@ -108,6 +110,12 @@
             foreach ($this->cart as $product) {
                 $product->purchaseProduct();
             }
+            //saves order to database with serailzed version of its own cart
+            $this->save();
+            $_SESSION['order'] = null;
+            $customer_id = $_SESSION['customer']->getId();
+            $_SESSION['order'] = new Order(null, $customer_id, "11-11-1999", "1-14-1999");
+
         }
 
 
