@@ -8,16 +8,14 @@
         private $delivery_date_time;
         private $total;
 
-        function __construct($id = null, $user_id, $order_date, $delivery_date_time, $total= 0)
+        function __construct($id = null, $user_id, $order_date, $delivery_date_time)
         {
             $this->id = $id;
             $this->user_id = $user_id;
-            $this->cart = $cart;
+            $this->cart = array();
             $this->order_date = $order_date;
             $this->delivery_date_time = $delivery_date_time;
-            $this->total = $total;
-
-
+            $this->total = 0;
         }
 
         function getId()
@@ -32,6 +30,10 @@
         function getCart()
         {
             return $this->cart;
+        }
+        function setCart($new_cart)
+        {
+            $this->cart= $new_cart;
         }
 
         function getOrderDate()
@@ -51,6 +53,10 @@
         function getTotal()
         {
             return $this->total;
+        }
+        function setTotal($new_total)
+        {
+            $this->total = $new_total;
         }
 
         function setDeliveryDateTime($new_delivery_date_time)
