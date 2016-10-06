@@ -224,6 +224,33 @@
         return $app->redirect('/');
     });
 
+    ////
+///////////new customer routes
+
+
+    $app->post("/customer/add", function() use ($app) {
+        $new_customer = new Customer (null, $_POST['name'], $_POST['email'], $_POST['address'], $_POST['password'], $funds=0);
+        $_SESSSION['new_order'] = $new_customer;
+        $new_customer->isNewMemberFree();
+
+        //this will also run save function if not free
+        // $serialized_new_customer = serialize($new_customer);
+        // $new_customer->insert_in_confirmation_staging();
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+    });
+
+    //customer confirmation attempt
+    $app->post("/customer/confirmation", function() use ($app) {
+        $confirmation_code = $_POST['confirmation_code'];
+        Customer::register_new_member($confirmation_code);
+
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+    });
+
+
+
+
+
 
 
     ////////// profile
@@ -236,17 +263,15 @@
     //     $histories = $_SESSION['customer']->getHistory();
     //     return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
     // });
+
     //all purpose logout function already listed, for both admin and customers. session destroy
     // $app->post("/customer/logOut", function() use ($app) {
     //     session_destroy();
     //     return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
     // });
-    //customer confirmation attempt
-    $app->post("/customer/confirmation", function() use ($app) {
-        $confirmation_code = $_POST['confirmation_code'];
-        Customer::register_new_member($confirmation_code);
-        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
-    });
+
+    /////This will be triggered on sign up, sending confirmation to email. enter confirmation code with following route
+
 
     $app->post("/profile/addFunds", function() use ($app) {
         $_SESSION['customer']->addFunds($_POST['new_funds']);
