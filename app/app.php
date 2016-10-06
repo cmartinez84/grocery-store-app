@@ -47,7 +47,7 @@
     //home page
 
     $app->get("/", function() use ($app) {
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
 
@@ -59,13 +59,13 @@
 
     $app->get("/category/{id}", function($id) use ($app) {
         $found_category = Category::find($id);
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'category' => $found_category, 'products' => $found_category->getProducts(), 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'category' => $found_category, 'products' => $found_category->getProducts(), 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
     $app->post("/search_products", function() use ($app) {
         $product = Product::searchProducts($_POST['search_input']);
 
-        return $app['twig']->render('home.html.twig', array('products' => $product, 'categories' => Category::getAll(), 'category' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('products' => $product, 'categories' => Category::getAll(), 'category' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
 // Administration portion
@@ -213,7 +213,7 @@
             $new_order = new Order(null, $customer_id, "11-11-1999", "1-14-1999");
             $_SESSION['order'] = $new_order;
         }
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'],'admin' => $_SESSION['admin']));
     });
     ////
 
@@ -230,12 +230,12 @@
 
     ////////// profile
     $app->get("/profile", function() use ($app) {
-        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> null));
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> null, 'admin' => $_SESSION['admin']));
     });
 
     $app->get("/profile/histories", function() use ($app) {
         $histories = $_SESSION['customer']->getHistory();
-        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories,'admin' => $_SESSION['admin']));
     });
 
 

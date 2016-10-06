@@ -1,8 +1,5 @@
-
-
 <!DOCTYPE html>
 <html>
-
     <body>
         <div class="container">
             <nav class="navbar navbar-default">
@@ -14,57 +11,51 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="/profile"><span class="glyphicon glyphicon-home"></span></a>
-                        {% if customer %}
-                        <h4> Hello, {{customer.getName}}</h4>
-                        {% endif %}
+                        <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span></a>
                     </div>
                     <div class="collapse navbar-collapse" id="nav">
                         <ul class="nav navbar-nav navbar-right">
-
-                            <li>
-                                <form class="form-inline navbar-form" action='/patron' method='post'>
-                                    {% if customer %}
-                                    <a class="btn btn-info form-control" href="/profile"> My Profile <span class="glyphicon glyphicon-glass
-                                        "></span> </a>
-                                    {% endif %}
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="New username" name='username'>
-                                    </div>
-                                    <button type="submit" class="btn btn-default">Sign Up</button>
-                                </form>
-                            </li>
-
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <form class="form-inline navbar-form" action='/logIn' method='post'>
-                                            <div class="form-group">
-                                                <label for="">Log In With Your Email:</label>
-                                                <input type="text" class="form-control" placeholder="email" name='email'>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Password:</label>
-                                                <input type="text" class="form-control" placeholder="password" name='password'>
-                                            </div>
-                                            <button class="form-control btn btn-success" type="submit" class="btn btn-default">Go</button>
-                                        </form>
-                                        <form class="" action="/logOut" method="post">
-                                            <button class="btn btn-danger" type="submit" name="button">Log Out</button>
-                                        </form>
-                                    </li>
-
-                                </ul>
-                            </li>
+                            {% if customer or admin %}
+                                <li>
+                                    <form class="navbar-form" action='/search_products' method='post'>
+                                        <a  href="/profile"><button class="active btn btn-info form-control" type="button" name="button">My Profile <span class="glyphicon glyphicon-glass"></span></button> </a>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Search" name='search_input'>
+                                            <button type="submit" class="btn btn-default"> Search</button>
+                                        </div>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form class="navbar-form" action="/logOut" method="post">
+                                        <button class="btn btn-danger" type="submit" name="button">Log Out</button>
+                                    </form>
+                                </li>
+                            {% endif %}
+                            {% if customer is empty %}
+                                <li>
+                                    <form class="navbar-form" action="/logOut" method="post">
+                                        <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Sign In</button>
+                                    </form>
+                                </li>
+                            {% endif %}
+                            {% if admin %}
+                                <li>
+                                    <form class="navbar-form" action="/products">
+                                        <button class="btn btn-warning" type="submit" class="btn btn-primary">Products</button>
+                                    </form>
+                                </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
             </nav>
 
             <br>
-            <div class="jumbotron text-center">
-                <h1>Shoppr</h1>
+            <div class="jumbotron">
+                <h1 id="logo">Shoppr</h1>
+                {% if customer %}
+                    <h2 class="hello-customer">Hello, {{ customer.getName }}</h2>
+                {% endif %}
             </div>
 
             <!-- <a href="/products">Enter / Modify Products</a> -->
@@ -147,8 +138,6 @@
 
                         <a class="btn btn-success" type="submit" name="button"  data-toggle="modal" data-target="#checkoutModal"> Checkout <span class="glyphicon glyphicon-shopping-cart"></span></a>
 
-
-
                     {% endif %}
                 </div>
 
@@ -170,9 +159,9 @@
                       <form class="" action="/customer/confirmation" method="post">
                           <h3>Enter Your confirmation code here:</h3>
                           <label for="">Email:</label>
-                          <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com">
+                          <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com" required>
                           <label for="">Confirmation Code:</label>
-                          <input class="form-control" type="text" name="confirmation_code" value="" placeholder="confirmation_code">
+                          <input class="form-control" type="text" name="confirmation_code" value="" placeholder="confirmation_code" required>
                           <button  class="form-control btn btn-success" type="submit" name="button">Confirm</button>
                       </form>
                   </div>
@@ -181,26 +170,26 @@
                       <h5 for="">Please Sign In to begin shopping</h5>
                       <form class=" " action="/logIn" method="post">
                           <label for="">Email:</label>
-                          <input class="form-control" type="text" name="email" value="" placeholder="julioqt@email.com">
+                          <input class="form-control" type="text" name="email" value="" placeholder="julioqt@email.com" required>
                           <label>Password</label>
-                          <input class="form-control" type="text" name="password" value="" placeholder= "must be between 6-15 characters">
+                          <input class="form-control" type="password" name="password" value="" placeholder= "must be between 6-15 characters" required>
                           <button class="btn btn-success form-control" type="subumit" name="name" value="">Log In</button>
 
                       </form>
                   </div>
-                  <label > Not a member? <a class="accordianSignUp">Sign-Up</a> today! Need to enter a confirmation code? <a class="confirmationRollUp"> Click here</a></label>
+                  <h4> Not a member? <a class="accordianSignUp">Sign-Up</a> today! <br>Need to enter a confirmation code? <a class="confirmationRollUp"> Click here</a></h4>
                   <!-- sign up div accordian -->
                   <div class="hide signUp">
                       <h3>Sign-UP</h3>
                       <form class="" action="/customer/add" method="post">
                           <label for="">Name:</label>
-                          <input class="form-control" type="text" name="name" value="" placeholder="Charles Day">
+                          <input class="form-control" type="text" name="name" value="" placeholder="Charles Day" required>
                           <label for="">Email:</label>
-                          <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com">
+                          <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com" required>
                           <label for="">Address:</label>
-                          <input class="form-control" type="text" name="address" value="" placeholder="8002 White Beach Lane">
+                          <input class="form-control" type="text" name="address" value="" placeholder="8002 White Beach Lane" required>
                           <label for="">Password:</label>
-                          <input class="form-control" type="text" name="password" placeholder="must be between 6-15 characters">
+                          <input class="form-control" type="password" name="password" placeholder="must be between 6-15 characters" required>
                           <label for="">Funds:</label>
                           <input class="form-control" type="number" name="funds"  value="0" disabled>
                           <button class="btn btn-success form-control" type="submit" name="button">Sign Up</button>
