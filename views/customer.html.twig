@@ -65,7 +65,7 @@
             <div class="row">
                 <div class="well col-sm-4">
                     <h3>Information for {{customer.getName}}</h3>
-                    <form class="" action="/customer/edit" method="post">
+                    <form class="" action="/profile/edit" method="post">
                         <input type="hidden" name="_method" value="patch">
                         <h3>Change information for {{customer.getName}}</h3>
                         <label for="">Edit Name:</label>
@@ -80,7 +80,7 @@
                         <input class="form-control" type="number" name="funds"  value="{{customer.getFunds}}">
                         <button class="btn btn-success" type="submit" name="button">Update</button>
                     </form>
-                    <form action="/customer/delete" method="post">
+                    <form action="/profile/delete" method="post">
                         <h3>Customer Deletes their own account</h3>
                         <input type="hidden" name="_method" value="delete">
                         <button class="btn btn-danger" type="delete" name="button">Delete {{customer.getName}}</button>
@@ -89,7 +89,7 @@
 
 
                     <div class="well col-sm-4">
-                        <form class="" action="/customer/addFunds" method="post">
+                        <form class="" action="/profile/addFunds" method="post">
                             <h3>Add Funds to your Account with a fake credit card</h3>
                             <label for="">How much would you like to load today?</label>
                             <input type="number" name="new_funds" value="" placeholder="$0.00" required>
@@ -115,34 +115,28 @@
 
                 <div class="well col-sm-4">
                     <h5>Customer History:</h5>
-                        {% if histories %}
-                            {% for history in histories %}
-                            <button class="accordian" type="button" name="button"><h3>Order Date {{history.getOrderDate}} Total ${{history.getCartTotal}}</h3></button>
-                                <div class="hide">
-                                    <h6>Here is what you bought on {{order.getOrderDate}}</h6>
-                                    {% for product in history.getCart %}
-                                    <ul>
-                                        <li>{{product.getPurchaseQuantity}} {{product.getName}}s <br>
-                                            @ ${{product.getPrice}} each = {{product.calculateProductPrice}}</li>
-                                    </ul>
-                                    {% endfor %}
-                                </div>
+                    {% if histories %}
+                        {% for history in histories %}
+                        <button class="accordian" type="button" name="button"><h3>Order Date {{history.getOrderDate}} Total ${{history.getCartTotal}}</h3></button>
+                            <div class="hide">
+                                <h6>Here is what you bought on {{order.getOrderDate}}</h6>
+                                {% for product in history.getCart %}
+                                <ul>
+                                    <li>{{product.getPurchaseQuantity}} {{product.getName}}s <br>
+                                        @ ${{product.getPrice}} each = {{product.calculateProductPrice}}</li>
+                                </ul>
+                                {% endfor %}
+                            </div>
 
-                            {% endfor %}
+                        {% endfor %}
 
-                        {% else %}
-                        <h1>you have no history with our company. Buy something <a href="/">HERE</a>
-                        {% endif %}
-
-
+                    {% else %}
+                    <h1>you have no history with our company. Buy something <a href="/">HERE</a>
+                    {% endif %}
                 </div>
-
             </div>    <!-- end row -->
 
             </div>
-
-
         </div>
-
     </body>
 </html>
