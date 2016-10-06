@@ -120,6 +120,7 @@
 
             return $total;
         }
+
         function checkOut(){
             //purchaseProduct will run database execution for us
             $_SESSION['customer']->pay($this->getCartTotal());
@@ -130,7 +131,7 @@
             $this->save();
             $_SESSION['order'] = null;
             $customer_id = $_SESSION['customer']->getId();
-            $_SESSION['order'] = new Order(null, $customer_id, "11-11-1999", "1-14-1999");
+            $_SESSION['order'] = new Order(null, $customer_id, date('Y-m-d'), $_POST['delivery_date_time']);
 
         }
 

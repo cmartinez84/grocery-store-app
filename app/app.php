@@ -208,7 +208,7 @@
             return $app->redirect('/logIn/failure');
         } else {
             $customer_id = $_SESSION['customer']->getId();
-            $new_order = new Order(null, $customer_id, "11-11-1999", "1-14-1999");
+            $new_order = new Order(null, $customer_id, date('Y-m-d'), $POST_['delivery_date_time']);
             $_SESSION['order'] = $new_order;
         }
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
