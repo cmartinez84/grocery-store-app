@@ -71,6 +71,7 @@
             {$this->getFunds()}
             );");
             $this->id = $GLOBALS['DB']->lastInsertId();
+            return $this->getId();
         }
         //this will update all customer info at one time. this should only be used to update funds due to an error. for adding funds to customer, please use "addFunds" function
         function update($new_name, $new_email, $new_address, $new_password, $new_funds)
@@ -173,7 +174,8 @@
                  echo "customer was created";
                  $unserialized_customer = unserialize($result['customer_serialized']);
                 //  var_dump($unserialized_customer);
-                 $unserialized_customer->save();
+                 $new_id = $unserialized_customer->save();
+                 return $new_id;
              }
          }
 

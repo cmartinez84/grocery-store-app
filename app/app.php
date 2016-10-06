@@ -172,20 +172,20 @@
         $_SESSION['order']->getCartTotal();
         // var_dump($_SESSION['order']);
 
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
     $app->delete("/deleteProductFromCart", function () use ($app){
         $_SESSION['order']->deleteProductFromCart($_POST['product_id']);
         $_SESSION['order']->getCartTotal();
         // var_dump($_SESSION['order']);
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
     //checkout functionality
     $app->post("/checkOut", function () use ($app){
         $_SESSION['order']->checkout();
         // var_dump($_SESSION['order']);
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
 
@@ -229,15 +229,18 @@
         //this will also run save function if not free
         // $serialized_new_customer = serialize($new_customer);
         // $new_customer->insert_in_confirmation_staging();
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
     //customer confirmation attempt
     $app->post("/customer/confirmation", function() use ($app) {
         $confirmation_code = $_POST['confirmation_code'];
-        Customer::register_new_member($confirmation_code);
-
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        $customer_id = Customer::register_new_member($confirmation_code);
+        $new_customer = Customer::find($customer_id);
+        $_SESSION['customer'] = $new_customer;
+        $new_order = new Order(null, $customer_id, "11-11-1999", "1-14-1999");
+        $_SESSION['order'] = $new_order;
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
     ////////// profile
@@ -252,7 +255,7 @@
     $app->post("/profile/addFunds", function() use ($app) {
         $_SESSION['customer']->addFunds($_POST['new_funds']);
         $histories = $_SESSION['customer']->getHistory();
-        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories, 'admin' => $_SESSION['admin']));
     });
     //edit customer info
     $app->patch("/profile/edit", function() use ($app) {

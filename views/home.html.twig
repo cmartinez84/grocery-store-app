@@ -15,7 +15,7 @@
                     </div>
                     <div class="collapse navbar-collapse" id="nav">
                         <ul class="nav navbar-nav navbar-right">
-                            {% if customer or admin %}
+                            {% if customer %}
                                 <li>
                                     <form class="navbar-form" action='/search_products' method='post'>
                                         <a  href="/profile"><button class="active btn btn-info form-control" type="button" name="button">My Profile <span class="glyphicon glyphicon-glass"></span></button> </a>
@@ -25,6 +25,8 @@
                                         </div>
                                     </form>
                                 </li>
+                            {% endif %}
+                            {% if customer or admin %}
                                 <li>
                                     <form class="navbar-form" action="/logOut" method="post">
                                         <button class="btn btn-danger" type="submit" name="button">Log Out</button>
@@ -94,7 +96,7 @@
                                         <form class="" action="/addToCart" method="post">
                                             <div class='form-group'>
                                                 <label>Purchase qty:</label>
-                                                <input type="number" name="purchase_quantity" min=0 max='{{product.getInventory}}' class='form-control' required>
+                                                <input type="number" name="purchase_quantity" min=1 max='{{product.getInventory}}' class='form-control' required>
                                                 <input type="hidden" name="product_id" value="{{product.getId}}">
                                             </div>
                                             <!-- customer not order -->
@@ -120,21 +122,21 @@
                     <div class="cartContents">
                         <ul>
                             {% for product in order.getCart %}
-                            <li><strong>{{product.getPurchaseQuantity}} {{product.getName}}</strong>
-                                <br><span class="smallFont">@ ${{product.getPrice}}
-                                = ${{product.calculateProductPrice}}</span>
+                                <li><strong>{{product.getPurchaseQuantity}} {{product.getName}}</strong>
+                                    <br><span class="smallFont">@ ${{product.getPrice}}
+                                    = ${{product.calculateProductPrice}}</span>
 
-                            <form class="trash" action="/deleteProductFromCart" method="post">
-                                <input type="hidden" name="_method" value="delete">
-                                <input type="hidden" name="product_id" value="{{product.getId}}">
-                                <button class=" btn-danger btn-xs" type="submit" name="button">
-                                    <span class= "glyphicon glyphicon-trash"></span></button>
-                            </form></li>
+                                <form class="trash" action="/deleteProductFromCart" method="post">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <input type="hidden" name="product_id" value="{{product.getId}}">
+                                    <button class=" btn-danger btn-xs" type="submit" name="button">
+                                        <span class= "glyphicon glyphicon-trash"></span></button>
+                                </form></li>
                             {% endfor %}
                         </ul>
                     </div>
 
-                    <p><strong>Total:</strong> ${{order.getTotal}}0</p>
+                    <p><strong>Total:</strong> ${{order.getTotal}}</p>
 
                         <a class="btn btn-success" type="submit" name="button"  data-toggle="modal" data-target="#checkoutModal"> Checkout <span class="glyphicon glyphicon-shopping-cart"></span></a>
 
@@ -245,9 +247,6 @@
                           </div>
                       {% endfor %}
                  {% endif %}
-
-
-
 
 
           </div>
