@@ -96,12 +96,12 @@
                                 <div class="col-sm-3 panel">
                                     <div class="panel-body">
                                         <img src="/uploads/{{ product.getPhoto }}" alt="Card image cap">
-                                        <h4>{{ product.getName }}</h4>
+                                        <h5>{{ product.getName }}</h5>
                                         <p>Price per - ${{ product.getPrice }}</p>
                                         <p>{{ product.getInventory }} in stock</p>
                                         <form class="" action="/addToCart" method="post">
                                             <div class='form-group'>
-                                                <label>Purchase quantity:</label>
+                                                <label>Purchase qty:</label>
                                                 <input type="number" name="purchase_quantity" min=0 max='{{product.getInventory}}' class='form-control' required>
                                                 <input type="hidden" name="product_id" value="{{product.getId}}">
                                             </div>
