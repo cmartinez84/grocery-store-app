@@ -56,7 +56,7 @@
         }
         function setTotal($new_total)
         {
-            $this->total = $new_total;
+            $this->total = number_format((float)$new_total,2);
         }
 
         function setDeliveryDateTime($new_delivery_date_time)
@@ -116,7 +116,7 @@
             {
                 $total += ($product->calculateProductPrice());
             }
-            $this->total = $total;
+            $this->total = number_format((float)$total,2);
 
             return $total;
         }
