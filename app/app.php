@@ -70,7 +70,7 @@
 
 // Administration portion
     $app->get("/products", function() use ($app) {
-        return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll()));
+        return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll(), 'admin' => $_SESSION['admin']));
     });
 
     $app->post("/products_add", function() use ($app) {
@@ -98,7 +98,7 @@
             $GLOBALS['DB']->exec("UPDATE products SET photo = '{$file}' WHERE id = {$product->getId()};");
         }
 
-        return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll()));
+        return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll(), 'admin' => $_SESSION['admin']));
     });
 
     $app->patch("/product_update/{id}", function($id) use ($app) {
@@ -126,30 +126,30 @@
             $GLOBALS['DB']->exec("UPDATE products SET photo = '{$file}' WHERE id = {$id};");
         }
 
-        return $app['twig']->render('product_details.html.twig', array('product' => $product, 'categories' => $product->getCategories(), 'all_categories' => Category::getAll()));
+        return $app['twig']->render('product_details.html.twig', array('product' => $product, 'categories' => $product->getCategories(), 'all_categories' => Category::getAll(), 'admin' => $_SESSION['admin']));
     });
 
     $app->get("/product_details/{id}", function($id) use ($app) {
         $product = Product::find($id);
 
-        return $app['twig']->render('product_details.html.twig', array('product' => $product, 'categories' => $product->getCategories(), 'all_categories' => Category::getAll()));
+        return $app['twig']->render('product_details.html.twig', array('product' => $product, 'categories' => $product->getCategories(), 'all_categories' => Category::getAll(), 'admin' => $_SESSION['admin']));
     });
 
    $app->get("/products_delete", function() use ($app) {
        Product::deleteAll();
 
-       return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll()));
+       return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll(), 'admin' => $_SESSION['admin']));
    });
 
    $app->delete("/product_delete/{id}", function($id) use ($app) {
        $product = Product::find($id);
        $product->delete();
 
-       return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll()));
+       return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll(), 'admin' => $_SESSION['admin']));
    });
 
    $app->get("/categories", function() use ($app) {
-       return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll()));
+       return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll(), 'admin' => $_SESSION['admin']));
    });
 
    $app->post("/categories_add", function() use ($app) {
@@ -157,13 +157,12 @@
        $category = new Category($name);
        $category->save();
 
-       return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll()));
+       return $app->redirect("/categories");
    });
 
    $app->get("/categories_delete", function() use ($app) {
        Category::deleteAll();
-
-       return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll()));
+       return $app->redirect("/categories");
    });
 //end Administration portion
 
@@ -218,9 +217,7 @@
     ////
 
     $app->get("/logIn/failure", function() use ($app) {
-
-
-        return $app['twig']->render('failure.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('failure.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
     $app->post("/logOut", function() use ($app) {
