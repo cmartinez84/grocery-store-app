@@ -86,7 +86,7 @@
         // im thinking this function can add one item at a time, we can refactor it to take the whole order, or we can have two seperate functions.
         // product enters cart in object format
         function addProductToCart($product){
-            
+
             array_push($this->cart, $product);
         }
         function deleteProductFromCart($product_id)
@@ -96,6 +96,7 @@
                 unset($this->cart[$index]);
             }
         }
+
 
 
         // this function will add together all contents of the cart, both returning the total and adding it to the Order instance. perhaps this function can also be called checkout? or can be woven into a checkout funciton which does many things, including changing inventory, and customer funds
