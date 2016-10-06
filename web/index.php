@@ -18,6 +18,8 @@
         <script src="/js/jquery-3.1.0.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/myscripts.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">
+        
     </head>
     <body>
 

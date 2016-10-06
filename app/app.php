@@ -47,25 +47,20 @@
     //home page
 
     $app->get("/", function() use ($app) {
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
 
-
     //homepage & customer view (pre-log-in)
-    // $app->get("/", function() use ($app) {
-    //     return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null));
-    // });
-
     $app->get("/category/{id}", function($id) use ($app) {
         $found_category = Category::find($id);
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'category' => $found_category, 'products' => $found_category->getProducts(), 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'category' => $found_category, 'products' => $found_category->getProducts(), 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
     $app->post("/search_products", function() use ($app) {
         $product = Product::searchProducts($_POST['search_input']);
 
-        return $app['twig']->render('home.html.twig', array('products' => $product, 'categories' => Category::getAll(), 'category' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('products' => $product, 'categories' => Category::getAll(), 'category' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
 // Administration portion
@@ -167,8 +162,6 @@
 //end Administration portion
 
 
-
-
 //////cart shit
 
 
@@ -214,7 +207,7 @@
             $new_order = new Order(null, $customer_id, $order_date, "0-0-0000");
             $_SESSION['order'] = $new_order;
         }
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'],'admin' => $_SESSION['admin']));
     });
     ////
 
@@ -250,28 +243,11 @@
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
 
-
-
-
-
-
-
     ////////// profile
     $app->get("/profile", function() use ($app) {
         $histories = $_SESSION['customer']->getHistory();
-        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> $histories));
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> $histories, 'admin' => $_SESSION['admin']));
     });
-
-    // $app->get("/profile/histories", function() use ($app) {
-    //     $histories = $_SESSION['customer']->getHistory();
-    //     return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
-    // });
-
-    //all purpose logout function already listed, for both admin and customers. session destroy
-    // $app->post("/customer/logOut", function() use ($app) {
-    //     session_destroy();
-    //     return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
-    // });
 
     /////This will be triggered on sign up, sending confirmation to email. enter confirmation code with following route
 
@@ -285,32 +261,16 @@
     $app->patch("/profile/edit", function() use ($app) {
         $histories = $_SESSION['customer']->getHistory();
         $_SESSION['customer']->update($_POST['name'], $_POST['email'], $_POST['address'], $_POST['password'], $_POST['funds']);
-        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
+
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories, 'admin' => $_SESSION['admin']));
     });
+
     // customer deletes their OWN account
     $app->delete("/profile/delete", function() use ($app) {
         $_SESSION['customer']->delete();
         session_destroy();
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     return $app;
 ?>

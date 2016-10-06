@@ -9,6 +9,38 @@
                 <h3>You don't have permission to view this page </h3>
                 <img class="fingerwag" src="http://cdn.niketalk.com/6/6b/900x900px-LL-6b6bfbe9_no-no-no-very-bad-man-Babu-Bhatt-seinfeld-gifs-finger-wag.gif" alt="" />
             {% else %}
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span></a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="nav">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <form class="form-inline navbar-form" action="/logOut" method="post">
+                                        <button class="btn btn-danger" type="submit" name="button">Log Out</button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form class="form-inline navbar-form" action="/products">
+                                        <button class="btn btn-success" type="submit" name="button">Products</button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form class="form-inline navbar-form" action="/categories">
+                                        <button class="btn btn-success" type="submit" name="button">Categories</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
                 <h1>Enter / Modify Products Information</h1>
                 <form action="/product_update/{{ product.getId }}" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="_method" value="patch">
@@ -45,21 +77,12 @@
                     </div>
 
                     <button class="btn btn-info">Update Product</button>
-                    </form>
+                </form>
 
-                    <form action="/product_delete/{{ product.getId }}" method="post">
-                        <input type="hidden" value="delete" name="_method">
-                        <button class="btn btn-danger">Delete Product</button>
-                    </form>
-                    <h2><a href='/products'>Go back to Products</a></h2>
-
-                    <h2><a href='/categories'>Go to Categories</a></h2>
-
-                    <br>
-                    <form action="/logOut" method="post">
-                        <button class="btn btn-danger">Logout of Admin View!</button>
-                    </form>
-                <br>
+                <form action="/product_delete/{{ product.getId }}" method="post">
+                    <input type="hidden" value="delete" name="_method">
+                    <button class="btn btn-danger">Delete Product</button>
+                </form>
             {% endif %}
         </div>
     </body>
