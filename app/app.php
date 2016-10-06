@@ -228,13 +228,58 @@
 
     ////////// profile
     $app->get("/profile", function() use ($app) {
-        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> null));
+        $histories = $_SESSION['customer']->getHistory();
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> $histories));
     });
 
-    $app->get("/profile/histories", function() use ($app) {
+    // $app->get("/profile/histories", function() use ($app) {
+    //     $histories = $_SESSION['customer']->getHistory();
+    //     return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
+    // });
+    //all purpose logout function already listed, for both admin and customers. session destroy
+    // $app->post("/customer/logOut", function() use ($app) {
+    //     session_destroy();
+    //     return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
+    // });
+    //customer confirmation attempt
+    $app->post("/customer/confirmation", function() use ($app) {
+        $confirmation_code = $_POST['confirmation_code'];
+        Customer::register_new_member($confirmation_code);
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
+    });
+
+    $app->post("/profile/addFunds", function() use ($app) {
+        $_SESSION['customer']->addFunds($_POST['new_funds']);
         $histories = $_SESSION['customer']->getHistory();
         return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
     });
+    //edit customer info
+    $app->patch("/profile/edit", function() use ($app) {
+        $histories = $_SESSION['customer']->getHistory();
+        $_SESSION['customer']->update($_POST['name'], $_POST['email'], $_POST['address'], $_POST['password'], $_POST['funds']);
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
+    });
+    // customer deletes their OWN account
+    $app->delete("/profile/delete", function() use ($app) {
+        $_SESSION['customer']->delete();
+        session_destroy();
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
