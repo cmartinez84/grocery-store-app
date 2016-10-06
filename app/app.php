@@ -18,6 +18,10 @@
     {
         $_SESSION['order'] = null;
     }
+    if(empty($_SESSION['customer']))
+    {
+        $_SESSION['customer']=null;
+    }
 
 
     $app = new Silex\Application();
@@ -34,7 +38,7 @@
     //home page
 
     $app->get("/", function() use ($app) {
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'] ));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
 
 
@@ -46,13 +50,13 @@
 
     $app->get("/category/{id}", function($id) use ($app) {
         $found_category = Category::find($id);
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => $found_category, 'categoryProducts' => $found_category->getProducts(), 'order' => $_SESSION['order']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'category' => $found_category, 'products' => $found_category->getProducts(), 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
 
     $app->post("/search_products", function() use ($app) {
         $product = Product::searchProducts($_POST['search_input']);
 
-        return $app['twig']->render('home.html.twig', array('products' => $product, 'categories' => Category::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order']));
+        return $app['twig']->render('home.html.twig', array('products' => $product, 'categories' => Category::getAll(), 'category' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
 
 // Administration portion
@@ -162,32 +166,43 @@
 
 
 
-    //will create new cart
-    $app->post("/cart", function () use ($app){
-        $new_order = new Order(null, 3, "11-11-1999", "1-14-1999");
-        $_SESSION['order'] = $new_order;
-        // var_dump( $_SESSION['order']->getDeliveryDateTime());
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order']));
-    });
-
     $app->post("/addToCart", function () use ($app){
         $new_product = Product::find($_POST['product_id']);
         $new_product->setPurchaseQuantity($_POST['purchase_quantity']);
         $_SESSION['order']->addProductToCart($new_product);
         $_SESSION['order']->getCartTotal();
         var_dump($_SESSION['order']);
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
+
     $app->delete("/deleteProductFromCart", function () use ($app){
         $_SESSION['order']->deleteProductFromCart($_POST['product_id']);
         $_SESSION['order']->getCartTotal();
         var_dump($_SESSION['order']);
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+    });
+    //checkout functionality
+    $app->post("/checkOut", function () use ($app){
+        $_SESSION['order']->checkout();
+        var_dump($_SESSION['order']);
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
 
+    //////////Customer Stuff
+    //will log in customer and create new cart at same time
+    $app->post("/logIn", function() use ($app) {
+        $result = Customer::logIn($_POST['email'], $_POST['password']);
+        $customer_id = $_SESSION['customer']->getId();
+        $new_order = new Order(null, $customer_id, "11-11-1999", "1-14-1999");
+        $_SESSION['order'] = $new_order;
 
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+    });
 
+    $app->post("/logOut", function() use ($app) {
 
+        session_destroy();
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => null, 'customer'=> null));
+    });
     return $app;
-
 ?>

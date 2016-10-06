@@ -98,7 +98,7 @@
         {
             $new_funds = $this->funds - $purchase_total;
             $this->funds = $new_funds;
-            $GLOBALS['DB']-exec("UPDATE customers SET funds={$this->getFunds()} WHERE id={$this->getId()};");
+            $GLOBALS['DB']->exec("UPDATE customers SET funds={$this->getFunds()} WHERE id={$this->getId()};");
         }
         function addFunds($new_funds)
         {
@@ -106,7 +106,7 @@
             $GLOBALS['DB']->exec("UPDATE customers SET funds ={$this->getFunds()} WHERE
              id={$this->getId()};");
          }
-         
+
          //the follwoing block contains both instance and static methods, but they are grouped together by the process of registration
          ////////////////         ////////////////         ////////////////         ////////////////         ////////////////
 

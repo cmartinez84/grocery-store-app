@@ -102,6 +102,10 @@
 
             return $total;
         }
+        function checkOut(){
+
+            $_SESSION['customer']->pay($this->getCartTotal());
+        }
 
 
 //static methods

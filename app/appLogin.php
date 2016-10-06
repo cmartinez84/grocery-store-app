@@ -40,11 +40,11 @@
         // $new_customer->insert_in_confirmation_staging();
         return $app['twig']->render('login.html.twig', array('customer'=> $_SESSION['customer']));
     });
-
-    $app->post("/customer/logIn", function() use ($app) {
-        Customer::logIn($_POST['email'], $_POST['password']);
-        return $app['twig']->render('login.html.twig', array('customer'=> $_SESSION['customer']));
-    });
+    //on app.php now
+    // $app->post("/customer/logIn", function() use ($app) {
+    //     Customer::logIn($_POST['email'], $_POST['password']);
+    //     return $app['twig']->render('login.html.twig', array('customer'=> $_SESSION['customer']));
+    // });
 
     $app->post("/customer/logOut", function() use ($app) {
         session_destroy();

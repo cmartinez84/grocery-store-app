@@ -17,5 +17,15 @@ img {
 .trash button{
     display: inline;
     font-size: 10px !important;
-    
+}
+ul{
+    list-style: none;
+}
+.cartContents{
+    overflow: scroll;
+    max-height: 500px;
+    margin-left: 0;
+}
+.smallFont{
+    font-size: .7em;
 }
