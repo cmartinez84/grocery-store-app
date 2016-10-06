@@ -221,7 +221,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h1 class="modal-title" id="myModalLabel">Finalize Your Order</h1>
+            <h1 class="modal-title" id="myModalLabel">Review Your Order</h1>
             {% if order.getCart is empty %}
             <h1>Your cart is empty!</h1>
             {% endif %}
@@ -258,8 +258,6 @@
 
 
 
-
-
           </div>
           <div class="modal-footer ">
               <div class="row">
@@ -272,19 +270,20 @@
                   <form class="" action="/checkOut" method="post">
                        <h3>Total: ${{order.getTotal}}</h3>
                        <div class="btn-group" data-toggle="buttons">
-                          <label class="btn btn-primary active">
-                            <input class="verifyAddress" type="checkbox" autocomplete="off"> Home Delivery
+                          <label class="verifyAddress btn btn-primary active">
+                            <input type="checkbox" autocomplete="off"> Home Delivery
                           </label>
                           <label class="btn btn-primary">
                             <input type="checkbox" autocomplete="off"> In Store Pick Up
                           </label>
                         </div>
-                        <div class="checkAddress">
+                        <div class="checkAddress hide">
                             <p>Deliver To: {{customer.getAddress}}</p> <a href="/profile">Change address</a>
                         </div>
                         <div class="">
-                            <label for="">Delivery Date:</label>
+                            <label class="pickup" for="">Delivery Date:</label>
                             <input type="date" name="delivery_date_time" value="">
+                            <span>@</span><input type="time" name="time" value="">
                         </div>
 
                         {% if customer.getFunds > order.getTotal  %}

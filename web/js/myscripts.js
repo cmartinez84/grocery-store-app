@@ -19,8 +19,13 @@ $(function(){
         $(this).hide();
     });
 
-    $("").click(function(){
-        alert("click");
+    $(".verifyAddress").click(function(){
+        $(".checkAddress").removeClass("hide");
     })
+    $(".pickup").click(function(){
+        $(".checkAddress").addClass("hide");
+    })
+
+
 
 });
