@@ -27,6 +27,10 @@
     {
         $_SESSION['customer']=null;
     }
+    if(empty($_SESSION['admin']))
+    {
+        $_SESSION['admin']=null;
+    }
 
 
     $app = new Silex\Application();
@@ -201,6 +205,15 @@
         if($result == false){
             //wil redirect to bananas failure page. its really that simple! awesome
             return $app->redirect('/logIn/failure');
+        } elseif {
+            if($_POST['email'] == "admin@shoppr.com" && $_POST['password'] == "@dm1n") {
+                $_SESSION['admin'] = "set";
+                return $app->redirect('/products');
+            }
+            else {
+                //will redirect to bananas failure page. its really that simple! awesome
+                return $app->redirect('/logIn/failure');
+            }
         }
         else{
             $customer_id = $_SESSION['customer']->getId();
@@ -218,9 +231,8 @@
     });
 
     $app->post("/logOut", function() use ($app) {
-
         session_destroy();
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => null, 'customer'=> null));
+        return $app->redirect('/');
     });
 
 
