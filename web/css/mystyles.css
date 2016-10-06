@@ -2,8 +2,18 @@
     background: url('https://c2.staticflickr.com/1/756/21027093585_593f2b7943_c.jpg') center center no-repeat;
     background-attachment: fixed;
     background-size: cover;
+}
+
+h1#logo {
     color: green;
     text-shadow: 3px 3px 3px white;
+    font-family:'Shrikhand', cursive;
+    margin-left: 13%;
+}
+
+.hello-customer {
+    color: white;
+    margin-left: 13%;
 }
 
 .product-table .row {
