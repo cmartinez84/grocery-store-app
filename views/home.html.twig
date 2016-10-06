@@ -54,7 +54,7 @@
                                             <button class="btn btn-danger" type="submit" name="button">Log Out</button>
                                         </form>
                                     </li>
-                                    <li><a href="/products">Admin View</a></li>
+
                                 </ul>
                             </li>
                         </ul>
@@ -66,6 +66,8 @@
             <div class="jumbotron text-center">
                 <h1>Shoppr</h1>
             </div>
+
+            <!-- <a href="/products">Enter / Modify Products</a> -->
 
             <div class="row">
                 <div class="col-sm-2 well">
@@ -105,11 +107,11 @@
                                                 <input type="hidden" name="product_id" value="{{product.getId}}">
                                             </div>
                                             <!-- customer not order -->
-                                            {% if customer is empty%}
+                                        {% if customer is empty%}
                                                 <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Add to cart!</button>
-                                            {% else %}
+                                                {% else %}
                                                 <button class="btn btn-info" type="submit" class="btn btn-primary">Add to cart!</button>
-                                            {% endif %}
+                                        {% endif %}
                                         </form>
                                     </div>
                                 </div>
@@ -124,33 +126,35 @@
                 <div class="col-sm-2">
                     <h3>Your Cart</h3>
                     {% if order is not empty %}
-                        <div class="cartContents">
-                            <ul>
-                                {% for product in order.getCart %}
-                                <li><strong>{{product.getPurchaseQuantity}} {{product.getName}}</strong>
-                                    <br><span class="smallFont">@ ${{product.getPrice}}
-                                    = ${{product.calculateProductPrice}}</span>
+                    <div class="cartContents">
+                        <ul>
+                            {% for product in order.getCart %}
+                            <li><strong>{{product.getPurchaseQuantity}} {{product.getName}}</strong>
+                                <br><span class="smallFont">@ ${{product.getPrice}}
+                                = ${{product.calculateProductPrice}}</span>
 
-                                <form class="trash" action="/deleteProductFromCart" method="post">
-                                    <input type="hidden" name="_method" value="delete">
-                                    <input type="hidden" name="product_id" value="{{product.getId}}">
-                                    <button class="btn-danger btn-xs" type="submit" name="button">
-                                        <span class= "glyphicon glyphicon-trash"></span></button>
-                                </form></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
+                            <form class="trash" action="/deleteProductFromCart" method="post">
+                                <input type="hidden" name="_method" value="delete">
+                                <input type="hidden" name="product_id" value="{{product.getId}}">
+                                <button class=" btn-danger btn-xs" type="submit" name="button">
+                                    <span class= "glyphicon glyphicon-trash"></span></button>
+                            </form></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
 
-                        <p><strong>Total:</strong> ${{order.getTotal}}0</p>
-                        <form class="" action="/checkOut" method="post">
-                            <button class="btn btn-success" type="submit" name="button"> Checkout <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                        </form>
+                    <p><strong>Total:</strong> ${{order.getTotal}}0</p>
+
+                        <a class="btn btn-success" type="submit" name="button"  data-toggle="modal" data-target="#checkoutModal"> Checkout <span class="glyphicon glyphicon-shopping-cart"></span></a>
+
+
 
                     {% endif %}
                 </div>
+
             </div>
+
         </div>
-        <!-- sign in modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -209,6 +213,89 @@
             </div>
           </div>
         </div>
+
+    <!-- begin modal for checkout items -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h1 class="modal-title" id="myModalLabel">Finalize Your Order</h1>
+            {% if order.getCart is empty %}
+            <h1>Your cart is empty!</h1>
+            {% endif %}
+          </div>
+          <div class="modal-body">
+
+              {% if order is not empty %}
+                  <div class="row">
+                      {% for product in order.getCart %}
+                          <div class="col-sm-3 panel">
+                              <div class="panel-body">
+                                  <img src="/uploads/{{ product.getPhoto }}" alt="Card image cap">
+                                  <h4>{{ product.getName }}</h4>
+                                  <p>Price per - ${{ product.getPrice }}</p>
+
+                                  <form class="" action="/deleteProductFromCart" method="post">
+                                      <input type="hidden" name="_method" value="delete">
+                                      <div class='form-group'>
+                                          <label>Purchase quantity: {{product.getPurchaseQuantity}}</label>
+                                          <input type="hidden" name="product_id" value="{{product.getId}}">
+                                          <label for="">Subtotal: ${{product.calculateProductPrice}}</label>
+                                      </div>
+                                      <!-- customer not order -->
+                                  {% if customer is empty%}
+                                          <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Add to cart!</button>
+                                          {% else %}
+                                          <button  type="submit" class="btn btn-danger">Remove <span class= "glyphicon glyphicon-trash"></span></button>
+                                  {% endif %}
+                                  </form>
+                              </div>
+                          </div>
+                      {% endfor %}
+                 {% endif %}
+
+
+
+
+
+          </div>
+          <div class="modal-footer ">
+              <div class="row">
+                  <div class="col-sm-3">
+                      <p>Your Current Acccount Balance: </p>
+                  </div>
+                  <div class="col-sm-2">
+                      <h3>${{customer.getFunds}}  </h3>
+                  </div>
+                  <form class="" action="/checkOut" method="post">
+                       <h3>Total: ${{order.getTotal}}</h3>
+                        {% if customer.getFunds > order.getTotal  %}
+                      <button class="btn btn-success" type="submit" name="button" > Finalize Purchase <span class="glyphicon
+                           glyphicon-shopping-cart"></span></button>
+                        {% endif %}
+                  </form>
+              </div>
+              <div class="">
+                  <form class="" action="index.html" method="post">
+                      <label for=""></label><input type="button" name="name" value="">
+                  </form>
+              </div>
+              <!-- this will appear if you do not have enough funds to make this purchase -->
+              {% if customer.getFunds < order.getTotal  %}
+                   <div class="row">
+                        <h3>You do not have enough funds to complete this transaction. Please add more money <a href="/profile">your account</a> before preceding</h3>
+                    </div>
+              {% endif %}
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
 
 
     </body>
