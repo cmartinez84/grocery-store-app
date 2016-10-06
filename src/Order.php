@@ -103,8 +103,11 @@
             return $total;
         }
         function checkOut(){
-
+            //purchaseProduct will run database execution for us
             $_SESSION['customer']->pay($this->getCartTotal());
+            foreach ($this->cart as $product) {
+                $product->purchaseProduct();
+            }
         }
 
 

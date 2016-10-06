@@ -181,6 +181,11 @@
         {
             return $this->getPrice() * $this->getPurchaseQuantity();
         }
+        function purchaseProduct(){
+            $this->inventory -= $this->purchase_quantity;
+            $GLOBALS['DB']->exec("UPDATE products SET inventory = {$this->getInventory()} WHERE id = {$this->getId()};");
+
+        }
     }
 
 ?>
