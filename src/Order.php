@@ -8,14 +8,16 @@
         private $delivery_date_time;
         private $total;
 
-        function __construct($id = null, $user_id, $order_date, $delivery_date_time)
+        function __construct($id = null, $user_id, $order_date, $delivery_date_time, $total= 0)
         {
             $this->id = $id;
             $this->user_id = $user_id;
-            $this->cart = array();
+            $this->cart = $cart;
             $this->order_date = $order_date;
             $this->delivery_date_time = $delivery_date_time;
-            $this->total = 0;
+            $this->total = $total;
+
+
         }
 
         function getId()

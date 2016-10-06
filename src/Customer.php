@@ -137,6 +137,24 @@
                 return true;
                 }
          }
+         function getHistory()
+         {
+            $returned_orders = $GLOBALS['DB']->query("SELECT * FROM orders WHERE user_id='{$this->getId()}' ORDER BY order_date DESC;");
+            $histories = array();
+            foreach($returned_orders as $order){
+                $id = $order['id'];
+                $user_id = $order['user_id'];
+                $cart = unserialize($order['cart']);
+                $order_date = $order['order_date'];
+                $delivery_date_time = $order['delivery_date_time'];
+                $total = $order['total'];
+                var_dump($cart);
+                $found_order = new Order($id, $user_id, $cart, $order_date, $delivery_date_time, $total);
+                array_push($histories, $found_order);
+            }
+
+            return $histories;
+         }
 
          static function register_new_member($confirmation_code)
          {

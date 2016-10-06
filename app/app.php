@@ -204,5 +204,23 @@
         session_destroy();
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => null, 'customer'=> null));
     });
+
+
+
+    ////////// profile
+    $app->get("/profile", function() use ($app) {
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+    });
+
+    $app->get("/profile/histories", function() use ($app) {
+        $histories = $_SESSION['customer']->getHistory();
+        // var_dump($histori es);
+
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
+    });
+
+
+
+
     return $app;
 ?>

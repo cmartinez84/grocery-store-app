@@ -109,5 +109,27 @@
             </div>
         </div>
         {% endif %}
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Customer History:</h3>
+
+                    {% if histories %}<ul>
+
+                        {% for history in histories %}
+                        <li>User Id: {{history.getUserId}} Total {{history.getCartTotal}}</li>
+
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                    <h1>you have no history with our company. Buy something <a href="/">HERE</a>
+                    {% endif %}
+
+
+            </div>
+            <div class="col-sm-4">
+
+            </div>
+
+        </div>
     </body>
 </html>
