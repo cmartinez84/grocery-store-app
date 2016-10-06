@@ -167,7 +167,17 @@
               </div>
               <div class="modal-body">
                   <!-- sign in div -->
-                  <div class="">
+                  <div class="hide confirmation">
+                      <form class="" action="/customer/confirmation" method="post">
+                          <h3>Enter Your confirmation code here:</h3>
+                          <label for="">Email:</label>
+                          <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com">
+                          <label for="">Confirmation Code:</label>
+                          <input class="form-control" type="text" name="confirmation_code" value="" placeholder="confirmation_code">
+                          <button  class="form-control btn btn-success" type="submit" name="button">Confirm</button>
+                      </form>
+                  </div>
+                  <div class="logIn">
                       <h3>Log In</h3>
                       <h5 for="">Please Sign In to begin shopping</h5>
                       <form class=" " action="/logIn" method="post">
@@ -177,12 +187,11 @@
                           <input class="form-control" type="text" name="password" value="" placeholder= "must be between 6-15 characters">
                           <button class="btn btn-success form-control" type="subumit" name="name" value="">Log In</button>
 
-
                       </form>
                   </div>
-                  <label class="accordian accordian-roll-up"> Not a member? <a href="#">Sign-Up</a> today!</label>
+                  <label > Not a member? <a class="accordianSignUp">Sign-Up</a> today! Need to enter a confirmation code? <a class="confirmationRollUp"> Click here</a></label>
                   <!-- sign up div accordian -->
-                  <div class="hide">
+                  <div class="hide signUp">
                       <h3>Sign-UP</h3>
                       <form class="" action="/customer/add" method="post">
                           <label for="">Name:</label>
