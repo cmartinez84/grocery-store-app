@@ -85,15 +85,20 @@
 
         // im thinking this function can add one item at a time, we can refactor it to take the whole order, or we can have two seperate functions.
         // product enters cart in object format
-        function addProductToCart($product){
-            
+
+        function addProductToCart($product)
+        {
+            $this->deleteProductFromCart($product->getId());
             array_push($this->cart, $product);
         }
+
         function deleteProductFromCart($product_id)
         {
             foreach ($this->cart as $index => $product) {
                 if($product->getId() == $product_id)
-                unset($this->cart[$index]);
+                {
+                    unset($this->cart[$index]);
+                }
             }
         }
 

@@ -79,6 +79,27 @@
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
+        static function getAllMinusCart($product_id)
+        {
+            $products = array();
+            $returned_products = $GLOBALS['DB']->query("SELECT * FROM products ORDER BY name;");
+            foreach($returned_products as $product) {
+                $name = ucwords($product['name']);
+                $price = $product['price'];
+                $purchase_quantity = $product['purchase_quantity'];
+                $inventory = $product['inventory'];
+                $photo = $product['photo'];
+                $id = $product['id'];
+
+                if ($id != $product_id)
+                {
+                    $new_product = new Product($name, $price, $purchase_quantity, $inventory, $photo, $id);
+                    array_push($products, $new_product);
+                }
+            }
+            return $products;
+        }
+
         static function getAll()
         {
             $products = array();
