@@ -209,13 +209,11 @@
 
     ////////// profile
     $app->get("/profile", function() use ($app) {
-        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> null));
     });
 
     $app->get("/profile/histories", function() use ($app) {
         $histories = $_SESSION['customer']->getHistory();
-        // var_dump($histori es);
-
         return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories));
     });
 
