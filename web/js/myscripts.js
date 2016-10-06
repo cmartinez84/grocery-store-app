@@ -1,7 +1,5 @@
 $(function(){
 
-
-
     $(".accordian").click(function(){
         $(this).next().toggleClass("show");
         // alert("ouch");
@@ -13,4 +11,5 @@ $(function(){
         // $(this).children(".glyphicon").toggleClass("rotateIcon");
     });
 
+    
 });

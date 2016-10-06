@@ -8,11 +8,16 @@
 
 
     date_default_timezone_set('America/Los_Angeles');
+    //these two are added to try the redirect on log in failures
+    use Silex\Application;
+    use Symfony\Component\HttpKernel\HttpKernelInterface;
+
 
     use Symfony\Component\Debug\Debug;
     Debug::enable();
 
-    use Symfony\Component\HttpFoundation\Request;  Request::enableHttpMethodParameterOverride();
+    use Symfony\Component\HttpFoundation\Request;
+     Request::enableHttpMethodParameterOverride();
     session_start();
     if(empty($_SESSION['order']))
     {
@@ -188,15 +193,28 @@
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
 
+
     //////////Customer Stuff
     //will log in customer and create new cart at same time
     $app->post("/logIn", function() use ($app) {
         $result = Customer::logIn($_POST['email'], $_POST['password']);
-        $customer_id = $_SESSION['customer']->getId();
-        $new_order = new Order(null, $customer_id, "11-11-1999", "1-14-1999");
-        $_SESSION['order'] = $new_order;
-
+        if($result == false){
+            //wil redirect to bananas failure page. its really that simple! awesome
+            return $app->redirect('/logIn/failure');
+        }
+        else{
+            $customer_id = $_SESSION['customer']->getId();
+            $new_order = new Order(null, $customer_id, "11-11-1999", "1-14-1999");
+            $_SESSION['order'] = $new_order;
+        }
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+    });
+    ////
+
+    $app->get("/logIn/failure", function() use ($app) {
+
+
+        return $app['twig']->render('failure.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
 
     $app->post("/logOut", function() use ($app) {

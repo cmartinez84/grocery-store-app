@@ -185,13 +185,15 @@
              $result = $memberQuery->fetch(PDO::FETCH_ASSOC);
              if($result == false)
              {
-                 echo "nobody found with";
+                //  echo "nobody found with";
+                 return false;
              }
              else {
 
                  $found_customer = Customer::find($result['id']);
-                 var_dump( $result);
+                //  var_dump( $result);
                  $_SESSION['customer'] = $found_customer;
+                 return true;
                 }
          }
 

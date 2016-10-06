@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 
@@ -22,8 +24,10 @@
 
                             <li>
                                 <form class="form-inline navbar-form" action='/patron' method='post'>
+                                    {% if customer %}
                                     <a class="btn btn-info form-control" href="/profile"> My Profile <span class="glyphicon glyphicon-glass
                                         "></span> </a>
+                                    {% endif %}
                                     <div class="form-group">
                                         <input type="text" class="form-control" placeholder="New username" name='username'>
                                     </div>
@@ -166,7 +170,7 @@
                   <div class="">
                       <h3>Log In</h3>
                       <h5 for="">Please Sign In to begin shopping</h5>
-                      <form class=" " action="/customer/logIn" method="post">
+                      <form class=" " action="/logIn" method="post">
                           <label for="">Email:</label>
                           <input class="form-control" type="text" name="email" value="" placeholder="julioqt@email.com">
                           <label>Password</label>
@@ -201,5 +205,7 @@
             </div>
           </div>
         </div>
+
+
     </body>
 <!-- </html> -->

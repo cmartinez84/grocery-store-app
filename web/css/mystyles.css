@@ -1,4 +1,8 @@
-
+body{
+    background: url('https://c2.staticflickr.com/1/756/21027093585_593f2b7943_c.jpg') center center no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
 .product-table .row {
     padding: 2%;
     border: dotted;
@@ -34,4 +38,7 @@ ul{
 }
 .hide{
     display: none;
+}
+.bananas{
+    background: url('http://40.media.tumblr.com/02e2da82b1921ce3de763dc05ae5f659/tumblr_mtj1nnKRfH1rb97tuo1_1280.jpg');
 }
