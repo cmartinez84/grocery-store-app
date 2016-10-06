@@ -5,46 +5,59 @@
     color: green;
     text-shadow: 3px 3px 3px white;
 }
+
 .product-table .row {
     padding: 2%;
     border: dotted;
 }
 
 img {
-    height: 5vh;
+    height: 7vh;
     width: auto;
 }
 
-.trash{
+.trash {
     display: inline;
     max-height: .4em;
 
 }
-.trash button{
+
+.trash button {
     display: inline;
     font-size: 10px !important;
 }
-ul{
+
+ul {
     list-style: none;
 }
-.cartContents{
+
+.cartContents {
     overflow: scroll;
     max-height: 500px;
     margin-left: 0;
 }
-.smallFont{
+
+.smallFont {
     font-size: .7em;
 }
-.show{
+
+.show {
     display: block;
 }
-.hide{
+
+.hide {
     display: none;
 }
-.bananas{
+
+.bananas {
     background: url('http://data.whicdn.com/images/127720451/original.gif');
 }
 
-.fingerwag{
+.fingerwag {
     height: 500px;
+}
+
+.panel-body {
+    height: 23em;
+    background-color: #fffae6;
 }
