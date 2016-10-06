@@ -172,8 +172,6 @@
 //////cart shit
 
 
-
-
     $app->post("/addToCart", function () use ($app){
         $new_product = Product::find($_POST['product_id']);
         $new_product->setPurchaseQuantity($_POST['purchase_quantity']);

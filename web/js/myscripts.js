@@ -17,8 +17,10 @@ $(function(){
         $(".signUp").toggleClass("hide");
         $(".logIn").toggleClass("hide");
         $(this).hide();
+    });
+
+    $("").click(function(){
+        alert("click");
     })
-
-
 
 });

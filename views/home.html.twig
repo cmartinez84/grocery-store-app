@@ -272,21 +272,33 @@
                   </div>
                   <form class="" action="/checkOut" method="post">
                        <h3>Total: ${{order.getTotal}}</h3>
+                       <div class="btn-group" data-toggle="buttons">
+                          <label class="btn btn-primary active">
+                            <input class="verifyAddress" type="checkbox" autocomplete="off"> Home Delivery
+                          </label>
+                          <label class="btn btn-primary">
+                            <input type="checkbox" autocomplete="off"> In Store Pick Up
+                          </label>
+                        </div>
+                        <div class="checkAddress">
+                            <p>Deliver To: {{customer.getAddress}}</p> <a href="/profile">Change address</a>
+                        </div>
+                        <div class="">
+                            <label for="">Delivery Date:</label>
+                            <input type="date" name="delivery_date_time" value="">
+                        </div>
+
                         {% if customer.getFunds > order.getTotal  %}
                       <button class="btn btn-success" type="submit" name="button" > Finalize Purchase <span class="glyphicon
                            glyphicon-shopping-cart"></span></button>
                         {% endif %}
                   </form>
               </div>
-              <div class="">
-                  <form class="" action="index.html" method="post">
-                      <label for=""></label><input type="button" name="name" value="">
-                  </form>
-              </div>
+
               <!-- this will appear if you do not have enough funds to make this purchase -->
               {% if customer.getFunds < order.getTotal  %}
                    <div class="row">
-                        <h3>You do not have enough funds to complete this transaction. Please add more money <a href="/profile">your account</a> before preceding</h3>
+                        <h3>You do not have enough funds to complete this transaction. Please add more money <a href="/profile">your account</a> before proceding</h3>
                     </div>
               {% endif %}
 
