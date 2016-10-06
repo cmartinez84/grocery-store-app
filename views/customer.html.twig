@@ -7,136 +7,142 @@
         {% if customer %}
         <h4>This is special text only a customer can see because the session variable isset. This will disappear when you click log out</h4>
         {% endif %}
-        <div class="row">
-            <!-- information to display with all customers -->
-            <div class="well col-sm-4">
-                <form class="" action="/customer/confirmation" method="post">
-                    <h3>Enter Your confirmation code here:</h3>
-                    <label for="">Email:</label>
-                    <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com">
-                    <label for="">Confirmation Code:</label>
-                    <input class="form-control" type="text" name="confirmation_code" value="" placeholder="confirmation_code">
-                    <button  class="btn btn-success" type="submit" name="button">Confirm</button>
-                </form>
-            </div>
-        <!-- <div class="well col-sm-4">
-            <h3>Sign-UP</h3>
-            <form class="" action="/customer/add" method="post">
-                <label for="">Name:</label>
-                <input class="form-control" type="text" name="name" value="" placeholder="Charles Day">
-                <label for="">Email:</label>
-                <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com">
-                <label for="">Address:</label>
-                <input class="form-control" type="text" name="address" value="" placeholder="8002 White Beach Lane">
-                <label for="">Password:</label>
-                <input class="form-control" type="text" name="password" placeholder="must be between 6-15 characters">
-                <label for="">Funds:</label>
-                <input class="form-control" type="number" name="funds"  value="0" disabled>
-                <button class="btn btn-success" type="submit" name="button">Sign Up</button>
-            </form>
-        </div> -->
-        <!-- <div class="well col-sm-4">
-            <h3>Log In</h3>
-            <form class=" " action="/customer/logIn" method="post">
-                <label for="">Email:</label>
-                <input class="form-control" type="text" name="email" value="" placeholder="julioqt@email.com">
-                <label>Password</label>
-                <input class="form-control" type="text" name="password" value="" placeholder= "must be between 6-15 characters">
-                <button class="btn btn-success form-control" type="subumit" name="name" value="">Log In</button>
-                <div class="form-group">
-                    <label class="accordian"> Not a member? <a href="#">Sign-Up</a> today!</label>
-                </div>
-            </form>
-            <form class="" action="/customer/logOut" method="post">
-                <label for="">Logging Out Will Delete Your Shopping cart as well, are you sure you want to do that?</label>
-                <button class="form-control  btn-danger" type="submit" name="button">Log Out</button>
-            </form>
-        </div> -->
-            </div>
-        {% if customer %}
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/profile"><span class="glyphicon glyphicon-home"></span></a>
+                        {% if customer %}
+                        <h4> Hello, {{customer.getName}}</h4>
+                        {% endif %}
 
 
+                    </div>
+                    <div class="collapse navbar-collapse" id="nav">
+                        <ul class="nav navbar-nav navbar-right">
 
-        <!-- end row -->
-        <div class="well col-sm-4">
-            <h3>Information for {{customer.getName}}</h3>
-            <form class="" action="/customer/edit" method="post">
-                <input type="hidden" name="_method" value="patch">
-                <h3>Change information for {{customer.getName}}</h3>
-                <label for="">Edit Name:</label>
-                <input class="form-control" type="text" name="name" value="{{customer.getName}}">
-                <label for="">Edit Email:</label>
-                <input class="form-control" type="text" name="email" value="{{customer.getEmail}}">
-                <label for="">Edit Address:</label>
-                <input class="form-control" type="text" name="address" value="{{customer.getAddress}}">
-                <label for="">Edit Password:</label>
-                <input class="form-control" type="text" name="password" value="{{customer.getPassword}}">
-                <label for="">Edit Funds:</label>
-                <input class="form-control" type="number" name="funds"  value="{{customer.getFunds}}">
-                <button class="btn btn-success" type="submit" name="button">Update</button>
-            </form>
-        </div>
-        <div class="well col-sm-4">
-            <form action="/customer/delete" method="post">
-                <h3>Customer Deletes their own account</h3>
-                <input type="hidden" name="_method" value="delete">
-                <button class="btn btn-danger" type="delete" name="button">Delete {{customer.getName}}</button>
-            </form>
-        </div>
+                            <li>
+                                <form class="form-inline navbar-form" action='/patron' method='post'>
+                                    {% if customer %}
+                                    <a  href="/profile"><button class="active btn btn-info form-control" type="button" name="button">My Profile <span class="glyphicon glyphicon-glass
+                                        "></span></button> </a>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Search For Products" name='username'>
+                                    </div>
+                                    <button type="submit" class="btn btn-default"> Search</button>
+                                </form>
 
-            <div class="well col-sm-4">
-                <form class="" action="/customer/addFunds" method="post">
-                    <h3>Add Funds to your Account with a fake credit card</h3>
-                    <label for="">How much would you like to load today?</label>
-                    <input type="number" name="new_funds" value="" placeholder="$0.00" required>
-                    <h4>and how are you paying?</h4>
-                    <label><input type="radio" name="payment_method" value=""><img src="http://i.pbase.com/site/cart/ccVisa.gif">Visa</label>
-                    <label><input type="radio" name="payment_method" value=""><img src="http://findicons.com/files/icons/2250/payment_icon_set/32/mastercard.png">Mastercard</label>
-                    <label><input type="radio" name="payment_method" value=""><img src="https://mxcustomer.com/images/discover.gif">Discover</label>
-                    <label><input type="radio" name="payment_method" value=""><img src="http://www.skiviez.com/image/data/bromic/payment_icons/American-Express-icon_1.png">Discover</label>
-                    <label for="">Credit Card Number</label>
-                    <input type="number" name="name" placeholder=" XXX-XXX-XXXX">
-                    <label for="">CVV number <a href="#"> ?</a></label>
-                    <input type="number" name="payment_method"  placeholder="XXX">
-                    <label for="">
-                    <input type="radio" name="payment_method" value="">Bank Account</label><br>
-                    <label>Routing Number:<a href="#"> ?</a></label>
-                    <input type="text" name="payment_method" value="" placeholder="XXXXX"></label>
-                    <label for="">Account Number:<a href="#"> ?</a></label>
-                    <input type="text" name="payment_method" value="" placeholder="XXXXX">
-                    <button class="btn-success" type="submit" name="button"><span class="glyphicon glyphicon-plus-sign"placeholder="XXXXXX"></span>Add Funds</button>
-                </form>
-            </div>
-        </div>
-        {% endif %}
-        <div class="row">
-            <div class="col-sm-4">
-                <h5>Customer History:</h5>
-                    {% if histories %}
-                        {% for history in histories %}
-                        <button class="accordian" type="button" name="button"><h3>Order Date {{history.getOrderDate}} Total ${{history.getCartTotal}}</h3></button>
-                            <div class="hide">
-                                <h6>Here is what you bought on {{order.getOrderDate}}</h6>
-                                {% for product in history.getCart %}
-                                <ul>
-                                    <li>{{product.getPurchaseQuantity}} {{product.getName}}s <br>
-                                        @ ${{product.getPrice}} each = {{product.calculateProductPrice}}</li>
+                            </li>
+                            <li>
+                                <form class="form-inline navbar-form" action="/logOut" method="post">
+                                    <button class="btn btn-danger" type="submit" name="button">Log Out</button>
+                                </form>
+                            </li>
+
+                            <!-- <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Log Out <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <form class="" action="index.html" method="post">
+                                        <li>feedback</li>
+                                    <li>
+
+                                    </li>
+
                                 </ul>
-                                {% endfor %}
-                            </div>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <br>
+            <div class="row">
+                <div class="well col-sm-4">
+                    <h3>Information for {{customer.getName}}</h3>
+                    <form class="" action="/customer/edit" method="post">
+                        <input type="hidden" name="_method" value="patch">
+                        <h3>Change information for {{customer.getName}}</h3>
+                        <label for="">Edit Name:</label>
+                        <input class="form-control" type="text" name="name" value="{{customer.getName}}">
+                        <label for="">Edit Email:</label>
+                        <input class="form-control" type="text" name="email" value="{{customer.getEmail}}">
+                        <label for="">Edit Address:</label>
+                        <input class="form-control" type="text" name="address" value="{{customer.getAddress}}">
+                        <label for="">Edit Password:</label>
+                        <input class="form-control" type="text" name="password" value="{{customer.getPassword}}">
+                        <label for="">Edit Funds:</label>
+                        <input class="form-control" type="number" name="funds"  value="{{customer.getFunds}}">
+                        <button class="btn btn-success" type="submit" name="button">Update</button>
+                    </form>
+                    <form action="/customer/delete" method="post">
+                        <h3>Customer Deletes their own account</h3>
+                        <input type="hidden" name="_method" value="delete">
+                        <button class="btn btn-danger" type="delete" name="button">Delete {{customer.getName}}</button>
+                    </form>
+                </div>
 
-                        {% endfor %}
 
-                    {% else %}
-                    <h1>you have no history with our company. Buy something <a href="/">HERE</a>
-                    {% endif %}
+                    <div class="well col-sm-4">
+                        <form class="" action="/customer/addFunds" method="post">
+                            <h3>Add Funds to your Account with a fake credit card</h3>
+                            <label for="">How much would you like to load today?</label>
+                            <input type="number" name="new_funds" value="" placeholder="$0.00" required>
+                            <h4>and how are you paying?</h4>
+                            <label><input type="radio" name="payment_method" value=""><img src="http://i.pbase.com/site/cart/ccVisa.gif">Visa</label>
+                            <label><input type="radio" name="payment_method" value=""><img src="http://findicons.com/files/icons/2250/payment_icon_set/32/mastercard.png">Mastercard</label>
+                            <label><input type="radio" name="payment_method" value=""><img src="https://mxcustomer.com/images/discover.gif">Discover</label>
+                            <label><input type="radio" name="payment_method" value=""><img src="http://www.skiviez.com/image/data/bromic/payment_icons/American-Express-icon_1.png">Discover</label>
+                            <label for="">Credit Card Number</label>
+                            <input type="number" name="name" placeholder=" XXX-XXX-XXXX">
+                            <label for="">CVV number <a href="#"> ?</a></label>
+                            <input type="number" name="payment_method"  placeholder="XXX">
+                            <label for="">
+                            <input type="radio" name="payment_method" value="">Bank Account</label><br>
+                            <label>Routing Number:<a href="#"> ?</a></label>
+                            <input type="text" name="payment_method" value="" placeholder="XXXXX"></label>
+                            <label for="">Account Number:<a href="#"> ?</a></label>
+                            <input type="text" name="payment_method" value="" placeholder="XXXXX">
+                            <button class="btn-success" type="submit" name="button"><span class="glyphicon glyphicon-plus-sign"placeholder="XXXXXX"></span>Add Funds</button>
+                        </form>
+                    </div>
 
+
+                <div class="well col-sm-4">
+                    <h5>Customer History:</h5>
+                        {% if histories %}
+                            {% for history in histories %}
+                            <button class="accordian" type="button" name="button"><h3>Order Date {{history.getOrderDate}} Total ${{history.getCartTotal}}</h3></button>
+                                <div class="hide">
+                                    <h6>Here is what you bought on {{order.getOrderDate}}</h6>
+                                    {% for product in history.getCart %}
+                                    <ul>
+                                        <li>{{product.getPurchaseQuantity}} {{product.getName}}s <br>
+                                            @ ${{product.getPrice}} each = {{product.calculateProductPrice}}</li>
+                                    </ul>
+                                    {% endfor %}
+                                </div>
+
+                            {% endfor %}
+
+                        {% else %}
+                        <h1>you have no history with our company. Buy something <a href="/">HERE</a>
+                        {% endif %}
+
+
+                </div>
+
+            </div>    <!-- end row -->
 
             </div>
-            <div class="col-sm-4">
 
-            </div>
 
         </div>
+
     </body>
 </html>
