@@ -202,20 +202,13 @@
     //will log in customer and create new cart at same time
     $app->post("/logIn", function() use ($app) {
         $result = Customer::logIn($_POST['email'], $_POST['password']);
-        if($result == false){
-            //wil redirect to bananas failure page. its really that simple! awesome
+        if(($_POST['email'] == "admin@shoppr.com") && ($_POST['password'] == "@dm1n")) {
+            $_SESSION['admin'] = "set";
+            return $app->redirect('/products');
+        } elseif($result == false) {
+            //will redirect to bananas failure page. its really that simple! awesome
             return $app->redirect('/logIn/failure');
-        } elseif {
-            if($_POST['email'] == "admin@shoppr.com" && $_POST['password'] == "@dm1n") {
-                $_SESSION['admin'] = "set";
-                return $app->redirect('/products');
-            }
-            else {
-                //will redirect to bananas failure page. its really that simple! awesome
-                return $app->redirect('/logIn/failure');
-            }
-        }
-        else{
+        } else {
             $customer_id = $_SESSION['customer']->getId();
             $new_order = new Order(null, $customer_id, "11-11-1999", "1-14-1999");
             $_SESSION['order'] = $new_order;
