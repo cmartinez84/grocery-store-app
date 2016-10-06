@@ -111,15 +111,22 @@
         {% endif %}
         <div class="row">
             <div class="col-sm-4">
-                <h3>Customer History:</h3>
-
-                    {% if histories %}<ul>
-
+                <h5>Customer History:</h5>
+                    {% if histories %}
                         {% for history in histories %}
-                        <li>User Id: {{history.getUserId}} Total {{history.getCartTotal}}</li>
+                        <button class="accordian" type="button" name="button"><h3>Order Date {{history.getOrderDate}} Total ${{history.getCartTotal}}</h3></button>
+                            <div class="hide">
+                                <h6>Here is what you bought on {{order.getOrderDate}}</h6>
+                                {% for product in history.getCart %}
+                                <ul>
+                                    <li>{{product.getPurchaseQuantity}} {{product.getName}}s <br>
+                                        @ ${{product.getPrice}} each = {{product.calculateProductPrice}}</li>
+                                </ul>
+                                {% endfor %}
+                            </div>
 
                         {% endfor %}
-                        </ul>
+
                     {% else %}
                     <h1>you have no history with our company. Buy something <a href="/">HERE</a>
                     {% endif %}
