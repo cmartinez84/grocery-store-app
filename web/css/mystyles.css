@@ -1,7 +1,9 @@
-body{
+.jumbotron {
     background: url('https://c2.staticflickr.com/1/756/21027093585_593f2b7943_c.jpg') center center no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    color: green;
+    text-shadow: 3px 3px 3px white;
 }
 .product-table .row {
     padding: 2%;

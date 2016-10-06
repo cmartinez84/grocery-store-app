@@ -67,8 +67,6 @@
                 <h1>Shoppr</h1>
             </div>
 
-            <!-- <a href="/products">Enter / Modify Products</a> -->
-
             <div class="row">
                 <div class="col-sm-2 well">
 
@@ -107,11 +105,11 @@
                                                 <input type="hidden" name="product_id" value="{{product.getId}}">
                                             </div>
                                             <!-- customer not order -->
-                                        {% if customer is empty%}
+                                            {% if customer is empty%}
                                                 <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Add to cart!</button>
-                                                {% else %}
+                                            {% else %}
                                                 <button class="btn btn-info" type="submit" class="btn btn-primary">Add to cart!</button>
-                                        {% endif %}
+                                            {% endif %}
                                         </form>
                                     </div>
                                 </div>
@@ -126,36 +124,33 @@
                 <div class="col-sm-2">
                     <h3>Your Cart</h3>
                     {% if order is not empty %}
-                    <div class="cartContents">
-                        <ul>
-                            {% for product in order.getCart %}
-                            <li><strong>{{product.getPurchaseQuantity}} {{product.getName}}</strong>
-                                <br><span class="smallFont">@ ${{product.getPrice}}
-                                = ${{product.calculateProductPrice}}</span>
+                        <div class="cartContents">
+                            <ul>
+                                {% for product in order.getCart %}
+                                <li><strong>{{product.getPurchaseQuantity}} {{product.getName}}</strong>
+                                    <br><span class="smallFont">@ ${{product.getPrice}}
+                                    = ${{product.calculateProductPrice}}</span>
 
-                            <form class="trash" action="/deleteProductFromCart" method="post">
-                                <input type="hidden" name="_method" value="delete">
-                                <input type="hidden" name="product_id" value="{{product.getId}}">
-                                <button class=" btn-danger btn-xs" type="submit" name="button">
-                                    <span class= "glyphicon glyphicon-trash"></span></button>
-                            </form></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                                <form class="trash" action="/deleteProductFromCart" method="post">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <input type="hidden" name="product_id" value="{{product.getId}}">
+                                    <button class="btn-danger btn-xs" type="submit" name="button">
+                                        <span class= "glyphicon glyphicon-trash"></span></button>
+                                </form></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
 
-                    <p><strong>Total:</strong> ${{order.getTotal}}0</p>
-                    <form class="" action="/checkOut" method="post">
-                        <button class="btn btn-success" type="submit" name="button"> Checkout <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                    </form>
-
-
+                        <p><strong>Total:</strong> ${{order.getTotal}}0</p>
+                        <form class="" action="/checkOut" method="post">
+                            <button class="btn btn-success" type="submit" name="button"> Checkout <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                        </form>
 
                     {% endif %}
                 </div>
-
             </div>
-
         </div>
+        <!-- sign in modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">

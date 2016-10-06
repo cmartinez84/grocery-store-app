@@ -176,20 +176,21 @@
         $new_product->setPurchaseQuantity($_POST['purchase_quantity']);
         $_SESSION['order']->addProductToCart($new_product);
         $_SESSION['order']->getCartTotal();
-        var_dump($_SESSION['order']);
+        // var_dump($_SESSION['order']);
+
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
 
     $app->delete("/deleteProductFromCart", function () use ($app){
         $_SESSION['order']->deleteProductFromCart($_POST['product_id']);
         $_SESSION['order']->getCartTotal();
-        var_dump($_SESSION['order']);
+        // var_dump($_SESSION['order']);
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
     //checkout functionality
     $app->post("/checkOut", function () use ($app){
         $_SESSION['order']->checkout();
-        var_dump($_SESSION['order']);
+        // var_dump($_SESSION['order']);
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
     });
 
