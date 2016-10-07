@@ -185,13 +185,12 @@
     $app->post("/checkOut", function () use ($app){
         $delivery_date_time = $_POST['delivery_date_time'] . " at " . $_POST['time'];
         $_SESSION['order']->setDeliveryDateTime($delivery_date_time);
-        $histories = $_SESSION['customer']->getHistory();
         if(isset($_POST['emailMeReceipt']))
         {
             $_SESSION['order']->sendReceiptEmail();
         }
         $_SESSION['order']->checkout();
-
+        $histories = $_SESSION['customer']->getHistory();
         return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> $histories, 'admin' => $_SESSION['admin']));
         });
 
