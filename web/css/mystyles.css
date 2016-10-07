@@ -5,6 +5,16 @@ body{
     background-attachment: fixed;;
     background-size: cover;
 }
+.categories a{
+    color: white !important;
+    font-family: "Roboto";
+    font-size: 1.5em;
+    text-shadow: 1px 1px 3px rgba(55, 55, 55, 0.5);
+}
+.categories a:hover{
+    transform: scale(2,2);
+}
+
 .panelMain{
     background: rgba(255, 255, 255, 0.5);
     background-repeat: no-repeat;
@@ -31,6 +41,8 @@ body{
     transition: .2s;
     text-align: center;
     font-family: 'Shrikhand', cursive;
+    /*position: absolute;*/
+    top: 0;
 }
 
 .price:hover{
@@ -66,13 +78,17 @@ body{
     width: 100% !important;
 }*/
 img {
-    height: 6vh;*/
+    /*height: 6vh;*/
     width: 100;
     max-width: 100%;
 }
+
 .amountToBuy{
-    width: 100%;
-    position: relative;
+    width: 91%;
+    position: absolute;;
+    bottom: 7px;
+    left: 10px;
+
 }
 .amountToBuy input{
     width: 100%;
@@ -82,11 +98,10 @@ img {
     top: 0;
     right: 1px;
     margin: 0px 0;
-    /*margin-top: 1px;*/
-
     font-size: 1em;
     line-height: 1px;
     padding: 4px;
+
 }
 .amountToBuy input{
     border-radius: 1px;
@@ -135,7 +150,8 @@ h1#logo {
 }
 
 ul {
-    list-style: none;
+    list-style-type: none;
+    padding: 0;
 }
 
 .cartContents {

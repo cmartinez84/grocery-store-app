@@ -3,7 +3,10 @@
     <head>
         <title>Products</title>
     </head>
-    <body>
+    <body  {% if admin is empty%}
+        class="bananas"
+            {% endif %}
+        >
         <div class="container">
             {% if admin is null %}
                 <h3>You don't have permission to view this page </h3>
@@ -70,7 +73,7 @@
                     <button class="btn btn-danger">Delete all products</button>
                 </form>
 
-            {% endif %}
+
 
             {% if products is not empty %}
                 <h2>Here is a list of the current products:</h2>
@@ -120,7 +123,8 @@
                     {% endfor %}
                 </div>
             {% endif %}
-
+            <!-- moved endif from line 73 -->
+        {% endif %}
 
         </div><!--closes container div-->
 
