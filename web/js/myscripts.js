@@ -2,7 +2,7 @@ $(function(){
 
     //modal loads on page load for thanking customer
     $('#thankYouModal').modal('show');
-    
+
 
 
     $(".accordian").click(function(){
@@ -34,8 +34,11 @@ $(function(){
     $(".finalizePurchase").click(function(){
         ///all stuff disappears and confirmation appears
 
+    });
+    $(".amountToBuy").hover(function(){
+        $(".amountToBuy").nextAll().slideUp();
+    });
 
-});
 
 
 });

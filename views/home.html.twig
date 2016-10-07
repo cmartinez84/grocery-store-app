@@ -91,17 +91,18 @@
                                     <div class="panel-body">
                                         <!-- <img src="/uploads/ product.getPhoto " alt="Card image cap"> -->
                                         <h5 class="productName">{{ product.getName }}</h5>
-                                        <p>Price per - ${{ product.getPrice }}</p>
-                                        <p>{{ product.getInventory }} in stock</p>
-                                        <form class="" action="/addToCart" method="post">
-                                            <div class='form-group'>
-                                                <label>Purchase qty:</label>
+                                        <div class="priceInfo">
+                                            <p class="price"> ${{ product.getPrice }}</p>
+                                            <br>
+                                            <!-- <p></p> -->
+                                        </div>
 
-                                            </div>
+                                        <form class="" action="/addToCart" method="post">
+
                                             <!-- customer not order -->
 
                                         <div class="amountToBuy">
-                                            <input type="number" name="purchase_quantity" min=1 max='{{product.getInventory}}'  required>
+                                            <input type="number" name="purchase_quantity" min=1 max='{{product.getInventory}}'  placeholder="{{product.getInventory }} in stock" required>
                                             <input type="hidden" name="product_id" value="{{product.getId}}">
                                             {% if customer is empty%}
                                                 <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal"> <span class="glyphicon glyphicon-plus-sign"> </span></button>

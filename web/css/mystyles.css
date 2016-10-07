@@ -1,4 +1,6 @@
 body{
+    /*background: url("http://www.pixelstalk.net/wp-content/uploads/2016/04/Retro-wallpaper-download-desktop-free.jpg") center center no-repeat;*/
+
     background: url("https://static.vecteezy.com/system/resources/previews/000/083/921/original/vector-grunge-retro-geometric-background.jpg") center center no-repeat;
     background-attachment: fixed;;
     background-size: cover;
@@ -10,12 +12,38 @@ body{
     background-size: 100%;
     box-shadow: inset 1px 1px 0px 8px white;
     border-radius: 5px;
+    height: 177px;
 }
 .panel:hover{
 
     box-shadow: inset 1px 1px 2px 3px rgba(0, 0, 0, 0.1);;
 }
+.priceInfo{
+    /*background: rgba(255, 255, 0, 0.5);*/
+    font-family: "Roboto";
+    height: 100%;
+    width: 100%;
+    color: white;
+}
+.price{
+    font-size: 3em;
+    color: rgba(0, 0, 0, 0.05);
+    transition: .2s;
+    text-align: center;
+    font-family: 'Shrikhand', cursive;
+}
 
+.price:hover{
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px black;
+    transition: .2s;
+
+
+}
+.glyphicon-plus-sign:hover{
+    transform: rotate(180deg);
+    transition: transform 1s;
+}
 
 .panel-body {
     /*height: 23em;*/
@@ -55,6 +83,7 @@ body{
     margin: 0px 0;
     font-size: .8em;
 }
+.
 .displayPic{
     width: 100% !important
 }
