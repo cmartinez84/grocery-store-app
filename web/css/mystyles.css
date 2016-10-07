@@ -120,11 +120,12 @@ img {
     border:  15px solid rgba(255, 255, 255, 0.9);
 }
 
-h1#logo {
+p#logo {
     color: green;
     text-shadow: 3px 3px 3px white;
     font-family:'Shrikhand', cursive;
     margin-left: 13%;
+    font-size: 10em;
 }
 
 .hello-customer {
