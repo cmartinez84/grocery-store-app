@@ -121,7 +121,7 @@
             $GLOBALS['DB']->exec("UPDATE products SET photo = '{$file}' WHERE id = {$id};");
         }
 
-        return $app['twig']->render('product_details.html.twig', array('product' => $product, 'categories' => $product->getCategories(), 'all_categories' => Category::getAll(), 'admin' => $_SESSION['admin']));
+        return $app['twig']->render('products.html.twig', array('products' => Product::getAll(), 'categories' => Category::getAll(), 'admin' => $_SESSION['admin']));
     });
 
     $app->get("/product_details/{id}", function($id) use ($app) {
