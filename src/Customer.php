@@ -111,7 +111,6 @@
          //the follwoing block contains both instance and static methods, but they are grouped together by the process of registration
          ////////////////         ////////////////         ////////////////         ////////////////         ////////////////
 
-
          //returns false and will not be constructed, true sends confirmation email
          function isNewMemberFree(){
              $queryString = "SELECT * FROM customers WHERE email='{$this->getEmail()}';";
@@ -266,6 +265,7 @@
             }
             return $found_customers;
         }
+
 
     }
  ?>

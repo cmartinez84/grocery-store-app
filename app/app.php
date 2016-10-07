@@ -187,6 +187,10 @@
         $_SESSION['order']->setDeliveryDateTime($delivery_date_time);
         $_SESSION['order']->checkout();
         $histories = $_SESSION['customer']->getHistory();
+        if(isset($_POST['emailMeReceipt']))
+        {
+            $_SESSION['order']->sendReceiptEmail();
+        }
 
         return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> $histories, 'admin' => $_SESSION['admin']));
         });

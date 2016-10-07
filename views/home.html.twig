@@ -290,6 +290,7 @@
                         </div>
 
                         {% if customer.getFunds > order.getTotal  %}
+                        <label><input type="checkbox" name="emailMeReceipt" value="yes">Email Me Receipt</label>
                       <button class="btn btn-success" type="submit" name="button" > Finalize Purchase <span class="glyphicon
                            glyphicon-shopping-cart"></span></button>
                         {% endif %}

@@ -132,7 +132,7 @@
             $_SESSION['order'] = null;
             $customer_id = $_SESSION['customer']->getId();
             $_SESSION['order'] = new Order(null, $customer_id, date('Y-m-d'), $_POST['delivery_date_time']);
-
+            // $this->sendReceiptEmail();
         }
 
 
@@ -166,6 +166,29 @@
                 }
             }
             return $found_order;
+        }
+
+
+        function  sendReceiptEmail(){
+            $customer = Customer::find($this->user_id);
+            $email = $customer->getEmail();
+            //email new customer with confirmation code:
+            $to = $email;
+            $subject = 'Shoppr.com confirmation code for shoppr.com';
+            $message = "<html><body>";
+            $message .= "<p>Thank you for shopping with us today. Here is your Receipt from Shoppr.com</p>";
+            foreach($this->cart as $product) {
+                $message .= "<p>" . $product->getPurchaseQuantity() . " " . $product->getName() . "</p>";
+                $message .= "<p> @" . $product->calculateProductPrice() . " each </p>";
+            }
+            $message .= "$" . $this->total;
+            $message .= "</body></html>";
+            $headers = 'From: shoppr_admin@shoppr.com' . "\r\n" . 'Reply-To: shoppr_admin@shoppr.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+            mail($to, $subject, $message, $headers, '-fwebmaster@example.com');
+            //insert confirmation code with serialized information
+
         }
 
 
