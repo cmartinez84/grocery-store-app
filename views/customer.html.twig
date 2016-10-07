@@ -46,11 +46,15 @@
 <div class="container">
             <br>
             <div class="jumbotron">
-                <h1 id="logo">Shoppr</h1>
-                {% if customer %}
-                    <h2 class="hello-customer">Hello, {{ customer.getName }}</h2>
-                {% endif %}
+                <!-- this was h1 -->
+                <p id="logo">Shoppr</p>
+                <div class="customerName">
+                    {% if customer %}
+                        <p class="hello-customer">Hello, {{ customer.getName }}</p>
+                    {% endif %}
+                </div>
             </div>
+
             <br>
             <div class="row">
                 <div class="well col-sm-4">

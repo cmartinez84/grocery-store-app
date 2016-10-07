@@ -56,9 +56,12 @@
             <div class="jumbotron">
                 <!-- this was h1 -->
                 <p id="logo">Shoppr</p>
-                {% if customer %}
-                    <!-- <p class="hello-customer">Hello, {{ customer.getName }}</p> -->
-                {% endif %}
+                <div class="customerName">
+                    {% if customer %}
+                        <p class="hello-customer">Hello, {{ customer.getName }}</p>
+                    {% endif %}
+                </div>
+
             </div>
 
             <!-- <a href="/products">Enter / Modify Products</a> -->

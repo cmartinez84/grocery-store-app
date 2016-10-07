@@ -116,16 +116,16 @@
          function isNewMemberFree(){
              $queryString = "SELECT * FROM customers WHERE email='{$this->getEmail()}';";
              $memberQuery = $GLOBALS['DB']->query($queryString);
-             echo $memberQuery->rowCount();
+            //  echo $memberQuery->rowCount();
                 if($memberQuery->rowCount() >= 1)
                 {
                     //notify member taken
-                    echo "member taken";
+                    // echo "member taken";
                     return false;
                 }
                 else {
                     $email = $this->email;
-                    echo "email:" . $email;
+                    // echo "email:" . $email;
                     // $this->save();
                     // Generate Random Number sequence as confirmation code
                     $random= md5(uniqid(rand()));
@@ -166,12 +166,12 @@
              if($result == false)
              {
                  //tell customer their confirmation code was incorrect
-                 echo "your inforamation was not valid. please try again";
+                //  echo "your inforamation was not valid. please try again";
                  return false;
              }
              else{
                  //unseriazlie customer and save it;
-                 echo "customer was created";
+                //  echo "customer was created";
                  $unserialized_customer = unserialize($result['customer_serialized']);
                 //  var_dump($unserialized_customer);
                  $new_id = $unserialized_customer->save();
