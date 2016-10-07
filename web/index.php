@@ -1,7 +1,4 @@
 <?php
-
-
-
     //
     $website = require_once __DIR__.'/../app/app.php';
     // $website = require_once __DIR__.'/../app/appLogin.php';
@@ -12,6 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lato|Roboto|Shrikhand" rel="stylesheet">
         <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
         <link rel="stylesheet" href="/css/mystyles.css" media="screen" title="no title" charset="utf-8">

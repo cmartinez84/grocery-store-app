@@ -118,19 +118,30 @@ img {
     background-attachment: fixed;
     background-size: cover;
     border:  15px solid rgba(255, 255, 255, 0.9);
+    position: relative;
 }
 
 p#logo {
     color: green;
-    text-shadow: 3px 3px 3px white;
+    text-shadow:  3px 3px 3px white;
     font-family:'Shrikhand', cursive;
     margin-left: 13%;
     font-size: 10em;
 }
 
+
+.customerName{
+    position: absolute;
+    right: 77px;
+    bottom: 7px;
+    font-size: 6em;
+}
 .hello-customer {
     color: white;
     margin-left: 13%;
+    font-family: 'Satisfy', cursive;
+    font-size: 49px !important;
+    text-shadow: 1px 1px 4px grey;
 }
 
 .product-table .row {
