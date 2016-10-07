@@ -1,7 +1,69 @@
+body{
+    background: url("https://static.vecteezy.com/system/resources/previews/000/083/921/original/vector-grunge-retro-geometric-background.jpg") center center no-repeat;
+    background-attachment: fixed;;
+    background-size: cover;
+}
+.panel{
+    background: rgba(255, 255, 255, 0.5);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100%;
+    box-shadow: inset 1px 1px 0px 8px white;
+    border-radius: 5px;
+}
+.panel:hover{
+
+    box-shadow: inset 1px 1px 2px 3px rgba(0, 0, 0, 0.1);;
+}
+
+
+.panel-body {
+    /*height: 23em;*/
+    background-color: transparent;
+    padding: 0 !important;
+
+}
+.productName{
+    color: white;
+    width: 100%;
+    background: rgba(255, 0, 0, 0.5);
+    text-shadow: 1px 1px 3px black;
+    font-size: 1.5em !important;
+    font-family: 'Shrikhand', cursive;
+    text-align: center;
+    padding: 3px;
+}
+/*.btn{
+    width: 100% !important;
+}*/
+/*img {
+    /*height: 6vh;*/
+    /*width: 100;*/
+    /*max-width: 100%;*/
+/*}*/
+.amountToBuy{
+    width: 100%;
+    position: relative;
+}
+.amountToBuy input{
+    width: 100%;
+}
+.amountToBuy button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0px 0;
+    font-size: .8em;
+}
+.displayPic{
+    width: 100% !important
+}
+
 .jumbotron {
     background: url('https://c2.staticflickr.com/1/756/21027093585_593f2b7943_c.jpg') center center no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    border:  15px solid rgba(255, 255, 255, 0.9);
 }
 
 h1#logo {
@@ -21,11 +83,7 @@ h1#logo {
     border: dotted;
 }
 
-img {
-    height: 6vh;
-    width: auto;
-    max-width: 100%;
-}
+
 
 .trash {
     display: inline;
@@ -65,9 +123,4 @@ ul {
 
 .fingerwag {
     height: 500px;
-}
-
-.panel-body {
-    height: 23em;
-    background-color: #fffae6;
 }

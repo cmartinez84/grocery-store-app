@@ -87,24 +87,28 @@
                     {% if products is not empty %}
                         <div class="row">
                             {% for product in products %}
-                                <div class="col-sm-3 panel">
+                                <div class="col-sm-3 panel" style="background-image: url(/uploads/{{ product.getPhoto }})">
                                     <div class="panel-body">
-                                        <img src="/uploads/{{ product.getPhoto }}" alt="Card image cap">
-                                        <h5>{{ product.getName }}</h5>
+                                        <!-- <img src="/uploads/ product.getPhoto " alt="Card image cap"> -->
+                                        <h5 class="productName">{{ product.getName }}</h5>
                                         <p>Price per - ${{ product.getPrice }}</p>
                                         <p>{{ product.getInventory }} in stock</p>
                                         <form class="" action="/addToCart" method="post">
                                             <div class='form-group'>
                                                 <label>Purchase qty:</label>
-                                                <input type="number" name="purchase_quantity" min=1 max='{{product.getInventory}}' class='form-control' required>
-                                                <input type="hidden" name="product_id" value="{{product.getId}}">
+
                                             </div>
                                             <!-- customer not order -->
-                                        {% if customer is empty%}
-                                                <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Add to cart! <span class="glyphicon glyphicon-plus-sign"> </span></button>
+
+                                        <div class="amountToBuy">
+                                            <input type="number" name="purchase_quantity" min=1 max='{{product.getInventory}}'  required>
+                                            <input type="hidden" name="product_id" value="{{product.getId}}">
+                                            {% if customer is empty%}
+                                                <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal"> <span class="glyphicon glyphicon-plus-sign"> </span></button>
                                                 {% else %}
-                                                <button class="btn btn-info" type="submit" class="btn btn-primary">Add to cart! <span class="glyphicon glyphicon-plus-sign"></span></button>
-                                        {% endif %}
+                                                <button class=" btn-info" type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-plus-sign"></span></button>
+                                            {% endif %}
+                                        </div>
                                         </form>
                                     </div>
                                 </div>
@@ -225,7 +229,7 @@
                       {% for product in order.getCart %}
                           <div class="col-sm-3 panel">
                               <div class="panel-body">
-                                  <img src="/uploads/{{ product.getPhoto }}" alt="Card image cap">
+                                  <img class="displayPic" src="/uploads/{{ product.getPhoto }}" alt="Card image cap">
                                   <h4>{{ product.getName }}</h4>
                                   <p>Price per - ${{ product.getPrice }}</p>
 

@@ -183,12 +183,13 @@
     });
     //checkout functionality
     $app->post("/checkOut", function () use ($app){
-        $delivery_date_time = $_POST['delivery_date_time'] . "at " . $_POST['time'];
+        $delivery_date_time = $_POST['delivery_date_time'] . " at " . $_POST['time'];
         $_SESSION['order']->setDeliveryDateTime($delivery_date_time);
         $_SESSION['order']->checkout();
-        // var_dump($_SESSION['order']);
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
-    });
+        $histories = $_SESSION['customer']->getHistory();
+
+        return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> $histories, 'admin' => $_SESSION['admin']));
+        });
 
 
     //////////Customer Stuff

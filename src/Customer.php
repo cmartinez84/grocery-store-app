@@ -149,7 +149,7 @@
                 $order_date = $order['order_date'];
                 $delivery_date_time = $order['delivery_date_time'];
                 $total = $order['total'];
-                var_dump($cart);
+                // var_dump($cart);
                 $found_order = new Order($id, $user_id,$order_date, $delivery_date_time);
                 $found_order->setCart($cart);
                 $found_order->setTotal($total);

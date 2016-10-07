@@ -54,31 +54,35 @@
             <br>
             <div class="row">
                 <div class="well col-sm-4">
-                    <h3>Information for {{customer.getName}}</h3>
-                    <form class="" action="/profile/edit" method="post">
-                        <input type="hidden" name="_method" value="patch">
-                        <h3>Change information for {{customer.getName}}</h3>
-                        <label for="">Edit Name:</label>
-                        <input class="form-control" type="text" name="name" value="{{customer.getName}}">
-                        <label for="">Edit Email:</label>
-                        <input class="form-control" type="text" name="email" value="{{customer.getEmail}}">
-                        <label for="">Edit Address:</label>
-                        <input class="form-control" type="text" name="address" value="{{customer.getAddress}}">
-                        <label for="">Edit Password:</label>
-                        <input class="form-control" type="text" name="password" value="{{customer.getPassword}}">
-                        <label for="">Edit Funds:</label>
-                        <input class="form-control" type="number" name="funds"  value="{{customer.getFunds}}">
-                        <button class="btn btn-success" type="submit" name="button">Update</button>
-                    </form>
-                    <form action="/profile/delete" method="post">
-                        <h3>Customer Deletes their own account</h3>
-                        <input type="hidden" name="_method" value="delete">
-                        <button class="btn btn-danger" type="delete" name="button">Delete {{customer.getName}}</button>
-                    </form>
-                </div>
-
-
-                    <div class="well col-sm-4">
+                    <button class="form-control accordian" type="button" name="button">Edit my information</button>
+                    <div class="hide fold">
+                        <h3>Information for {{customer.getName}}</h3>
+                        <form class="" action="/profile/edit" method="post">
+                            <input type="hidden" name="_method" value="patch">
+                            <h3>Change information for {{customer.getName}}</h3>
+                            <label for="">Edit Name:</label>
+                            <input class="form-control" type="text" name="name" value="{{customer.getName}}">
+                            <label for="">Edit Email:</label>
+                            <input class="form-control" type="text" name="email" value="{{customer.getEmail}}">
+                            <label for="">Edit Address:</label>
+                            <input class="form-control" type="text" name="address" value="{{customer.getAddress}}">
+                            <label for="">Edit Password:</label>
+                            <input class="form-control" type="text" name="password" value="{{customer.getPassword}}">
+                            <label for="">Edit Funds:</label>
+                            <input class="form-control" type="number" name="funds"  value="{{customer.getFunds}}">
+                            <button class="btn btn-success" type="submit" name="button">Update</button>
+                        </form>
+                    </div>
+                    <button class="form-control accordian" type="button" name="button">Delete my membership</button>
+                    <div class="hide fold">
+                        <form action="/profile/delete" method="post">
+                            <h3>Customer Deletes their own account</h3>
+                            <input type="hidden" name="_method" value="delete">
+                            <button class="btn btn-danger" type="delete" name="button">Delete {{customer.getName}}</button>
+                        </form>
+                    </div>
+                    <button class="form-control accordian" type="button" name="button">Add money to my account</button>
+                    <div class="hide fold">
                         <form class="" action="/profile/addFunds" method="post">
                             <h3>Add Funds to your Account with a fake credit card</h3>
                             <label for="">How much would you like to load today?</label>
@@ -101,6 +105,27 @@
                             <button class="btn-success" type="submit" name="button"><span class="glyphicon glyphicon-plus-sign"placeholder="XXXXXX"></span>Add Funds</button>
                         </form>
                     </div>
+                </div>
+
+
+                    <div class="well col-sm-4">
+                        <h1>Your last purchase</h1>
+                        {% if histories %}
+                        <li><strong>Order Date:</strong>{{histories|first.getOrderDate}}</li>
+                        <li><strong>Expected Delivery Date:{{histories|first.getDeliveryDateTime}}</strong></li>
+                        <li><strong>Your Cart:</strong></li>
+                        <ul>
+
+
+                        {% for product in histories|first.getCart %}
+                        <li>{{product.getPurchaseQuantity}} {{product.getName}} <br>
+                            @ ${{product.getPrice}} each = {{product.calculateProductPrice}}</li>
+                        {% endfor %}
+
+                        <h3><strong>Total:</strong> {{histories|first.getTotal}}</h3>
+                        </ul>
+                        {% endif %}
+                    </div>
 
 
                 <div class="well col-sm-4">
@@ -108,7 +133,7 @@
                     {% if histories %}
                         {% for history in histories %}
 
-                        <button class="accordian" type="button" name="button"><h3>Order Date {{history.getOrderDate}} Total ${{history.getCartTotal}}</h3></button>
+                        <button class="form-control accordian" type="button" name="button"><p>Order Date {{history.getOrderDate}} Total ${{history.getCartTotal}}</p></button>
                             <div class="hide">
                                 <h6>Expected delivery date: {{history.getDeliveryDateTime}}</h6>
 
