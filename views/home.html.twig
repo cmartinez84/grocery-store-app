@@ -262,14 +262,18 @@
 
 
           </div>
-          <div class="modal-footer ">
-              <div class="row">
-                  <div class="col-sm-3">
-                      <p>Your Current Acccount Balance: </p>
+          {% if customer %}
+              <div class="modal-footer ">
+                  <div class="row">
+                      <div class="col-sm-3">
+                          <p>Your Current Acccount Balance: </p>
+                      </div>
+                      <div class="col-sm-2">
+                            <h3>${{customer.getFunds}}  </h3>
+                      </div>
+
                   </div>
-                  <div class="col-sm-2">
-                      <h3>${{customer.getFunds}}  </h3>
-                  </div>
+
                   <form class="" action="/checkOut" method="post">
                        <h3>Total: ${{order.getTotal}}</h3>
                        <div class="btn-group" data-toggle="buttons">
@@ -297,13 +301,15 @@
                   </form>
               </div>
 
-              <!-- this will appear if you do not have enough funds to make this purchase -->
-              {% if customer.getFunds < order.getTotal  %}
-                   <div class="row">
-                        <h3>You do not have enough funds to complete this transaction. Please add more money <a href="/profile">your account</a> before proceding</h3>
-                    </div>
-              {% endif %}
 
+              <!-- this will appear if you do not have enough funds to make this purchase -->
+
+                  {% if customer.getFunds < order.getTotal  %}
+                       <div class="row">
+                            <h3>You do not have enough funds to complete this transaction. Please add more money <a href="/profile">your account</a> before proceding</h3>
+                        </div>
+                  {% endif %}
+          {% endif %}
 
           </div>
         </div>

@@ -181,7 +181,7 @@
          //for loggin in
          static function logIn($email, $password)
          {
-             $queryString = "SELECT * FROM customers WHERE email='{$email}';";
+             $queryString = "SELECT * FROM customers WHERE email='{$email}' and password='{$password}';";
              $memberQuery = $GLOBALS['DB']->query($queryString);
              $result = $memberQuery->fetch(PDO::FETCH_ASSOC);
              if($result == false)

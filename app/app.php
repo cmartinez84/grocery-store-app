@@ -185,12 +185,12 @@
     $app->post("/checkOut", function () use ($app){
         $delivery_date_time = $_POST['delivery_date_time'] . " at " . $_POST['time'];
         $_SESSION['order']->setDeliveryDateTime($delivery_date_time);
-        $_SESSION['order']->checkout();
         $histories = $_SESSION['customer']->getHistory();
         if(isset($_POST['emailMeReceipt']))
         {
             $_SESSION['order']->sendReceiptEmail();
         }
+        $_SESSION['order']->checkout();
 
         return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> $histories, 'admin' => $_SESSION['admin']));
         });
@@ -278,7 +278,7 @@
     $app->delete("/profile/delete", function() use ($app) {
         $_SESSION['customer']->delete();
         session_destroy();
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> null, 'admin' => $_SESSION['admin']));
     });
 
     return $app;
