@@ -274,7 +274,7 @@
     $app->delete("/profile/delete", function() use ($app) {
         $_SESSION['customer']->delete();
         session_destroy();
-        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer']));
+        return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> null, 'admin' => $_SESSION['admin']));
     });
 
     return $app;
