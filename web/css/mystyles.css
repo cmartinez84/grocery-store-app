@@ -45,6 +45,7 @@ body{
     transition: transform 1s;
 }
 
+
 .panel-body {
     /*height: 23em;*/
     background-color: transparent;
@@ -79,11 +80,20 @@ img {
 .amountToBuy button {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 1px;
     margin: 0px 0;
-    font-size: .8em;
+    /*margin-top: 1px;*/
+
+    font-size: 1em;
+    line-height: 1px;
+    padding: 4px;
 }
-.
+.amountToBuy input{
+    border-radius: 1px;
+}
+.absoluteBox{
+    margin: 0
+}
 .displayPic{
     width: 100% !important
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <div class="container">
+
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </nav>
-
+<div class="container">
             <br>
             <div class="jumbotron">
                 <h1 id="logo">Shoppr</h1>
@@ -87,7 +87,7 @@
                     {% if products is not empty %}
                         <div class="row">
                             {% for product in products %}
-                                <div class="col-sm-3 panelMain" style="background-image: url(/uploads/{{ product.getPhoto }})">
+                                <div class="col-sm-3 panel panelMain" style="background-image: url(/uploads/{{ product.getPhoto }})">
                                     <div class="panel-body">
                                         <!-- <img src="/uploads/ product.getPhoto " alt="Card image cap"> -->
                                         <h5 class="productName">{{ product.getName }}</h5>
@@ -100,16 +100,16 @@
                                         <form class="" action="/addToCart" method="post">
 
                                             <!-- customer not order -->
+                                                <div class="amountToBuy">
+                                                    <input type="number" name="purchase_quantity" min=1 max='{{product.getInventory}}'  placeholder="{{product.getInventory }} in stock" required>
+                                                    <input type="hidden" name="product_id" value="{{product.getId}}">
+                                                    {% if customer is empty%}
+                                                        <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal"> <span class="glyphicon glyphicon-plus-sign"> </span></button>
+                                                        {% else %}
+                                                        <button class=" btn-info" type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-plus-sign"></span></button>
+                                                    {% endif %}
+                                                </div>
 
-                                        <div class="amountToBuy">
-                                            <input type="number" name="purchase_quantity" min=1 max='{{product.getInventory}}'  placeholder="{{product.getInventory }} in stock" required>
-                                            <input type="hidden" name="product_id" value="{{product.getId}}">
-                                            {% if customer is empty%}
-                                                <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal"> <span class="glyphicon glyphicon-plus-sign"> </span></button>
-                                                {% else %}
-                                                <button class=" btn-info" type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-plus-sign"></span></button>
-                                            {% endif %}
-                                        </div>
                                         </form>
                                     </div>
                                 </div>
