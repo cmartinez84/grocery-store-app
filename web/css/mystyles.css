@@ -4,6 +4,7 @@ body{
     background: url("https://static.vecteezy.com/system/resources/previews/000/083/921/original/vector-grunge-retro-geometric-background.jpg") center center no-repeat;
     background-attachment: fixed;;
     background-size: cover;
+    padding-top: 70px;
 }
 .categories a{
     color: white !important;
@@ -79,10 +80,14 @@ body{
 }*/
 img {
     /*height: 6vh;*/
-    width: 100;
+    width: 100%;
     max-width: 100%;
 }
 
+#product-photo img {
+  height: 20vh;
+  width: auto;
+}
 .amountToBuy{
     width: 91%;
     position: absolute;;
