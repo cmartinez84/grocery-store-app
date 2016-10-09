@@ -1,10 +1,19 @@
 body{
-    /*background: url("http://www.pixelstalk.net/wp-content/uploads/2016/04/Retro-wallpaper-download-desktop-free.jpg") center center no-repeat;*/
-
     background: url("https://static.vecteezy.com/system/resources/previews/000/083/921/original/vector-grunge-retro-geometric-background.jpg") center center no-repeat;
     background-attachment: fixed;;
     background-size: cover;
     padding-top: 70px;
+}
+
+img {
+    /*height: 6vh;*/
+    /*width: 100;*/
+    max-width: 100%;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
 }
 .categories a{
     color: white !important;
@@ -78,11 +87,7 @@ body{
 /*.btn{
     width: 100% !important;
 }*/
-img {
-    /*height: 6vh;*/
-    /*width: 100;*/
-    max-width: 100%;
-}
+
 
 #product-photo img {
   height: 20vh;
@@ -134,7 +139,6 @@ p#logo {
     font-size: 10em;
 }
 
-
 .customerName{
     position: absolute;
     right: 77px;
@@ -154,8 +158,6 @@ p#logo {
     border: dotted;
 }
 
-
-
 .trash {
     display: inline;
     max-height: .4em;
@@ -164,11 +166,6 @@ p#logo {
 .trash button {
     display: inline;
     font-size: 10px !important;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
 }
 
 .cartContents {

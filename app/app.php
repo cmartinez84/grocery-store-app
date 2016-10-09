@@ -162,23 +162,18 @@
 //end Administration portion
 
 
-//////cart shit
-
-
+//////cart routes
     $app->post("/addToCart", function () use ($app){
         $new_product = Product::find($_POST['product_id']);
         $new_product->setPurchaseQuantity($_POST['purchase_quantity']);
         $_SESSION['order']->addProductToCart($new_product);
         $_SESSION['order']->getCartTotal();
-        // var_dump($_SESSION['order']);
-
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
     $app->delete("/deleteProductFromCart", function () use ($app){
         $_SESSION['order']->deleteProductFromCart($_POST['product_id']);
         $_SESSION['order']->getCartTotal();
-        // var_dump($_SESSION['order']);
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
     //checkout functionality
@@ -196,26 +191,27 @@
         });
 
 
-    //////////Customer Stuff
+    //////////Customer routes
+
     //will log in customer and create new cart at same time
     $app->post("/logIn", function() use ($app) {
         $result = Customer::logIn($_POST['email'], $_POST['password']);
+        //admin is not stored as a user in the databse, but rather a special command enacted with these credentials
         if(($_POST['email'] == "admin@shoppr.com") && ($_POST['password'] == "@dm1n")) {
             $_SESSION['admin'] = "set";
             return $app->redirect('/products');
         } elseif($result == false) {
-            //will redirect to bananas failure page. its really that simple! awesome
+            //will redirect to bananas failure page
             return $app->redirect('/logIn/failure');
         } else {
             $customer_id = $_SESSION['customer']->getId();
             $order_date = date("Y-m-d");
             $new_order = new Order(null, $customer_id, $order_date, "0-0-0000");
-
             $_SESSION['order'] = $new_order;
         }
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'],'admin' => $_SESSION['admin']));
     });
-    ////
+    ////login/logout routes
 
     $app->get("/logIn/failure", function() use ($app) {
         return $app['twig']->render('failure.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
@@ -226,18 +222,14 @@
         return $app->redirect('/');
     });
 
-    ////
-///////////new customer routes
 
+///////////new customer routes
 
     $app->post("/customer/add", function() use ($app) {
         $new_customer = new Customer (null, $_POST['name'], $_POST['email'], $_POST['address'], $_POST['password'], $funds=0);
         $_SESSSION['new_order'] = $new_customer;
+        //this will add create a new customer object and email the customer a randomly generated code to log in with and activate their account. the serialized (php function serialize($customer)) will store customer data in confirmation_stagining table until the cofirmation code is entered in. the customer info will then be unserialized and saved in customer database, if successful.
         $new_customer->isNewMemberFree();
-
-        //this will also run save function if not free
-        // $serialized_new_customer = serialize($new_customer);
-        // $new_customer->insert_in_confirmation_staging();
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
@@ -258,19 +250,16 @@
         return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories'=> $histories, 'admin' => $_SESSION['admin']));
     });
 
-    /////This will be triggered on sign up, sending confirmation to email. enter confirmation code with following route
-
-
     $app->post("/profile/addFunds", function() use ($app) {
         $_SESSION['customer']->addFunds($_POST['new_funds']);
         $histories = $_SESSION['customer']->getHistory();
         return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories, 'admin' => $_SESSION['admin']));
     });
+
     //edit customer info
     $app->patch("/profile/edit", function() use ($app) {
         $histories = $_SESSION['customer']->getHistory();
         $_SESSION['customer']->update($_POST['name'], $_POST['email'], $_POST['address'], $_POST['password'], $_POST['funds']);
-
         return $app['twig']->render('customer.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'histories' => $histories, 'admin' => $_SESSION['admin']));
     });
 
