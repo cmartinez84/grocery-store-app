@@ -165,14 +165,13 @@
              if($result == false)
              {
                  //tell customer their confirmation code was incorrect
-                //  echo "your inforamation was not valid. please try again";
+                 //redirect to bananas failure page
                  return false;
              }
              else{
                  //unseriazlie customer and save it;
-                //  echo "customer was created";
                  $unserialized_customer = unserialize($result['customer_serialized']);
-                //  var_dump($unserialized_customer);
+                //save function both saves and returns that customers newly generated id (lastinsertid). we need to pass this along because our route will create an instance based on this id, and from info queried in the database
                  $new_id = $unserialized_customer->save();
                  return $new_id;
              }

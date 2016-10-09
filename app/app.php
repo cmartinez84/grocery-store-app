@@ -224,11 +224,10 @@
 
 
 ///////////new customer routes
-
+    //this will add create a new customer object and email the customer a randomly generated code to log in with and activate their account. the serialized (php function serialize($customer)) will store customer data in confirmation_stagining table until the cofirmation code is entered in. the customer info will then be unserialized and saved in customer database, if successful.
     $app->post("/customer/add", function() use ($app) {
         $new_customer = new Customer (null, $_POST['name'], $_POST['email'], $_POST['address'], $_POST['password'], $funds=0);
         $_SESSSION['new_order'] = $new_customer;
-        //this will add create a new customer object and email the customer a randomly generated code to log in with and activate their account. the serialized (php function serialize($customer)) will store customer data in confirmation_stagining table until the cofirmation code is entered in. the customer info will then be unserialized and saved in customer database, if successful.
         $new_customer->isNewMemberFree();
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
@@ -237,10 +236,13 @@
     $app->post("/customer/confirmation", function() use ($app) {
         $confirmation_code = $_POST['confirmation_code'];
         $customer_id = Customer::register_new_member($confirmation_code);
-        $new_customer = Customer::find($customer_id);
-        $_SESSION['customer'] = $new_customer;
-        $new_order = new Order(null, $customer_id, "11-11-1999", "1-14-1999");
-        $_SESSION['order'] = $new_order;
+        if($customer_id){
+            $_SESSION['customer'] = Customer::find($customer_id);
+            $_SESSION['order']= new Order(null, $customer_id, "11-11-1999", "1-14-1999");
+        }
+        else{
+            return $app->redirect('/logIn/failure');
+        }
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });
 
