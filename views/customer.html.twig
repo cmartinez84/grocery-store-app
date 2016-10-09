@@ -143,7 +143,7 @@
 
                                 {% for product in history.getCart %}
                                 <ul>
-                                    <li>{{product.getPurchaseQuantity}} {{product.getName}}s <br>
+                                    <li>{{product.getPurchaseQuantity}} {{product.getName}}(s) <br>
                                         @ ${{product.getPrice}} each = {{product.calculateProductPrice}}</li>
                                 </ul>
                                 {% endfor %}

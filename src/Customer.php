@@ -135,7 +135,7 @@
          }
          function getHistory()
          {
-            $returned_orders = $GLOBALS['DB']->query("SELECT * FROM orders WHERE user_id='{$this->getId()}' ORDER BY order_date DESC;");
+            $returned_orders = $GLOBALS['DB']->query("SELECT * FROM orders WHERE user_id='{$this->getId()}' ORDER BY id DESC;");
             $histories = array();
             foreach($returned_orders as $order){
                 $id = $order['id'];
