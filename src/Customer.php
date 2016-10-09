@@ -115,23 +115,19 @@
          function isNewMemberFree(){
              $queryString = "SELECT * FROM customers WHERE email='{$this->getEmail()}';";
              $memberQuery = $GLOBALS['DB']->query($queryString);
-            //  echo $memberQuery->rowCount();
                 if($memberQuery->rowCount() >= 1)
                 {
                     //notify member taken
-                    // echo "member taken";
                     return false;
                 }
                 else {
                     $email = $this->email;
-                    // echo "email:" . $email;
-                    // $this->save();
                     // Generate Random Number sequence as confirmation code
                     $random= md5(uniqid(rand()));
                     $confirmation_code = substr($random,0, 6);
                     $serialized_new_customer = serialize($this);
                     //email new customer with confirmation code:
-                    $to = $email; $subject = 'Shoppr.com confirmation code for shoppr.com'; $message = 'thank you for signing up with Shoppr.com. In order to complete your registration, please go to our website and enter your confirmation code exactly as written in this email. confirmation code:' . $confirmation_code; $headers = 'From: shoppr_admin@shoppr.com' . "\r\n" . 'Reply-To: shoppr_admin@shoppr.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion(); mail($to, $subject, $message, $headers, '-fwebmaster@example.com');
+                    $to = $email; $subject = 'Shoppr.com confirmation code for shoppr.com'; $message = 'Thank you for signing up with Shoppr.com. In order to complete your registration, please go to our website, click "log in", and then "enter confirmation code" and enter your confirmation code exactly as written in this email. The code is case sensitive. confirmation code:' . $confirmation_code; $headers = 'From: shoppr_admin@shoppr.com' . "\r\n" . 'Reply-To: shoppr_admin@shoppr.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion(); mail($to, $subject, $message, $headers, '-fwebmaster@example.com');
                     //insert confirmation code with serialized information
                     $GLOBALS['DB']->exec("INSERT INTO confirmation_staging (customer_serialized, confirmation_code) VALUES ('{$serialized_new_customer}', '{$confirmation_code}');");
                 return true;
@@ -148,13 +144,11 @@
                 $order_date = $order['order_date'];
                 $delivery_date_time = $order['delivery_date_time'];
                 $total = $order['total'];
-                // var_dump($cart);
                 $found_order = new Order($id, $user_id,$order_date, $delivery_date_time);
                 $found_order->setCart($cart);
                 $found_order->setTotal($total);
                 array_push($histories, $found_order);
             }
-
             return $histories;
          }
 
@@ -177,7 +171,7 @@
              }
          }
 
-         //for loggin in
+         //for login in
          static function logIn($email, $password)
          {
              $queryString = "SELECT * FROM customers WHERE email='{$email}' and password='{$password}';";
@@ -185,23 +179,22 @@
              $result = $memberQuery->fetch(PDO::FETCH_ASSOC);
              if($result == false)
              {
-                //  echo "nobody found with";
+                 //redirects in app to failure page
                  return false;
              }
              else {
 
                  $found_customer = Customer::find($result['id']);
-                //  var_dump( $result);
                  $_SESSION['customer'] = $found_customer;
                  return true;
                 }
          }
 
-
         static function deleteAll()
         {
             $GLOBALS['DB']->exec('DELETE FROM customers');
         }
+
         static function getAll()
         {
             $returned_customers = $GLOBALS['DB']->query("SELECT * FROM customers");
@@ -264,7 +257,5 @@
             }
             return $found_customers;
         }
-
-
     }
  ?>

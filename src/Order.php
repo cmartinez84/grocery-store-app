@@ -174,7 +174,7 @@
             $email = $customer->getEmail();
             //email new customer with confirmation code:
             $to = $email;
-            $subject = 'Shoppr.com confirmation code for shoppr.com';
+            $subject = 'Shoppr.com Receipt';
             $message = "<html><body>";
             $message .= "<p>Thank you for shopping with us today. Here is your Receipt from Shoppr.com</p>";
             foreach($this->cart as $product) {
@@ -187,10 +187,6 @@
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
             mail($to, $subject, $message, $headers, '-fwebmaster@example.com');
-            //insert confirmation code with serialized information
-
         }
-
-
     }
 ?>
