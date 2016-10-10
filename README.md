@@ -51,9 +51,8 @@ _This app is a demo of an online grocery store for in-store pick up or delivery 
 * _CREATE TABLE products (id serial PRIMARY KEY, name VARCHAR(255), price FLOAT, purchase_quantity INT, inventory INT, category VARCHAR(255), photo VARCHAR(255))_
 * _CREATE TABLE categories(id serial PRIMARY KEY, name VARCHAR(255))_
 * _CREATE TABLE products_categories(id serial PRIMARY KEY, product_id INT, category_id INT)_
-* _CREATE TABLE products (id serial PRIMARY KEY, name VARCHAR(255), price FLOAT, purchase_quantity INT, inventory INT, category VARCHAR(255), photo VARCHAR(255))_
 * _CREATE TABLE customers (id serial PRIMARY KEY, name VARCHAR(255), email VARCHAR(255), address VARCHAR(255), password VARCHAR(255), funds INT)_
-* _CREATE TABLE orders (id serial PRIMARY KEY, product_id INT, purchase_quantity INT, purchase_price INT, purchase_subtotal INT, order_date DATE, delivery_date_time VARCHAR(255))_;
+* _CREATE TABLE orders (id serial PRIMARY KEY, user_id INT, cart LONGTEXT,  order_date VARCHAR(255), delivery_date_time VARCHAR(255))_;
 * _CREATE TABLE confirmation_staging(id serial PRIMARY KEY, customer_serialized LONGTEXT, confirmation_code VARCHAR(255))_;
 
 
@@ -64,7 +63,7 @@ _This app is a demo of an online grocery store for in-store pick up or delivery 
 * _In terminal, navigate to _
 * _Open Browser and navigate to http://localhost:8000_
 ## Link
-https://github.com/cmartinez84/grocery-store-app
+https://github.com/cmartinez84/grocery-store-app_
 ## Known Bugs
 _In order to use this projects email feature (for both confirmation code and receipt functionality), you must have email enabled on your local server. If using MAMP PRO, you will need to go to MAMP PRO >  SERVER > Postfix to enable.
 If using MAMP, you can configure your server to send email with instructions located here: http://www.blog.tripleroi.com/2012/05/solvedenabling-sendmail-on-localhost.html.
