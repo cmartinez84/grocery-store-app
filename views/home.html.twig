@@ -1,326 +1,288 @@
 <!DOCTYPE html>
 <html>
-    <body>
-
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span></a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="nav">
-                        <ul class="nav navbar-nav navbar-right">
-                            {% if customer %}
-                                <li>
-                                    <form class="navbar-form" action='/search_products' method='post'>
-                                        <a  href="/profile"><button class="active btn btn-info form-control" type="button" name="button">My Profile <span class="glyphicon glyphicon-glass"></span></button> </a>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Search" name='search_input'>
-                                            <button type="submit" class="btn btn-default"> Search</button>
-                                        </div>
-                                    </form>
-                                </li>
-                            {% endif %}
-                            {% if customer or admin %}
-                                <li>
-                                    <form class="navbar-form" action="/logOut" method="post">
-                                        <button class="btn btn-danger" type="submit" name="button">Log Out</button>
-                                    </form>
-                                </li>
-                            {% endif %}
-                            {% if customer is empty %}
-                                <li>
-                                    <form class="navbar-form" action="/logOut" method="post">
-                                        <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Sign In</button>
-                                    </form>
-                                </li>
-                            {% endif %}
-                            {% if admin %}
-                                <li>
-                                    <form class="navbar-form" action="/products">
-                                        <button class="btn btn-warning" type="submit" class="btn btn-primary">Products</button>
-                                    </form>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </div>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="nav navbar-nav navbar-right">
+            {% if customer %}
+            <li>
+              <form class="navbar-form" action='/search_products' method='post'>
+                <a  href="/profile"><button class="active btn btn-info form-control" type="button" name="button">My Profile <span class="glyphicon glyphicon-glass"></span></button> </a>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Search" name='search_input'>
+                  <button type="submit" class="btn btn-default"> Search</button>
                 </div>
-            </nav>
-<div class="container">
-            <br>
-            <div class="jumbotron">
-                <!-- this was h1 -->
-                <p id="logo">Shoppr</p>
-                <div class="customerName">
-                    {% if customer %}
-                        <p class="hello-customer">Hello, {{ customer.getName }}</p>
-                    {% endif %}
-                </div>
-
+              </form>
+            </li>
+            {% endif %}
+            {% if customer or admin %}
+            <li>
+              <form class="navbar-form" action="/logOut" method="post">
+                <button class="btn btn-danger" type="submit" name="button">Log Out</button>
+              </form>
+            </li>
+            {% endif %}
+            {% if customer is empty %}
+            <li>
+              <form class="navbar-form" action="/logOut" method="post">
+                <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Sign In</button>
+              </form>
+            </li>
+            {% endif %}
+            {% if admin %}
+            <li>
+              <form class="navbar-form" action="/products">
+                <button class="btn btn-warning" type="submit" class="btn btn-primary">Products</button>
+              </form>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <br>
+      <div class="jumbotron">
+        <!-- this was h1 -->
+        <p id="logo">Shoppr</p>
+        <div class="customerName">
+          {% if customer %}
+          <p class="hello-customer">Hello, {{ customer.getName }}</p>
+          {% endif %}
+        </div>
+      </div>
+      <!-- <a href="/products">Enter / Modify Products</a> -->
+      <div class="row">
+        <div class="col-sm-2 categories ">
+          <form action='/search_products' method='post'>
+            <div class="form-group input-group">
+              <input type="text" class="form-control" placeholder="Search" name='search_input'>
+              <span class="input-group-btn"><button type="submit" class="btn btn-warning"><span class='glyphicon glyphicon-search'></span></button></span>
             </div>
-
-            <!-- <a href="/products">Enter / Modify Products</a> -->
-
-            <div class="row">
-                <div class="col-sm-2 categories ">
-
-                    <form action='/search_products' method='post'>
-                        <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="Search" name='search_input'>
-                            <span class="input-group-btn"><button type="submit" class="btn btn-warning"><span class='glyphicon glyphicon-search'></span></button></span>
-                        </div>
-                    </form>
-                    <button class="btn btn-warning"><a href="/">Clear Filters</a></button>
-
-                    {% if categories is not empty %}
-                    <ul>
-                        {% for category in categories %}
-                            <li><a href="/category/{{ category.getId }}">{{ category.getName }}</a></li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+          </form>
+          <button class="btn btn-warning"><a href="/">Clear Filters</a></button>
+          {% if categories is not empty %}
+          <ul>
+            {% for category in categories %}
+            <li><a href="/category/{{ category.getId }}">{{ category.getName }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+        <div class="col-sm-8">
+          {% if products is not empty %}
+          <div class="row">
+            {% for product in products %}
+            <div class="col-sm-3 panel panelMain" style="background-image: url(/uploads/{{ product.getPhoto }})">
+              <div class="panel-body">
+                <!-- <img src="/uploads/ product.getPhoto " alt="Card image cap"> -->
+                <h5 class="productName">{{ product.getName }}</h5>
+                <div class="priceInfo">
+                  <p class="price"> ${{ product.getPrice }}    <br></p>
+                  <!-- <p></p> -->
                 </div>
-
-                <div class="col-sm-8">
-                    {% if products is not empty %}
-                        <div class="row">
-                            {% for product in products %}
-                                <div class="col-sm-3 panel panelMain" style="background-image: url(/uploads/{{ product.getPhoto }})">
-                                    <div class="panel-body">
-                                        <!-- <img src="/uploads/ product.getPhoto " alt="Card image cap"> -->
-                                        <h5 class="productName">{{ product.getName }}</h5>
-                                        <div class="priceInfo">
-
-                                            <p class="price"> ${{ product.getPrice }}    <br></p>
-
-                                            <!-- <p></p> -->
-                                        </div>
-
-                                        <form class="" action="/addToCart" method="post">
-                                            <input type="hidden" name="product_id" value="{{product.getId}}">
-
-
-                                            <!-- customer not order -->
-                                                <div class="amountToBuy">
-
-                                                    <input type="number" name="purchase_quantity" min=1 max='{{product.getInventory}}'  placeholder="{{product.getInventory }} in stock" required>
-                                                    {% if customer is empty%}
-                                                        <button  class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal"> <span class="glyphicon glyphicon-plus-sign"> </span></button>
-                                                        {% else %}
-                                                        <button class=" btn-info" type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-plus-sign"></span></button>
-                                                    {% endif %}
-                                                </div>
-
-                                        </form>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-
+                <form class="" action="/addToCart" method="post">
+                  <input type="hidden" name="product_id" value="{{product.getId}}">
+                  <!-- customer not order -->
+                  <div class="amountToBuy">
+                    <input type="number" name="purchase_quantity" min=1 max='{{product.getInventory}}'  placeholder="{{product.getInventory }} in stock" required>
+                    {% if customer is empty%}
+                    <button  class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal"> <span class="glyphicon glyphicon-plus-sign"> </span></button>
                     {% else %}
-                        <h5>Sorry ... no known inventory! D-:</h5>
+                    <button class=" btn-info" type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-plus-sign"></span></button>
                     {% endif %}
-                </div>
-                <!-- cart area -->
-                <div class="col-sm-2">
-                    <h3>Your Cart</h3>
-                    {% if order is not empty %}
-                    <div class="cartContents">
-                        <ul>
-                            {% for product in order.getCart %}
-                                <li><strong>{{product.getPurchaseQuantity}} {{product.getName}}</strong>
-                                    <br><span class="smallFont">@ ${{product.getPrice}}
-                                    = ${{product.calculateProductPrice}}</span>
-
-                                <form class="trash" action="/deleteProductFromCart" method="post">
-                                    <input type="hidden" name="_method" value="delete">
-                                    <input type="hidden" name="product_id" value="{{product.getId}}">
-                                    <button class=" btn-danger btn-xs" type="submit" name="button">
-                                        <span class= "glyphicon glyphicon-trash"></span></button>
-                                </form></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-
-                    <p><strong>Total:</strong> ${{order.getTotal}}</p>
-
-                        <a class="btn btn-success" type="submit" name="button"  data-toggle="modal" data-target="#checkoutModal"> Checkout <span class="glyphicon glyphicon-shopping-cart"></span></a>
-
-                    {% endif %}
-                </div>
-
-            </div>
-
-        </div>
-        <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <h1 class="modal-title" id="myModalLabel">Sign In</h1>
-              </div>
-              <div class="modal-body">
-                  <!-- sign in div -->
-                  <div class="hide confirmation">
-                      <form class="" action="/customer/confirmation" method="post">
-                          <h3>Enter Your confirmation code here:</h3>
-                          <label for="">Email:</label>
-                          <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com" required>
-                          <label for="">Confirmation Code:</label>
-                          <input class="form-control" type="text" name="confirmation_code" value="" placeholder="confirmation_code" required>
-                          <button  class="form-control btn btn-success" type="submit" name="button">Confirm</button>
-                      </form>
                   </div>
-                  <div class="logIn">
-                      <h3>Log In</h3>
-                      <h5 for="">Please Sign In to begin shopping</h5>
-                      <form class=" " action="/logIn" method="post">
-                          <label for="">Email:</label>
-                          <input class="form-control" type="text" name="email" value="" placeholder="julioqt@email.com" required>
-                          <label>Password</label>
-                          <input class="form-control" type="password" name="password" value="" placeholder= "must be between 6-15 characters" required>
-                          <button class="btn btn-success form-control" type="subumit" name="name" value="">Log In</button>
-
-                      </form>
-                  </div>
-                  <h4> Not a member? <a class="accordianSignUp">Sign-Up</a> today! <br>Need to enter a confirmation code? <a class="confirmationRollUp"> Click here</a></h4>
-                  <!-- sign up div accordian -->
-                  <div class="hide signUp">
-                      <h3>Sign-UP</h3>
-                      <form class="" action="/customer/add" method="post">
-                          <label for="">Name:</label>
-                          <input class="form-control" type="text" name="name" value="" placeholder="Charles Day" required>
-                          <label for="">Email:</label>
-                          <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com" required>
-                          <label for="">Address:</label>
-                          <input class="form-control" type="text" name="address" value="" placeholder="8002 White Beach Lane" required>
-                          <label for="">Password:</label>
-                          <input class="form-control" type="password" name="password" placeholder="must be between 6-15 characters" required>
-                          <label for="">Funds:</label>
-                          <input class="form-control" type="number" name="funds"  value="0" disabled>
-                          <button class="btn btn-success form-control" type="submit" name="button">Sign Up</button>
-                      </form>
-                  </div>
-              </div>
-              <div class="modal-footer">
-
+                </form>
               </div>
             </div>
+            {% endfor %}
           </div>
+          {% else %}
+          <h5>Sorry ... no known inventory! D-:</h5>
+          {% endif %}
         </div>
-{% if order %}
-    <!-- begin modal for checkout items -->
-    <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- cart area -->
+        <div class="col-sm-2">
+          <h3>Your Cart</h3>
+          {% if order is not empty %}
+          <div class="cartContents">
+            <ul>
+              {% for product in order.getCart %}
+              <li>
+                <strong>{{product.getPurchaseQuantity}} {{product.getName}}</strong>
+                <br><span class="smallFont">@ ${{product.getPrice}}
+                = ${{product.calculateProductPrice}}</span>
+                <form class="trash" action="/deleteProductFromCart" method="post">
+                  <input type="hidden" name="_method" value="delete">
+                  <input type="hidden" name="product_id" value="{{product.getId}}">
+                  <button class=" btn-danger btn-xs" type="submit" name="button">
+                  <span class= "glyphicon glyphicon-trash"></span></button>
+                </form>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <p><strong>Total:</strong> ${{order.getTotal}}</p>
+          <a class="btn btn-success" type="submit" name="button"  data-toggle="modal" data-target="#checkoutModal"> Checkout <span class="glyphicon glyphicon-shopping-cart"></span></a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
             </button>
-            <h1 class="modal-title" id="myModalLabel">Review Your Order</h1>
-            {% if order.getCart is empty %}
-            <h1>Your cart is empty!</h1>
-            {% endif %}
+            <h1 class="modal-title" id="myModalLabel">Sign In</h1>
           </div>
           <div class="modal-body">
-
-              {% if order is not empty %}
-                  <div class="row">
-                      {% for product in order.getCart %}
-                          <div class="col-sm-3 panel">
-                              <div class="panel-body">
-                                  <img class="displayPic" src="/uploads/{{ product.getPhoto }}" alt="Card image cap">
-                                  <h4>{{ product.getName }}</h4>
-                                  <p>Price per - ${{ product.getPrice }}</p>
-
-                                  <form class="" action="/deleteProductFromCart" method="post">
-                                      <input type="hidden" name="_method" value="delete">
-                                      <div class='form-group'>
-                                          <label>Purchase quantity: {{product.getPurchaseQuantity}}</label>
-                                          <input type="hidden" name="product_id" value="{{product.getId}}">
-                                          <label for="">Subtotal: ${{product.calculateProductPrice}}</label>
-                                      </div>
-                                      <!-- customer not order -->
-                                  {% if customer is empty%}
-                                          <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Add to cart! <</button>
-                                          {% else %}
-                                          <button  type="submit" class="btn btn-danger">Remove <span class= "glyphicon glyphicon-trash"></span></button>
-                                  {% endif %}
-                                  </form>
-                              </div>
-                          </div>
-                      {% endfor %}
-                 {% endif %}
-
-
-
+            <!-- sign in div -->
+            <div class="hide confirmation">
+              <form class="" action="/customer/confirmation" method="post">
+                <h3>Enter Your confirmation code here:</h3>
+                <label for="">Email:</label>
+                <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com" required>
+                <label for="">Confirmation Code:</label>
+                <input class="form-control" type="text" name="confirmation_code" value="" placeholder="confirmation_code" required>
+                <button  class="form-control btn btn-success" type="submit" name="button">Confirm</button>
+              </form>
+            </div>
+            <div class="logIn">
+              <h3>Log In</h3>
+              <h5 for="">Please Sign In to begin shopping</h5>
+              <form class=" " action="/logIn" method="post">
+                <label for="">Email:</label>
+                <input class="form-control" type="text" name="email" value="" placeholder="julioqt@email.com" required>
+                <label>Password</label>
+                <input class="form-control" type="password" name="password" value="" placeholder= "must be between 6-15 characters" required>
+                <button class="btn btn-success form-control" type="subumit" name="name" value="">Log In</button>
+              </form>
+            </div>
+            <h4> Not a member? <a class="accordianSignUp">Sign-Up</a> today! <br>Need to enter a confirmation code? <a class="confirmationRollUp"> Click here</a></h4>
+            <!-- sign up div accordian -->
+            <div class="hide signUp">
+              <h3>Sign-UP</h3>
+              <form class="" action="/customer/add" method="post">
+                <label for="">Name:</label>
+                <input class="form-control" type="text" name="name" value="" placeholder="Charles Day" required>
+                <label for="">Email:</label>
+                <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com" required>
+                <label for="">Address:</label>
+                <input class="form-control" type="text" name="address" value="" placeholder="8002 White Beach Lane" required>
+                <label for="">Password:</label>
+                <input class="form-control" type="password" name="password" placeholder="must be between 6-15 characters" required>
+                <label for="">Funds:</label>
+                <input class="form-control" type="number" name="funds"  value="0" disabled>
+                <button class="btn btn-success form-control" type="submit" name="button">Sign Up</button>
+              </form>
+            </div>
           </div>
-          {% if customer %}
-              <div class="modal-footer ">
-                  <div class="row">
-                      <div class="col-sm-3">
-                          <p>Your Current Acccount Balance: </p>
-                      </div>
-                      <div class="col-sm-2">
-                            <h3>${{customer.getFunds}}  </h3>
-                      </div>
-
-                  </div>
-
-                  <form class="" action="/checkOut" method="post">
-                       <h3>Total: ${{order.getTotal}}</h3>
-                       <div class="btn-group" data-toggle="buttons">
-                          <label class="verifyAddress btn btn-primary active">
-                            <input type="checkbox" autocomplete="off"> Home Delivery
-                          </label>
-                          <label class="btn btn-primary">
-                            <input type="checkbox" autocomplete="off"> In Store Pick Up
-                          </label>
-                        </div>
-                        <div class="checkAddress hide">
-                            <p>Deliver To: {{customer.getAddress}}</p> <a href="/profile">Change address</a>
-                        </div>
-                        <div class="">
-                            <label class="pickup" for="">Delivery Date:</label>
-                            <input type="date" name="delivery_date_time" value="">
-                            <span>@</span><input type="time" name="time" value="">
-                        </div>
-
-                        {% if customer.getFunds > order.getTotal  %}
-                        <label><input type="checkbox" name="emailMeReceipt" value="yes">Email Me Receipt</label>
-                      <button class="btn btn-success" type="submit" name="button" > Finalize Purchase <span class="glyphicon
-                           glyphicon-shopping-cart"></span></button>
-                        {% endif %}
-                  </form>
-              </div>
-
-
-              <!-- this will appear if you do not have enough funds to make this purchase -->
-
-                  {% if customer.getFunds < order.getTotal  %}
-                       <div class="row">
-                            <h3>You do not have enough funds to complete this transaction. Please add more money <a href="/profile">your account</a> before proceding</h3>
-                        </div>
-                  {% endif %}
-          {% endif %}
-
+          <div class="modal-footer">
           </div>
         </div>
       </div>
-
-{% endif %}
-
-<div>
-
-
-
-
-    </body>
-<!-- </html> -->
+    </div>
+    {% if order %}
+    <!-- begin modal for checkout items -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          <h1 class="modal-title" id="myModalLabel">Review Your Order</h1>
+          {% if order.getCart is empty %}
+          <h1>Your cart is empty!</h1>
+          {% endif %}
+        </div>
+        <div class="modal-body">
+          {% if order is not empty %}
+          <div class="row">
+            {% for product in order.getCart %}
+            <div class="col-sm-3 panel">
+              <div class="panel-body">
+                <img class="displayPic" src="/uploads/{{ product.getPhoto }}" alt="Card image cap">
+                <h4>{{ product.getName }}</h4>
+                <p>Price per - ${{ product.getPrice }}</p>
+                <form class="" action="/deleteProductFromCart" method="post">
+                  <input type="hidden" name="_method" value="delete">
+                  <div class='form-group'>
+                    <label>Purchase quantity: {{product.getPurchaseQuantity}}</label>
+                    <input type="hidden" name="product_id" value="{{product.getId}}">
+                    <label for="">Subtotal: ${{product.calculateProductPrice}}</label>
+                  </div>
+                  <!-- customer not order -->
+                  {% if customer is empty%}
+                  <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Add to cart! <</button>
+                  {% else %}
+                  <button  type="submit" class="btn btn-danger">Remove <span class= "glyphicon glyphicon-trash"></span></button>
+                  {% endif %}
+                </form>
+              </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+          </div>
+          {% if customer %}
+          <div class="modal-footer ">
+            <div class="row">
+              <div class="col-sm-3">
+                <p>Your Current Acccount Balance: </p>
+              </div>
+              <div class="col-sm-2">
+                <h3>${{customer.getFunds}}  </h3>
+              </div>
+            </div>
+            <form class="" action="/checkOut" method="post">
+              <h3>Total: ${{order.getTotal}}</h3>
+              <div class="btn-group" data-toggle="buttons">
+                <label class="verifyAddress btn btn-primary active">
+                <input type="checkbox" autocomplete="off"> Home Delivery
+                </label>
+                <label class="btn btn-primary">
+                <input type="checkbox" autocomplete="off"> In Store Pick Up
+                </label>
+              </div>
+              <div class="checkAddress hide">
+                <p>Deliver To: {{customer.getAddress}}</p>
+                <a href="/profile">Change address</a>
+              </div>
+              <div class="">
+                <label class="pickup" for="">Delivery Date:</label>
+                <input type="date" name="delivery_date_time" value="">
+                <span>@</span><input type="time" name="time" value="">
+              </div>
+              {% if customer.getFunds > order.getTotal  %}
+              <label><input type="checkbox" name="emailMeReceipt" value="yes">Email Me Receipt</label>
+              <button class="btn btn-success" type="submit" name="button" > Finalize Purchase <span class="glyphicon
+                glyphicon-shopping-cart"></span></button>
+              {% endif %}
+            </form>
+          </div>
+          <!-- this will appear if you do not have enough funds to make this purchase -->
+          {% if customer.getFunds < order.getTotal  %}
+          <div class="row">
+            <h3>You do not have enough funds to complete this transaction. Please add more money <a href="/profile">your account</a> before proceding</h3>
+          </div>
+          {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <div>
+  </body>
+  <!-- </html> -->

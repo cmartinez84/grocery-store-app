@@ -1,89 +1,84 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Products</title>
-    </head>
-    <body>
-        <div class="container">
-            {% if admin is null %}
-                <h3>You don't have permission to view this page </h3>
-                <img class="fingerwag" src="http://cdn.niketalk.com/6/6b/900x900px-LL-6b6bfbe9_no-no-no-very-bad-man-Babu-Bhatt-seinfeld-gifs-finger-wag.gif" alt="" />
-            {% else %}
-                <nav class="navbar navbar-default navbar-fixed-top">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span></a>
-                        </div>
-                        <div class="collapse navbar-collapse" id="nav">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li>
-                                    <form class="form-inline navbar-form" action="/logOut" method="post">
-                                        <button class="btn btn-danger" type="submit" name="button">Log Out</button>
-                                    </form>
-                                </li>
-                                <li>
-                                    <form class="form-inline navbar-form" action="/products">
-                                        <button class="btn btn-success" type="submit" name="button">Products</button>
-                                    </form>
-                                </li>
-                                <li>
-                                    <form class="form-inline navbar-form" action="/categories">
-                                        <button class="btn btn-success" type="submit" name="button">Categories</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                <h1>Enter / Modify Products Information</h1>
-                <form action="/product_update/{{ product.getId }}" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="_method" value="patch">
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input id="name" name="name" class="form-control" type="text" value="{{ product.getName }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Price:</label>
-                        <input id="price" name="price" class="form-control" type="float" min=0 value="{{ product.getPrice }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="inventory">Inventory:</label>
-                        <input id="inventory" name="inventory" class="form-control" type="number" value="{{ product.getInventory }}" required>
-                    </div>
-                    <div class="form-group" id="product-photo">
-                        <img src="/uploads/{{ product.getPhoto }}">
-                        <input type="file" name="file" />
-                    </div>
-
-
-                    {% for category in categories %}
-                        <li>{{ category.getName }}</li>
-                    {% endfor %}
-
-                    <div class="form-group">
-                        <label for="category_id">Add Category:</label>
-                        <select id="category_id" name="category_id" type="text">
-                            <option></option>
-                            {% for category in all_categories %}
-                                <option value="{{ category.getId }}">{{ category.getName }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <button class="btn btn-info">Update Product</button>
+  <head>
+    <title>Products</title>
+  </head>
+  <body>
+    <div class="container">
+      {% if admin is null %}
+      <h3>You don't have permission to view this page </h3>
+      <img class="fingerwag" src="http://cdn.niketalk.com/6/6b/900x900px-LL-6b6bfbe9_no-no-no-very-bad-man-Babu-Bhatt-seinfeld-gifs-finger-wag.gif" alt="" />
+      {% else %}
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span></a>
+          </div>
+          <div class="collapse navbar-collapse" id="nav">
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <form class="form-inline navbar-form" action="/logOut" method="post">
+                  <button class="btn btn-danger" type="submit" name="button">Log Out</button>
                 </form>
-
-                <form action="/product_delete/{{ product.getId }}" method="post">
-                    <input type="hidden" value="delete" name="_method">
-                    <button class="btn btn-danger">Delete Product</button>
+              </li>
+              <li>
+                <form class="form-inline navbar-form" action="/products">
+                  <button class="btn btn-success" type="submit" name="button">Products</button>
                 </form>
-            {% endif %}
+              </li>
+              <li>
+                <form class="form-inline navbar-form" action="/categories">
+                  <button class="btn btn-success" type="submit" name="button">Categories</button>
+                </form>
+              </li>
+            </ul>
+          </div>
         </div>
-    </body>
+      </nav>
+      <h1>Enter / Modify Products Information</h1>
+      <form action="/product_update/{{ product.getId }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_method" value="patch">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input id="name" name="name" class="form-control" type="text" value="{{ product.getName }}" required>
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input id="price" name="price" class="form-control" type="float" min=0 value="{{ product.getPrice }}" required>
+        </div>
+        <div class="form-group">
+          <label for="inventory">Inventory:</label>
+          <input id="inventory" name="inventory" class="form-control" type="number" value="{{ product.getInventory }}" required>
+        </div>
+        <div class="form-group" id="product-photo">
+          <img src="/uploads/{{ product.getPhoto }}">
+          <input type="file" name="file" />
+        </div>
+        {% for category in categories %}
+        <li>{{ category.getName }}</li>
+        {% endfor %}
+        <div class="form-group">
+          <label for="category_id">Add Category:</label>
+          <select id="category_id" name="category_id" type="text">
+            <option></option>
+            {% for category in all_categories %}
+            <option value="{{ category.getId }}">{{ category.getName }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button class="btn btn-info">Update Product</button>
+      </form>
+      <form action="/product_delete/{{ product.getId }}" method="post">
+        <input type="hidden" value="delete" name="_method">
+        <button class="btn btn-danger">Delete Product</button>
+      </form>
+      {% endif %}
+    </div>
+  </body>
 </html>

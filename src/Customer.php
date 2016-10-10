@@ -127,7 +127,7 @@
                     $confirmation_code = substr($random,0, 6);
                     $serialized_new_customer = serialize($this);
                     //email new customer with confirmation code:
-                    $to = $email; $subject = 'Shoppr.com confirmation code for shoppr.com'; $message = 'Thank you for signing up with Shoppr.com. In order to complete your registration, please go to our website, click "log in", and then "enter confirmation code" and enter your confirmation code exactly as written in this email. The code is case sensitive. confirmation code:' . $confirmation_code; $headers = 'From: shoppr_admin@shoppr.com' . "\r\n" . 'Reply-To: shoppr_admin@shoppr.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion(); mail($to, $subject, $message, $headers, '-fwebmaster@example.com');
+                    $to = $email; $subject = 'Shoppr.com confirmation code for shoppr.com'; $message = 'Thank you for signing up with Shoppr.com. In order to complete your registration, please go to our website, click "log in", and then "enter confirmation code" and enter your confirmation code exactly as written in this email. The code is case sensitive. confirmation code:' . $confirmation_code; $headers = 'From: shoppr_admin@shoppr.com' . "\r\n" . 'Reply-To: shoppr_admin@shoppr.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion(); mail($to, $subject, $message, $headers, '-fwebmaster@shoppr.com');
                     //insert confirmation code with serialized information
                     $GLOBALS['DB']->exec("INSERT INTO confirmation_staging (customer_serialized, confirmation_code) VALUES ('{$serialized_new_customer}', '{$confirmation_code}');");
                 return true;

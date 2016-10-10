@@ -1,165 +1,156 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Customer Log In</title>
-    </head>
-    <body>
-
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span></a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="nav">
-                        <ul class="nav navbar-nav navbar-right">
-                            {% if customer %}
-                                <li>
-                                    <form class="navbar-form" action='/search_products' method='post'>
-                                        <a  href="/profile"><button class="active btn btn-info form-control" type="button" name="button">My Profile <span class="glyphicon glyphicon-glass"></span></button> </a>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Search" name='search_input'>
-                                            <button type="submit" class="btn btn-default"> Search</button>
-                                        </div>
-                                    </form>
-                                </li>
-                                <li>
-                                    <form class="navbar-form" action="/logOut" method="post">
-                                        <button class="btn btn-danger" type="submit" name="button">Log Out</button>
-                                    </form>
-                                </li>
-                            {% endif %}
-                            {% if customer is empty %}
-                                <li>
-                                    <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Sign In</button>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-<div class="container">
-            <br>
-            <div class="jumbotron">
-                <!-- this was h1 -->
-                <p id="logo">Shoppr</p>
-                <div class="customerName">
-                    {% if customer %}
-                        <p class="hello-customer">Hello, {{ customer.getName }}</p>
-                    {% endif %}
-                </div>
+   <head>
+      <title>Customer Log In</title>
+   </head>
+   <body>
+      <nav class="navbar navbar-default navbar-fixed-top">
+         <div class="container-fluid">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav" aria-expanded="false">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span></a>
             </div>
-
-            <br>
-            <div class="row">
-                <div class="well col-sm-4">
-                    <button class="form-control accordian" type="button" name="button">Edit my information</button>
-                    <div class="hide fold">
-                        <h3>Information for {{customer.getName}}</h3>
-                        <form class="" action="/profile/edit" method="post">
-                            <input type="hidden" name="_method" value="patch">
-                            <h3>Change information for {{customer.getName}}</h3>
-                            <label for="">Edit Name:</label>
-                            <input class="form-control" type="text" name="name" value="{{customer.getName}}">
-                            <label for="">Edit Email:</label>
-                            <input class="form-control" type="text" name="email" value="{{customer.getEmail}}">
-                            <label for="">Edit Address:</label>
-                            <input class="form-control" type="text" name="address" value="{{customer.getAddress}}">
-                            <label for="">Edit Password:</label>
-                            <input class="form-control" type="text" name="password" value="{{customer.getPassword}}">
-                            <label for="">Edit Funds:</label>
-                            <input class="form-control" type="number" name="funds"  value="{{customer.getFunds}}">
-                            <button class="btn btn-success" type="submit" name="button">Update</button>
-                        </form>
-                    </div>
-                    <button class="form-control accordian" type="button" name="button">Delete my membership</button>
-                    <div class="hide fold">
-                        <form action="/profile/delete" method="post">
-                            <h3>Customer Deletes their own account</h3>
-                            <input type="hidden" name="_method" value="delete">
-                            <button class="btn btn-danger" type="delete" name="button">Delete {{customer.getName}}</button>
-                        </form>
-                    </div>
-                    <button class="form-control accordian" type="button" name="button">Add money to my account</button>
-                    <div class="hide fold">
-                        <form class="" action="/profile/addFunds" method="post">
-                            <h3>Add Funds to your Account with a fake credit card</h3>
-                            <label for="">How much would you like to load today?</label>
-                            <input type="number" name="new_funds" value="" placeholder="$0.00" required>
-                            <h4>and how are you paying?</h4>
-                            <label><input type="radio" name="payment_method" value=""><img src="http://i.pbase.com/site/cart/ccVisa.gif">Visa</label>
-                            <label><input type="radio" name="payment_method" value=""><img src="http://findicons.com/files/icons/2250/payment_icon_set/32/mastercard.png">Mastercard</label>
-                            <label><input type="radio" name="payment_method" value=""><img src="https://mxcustomer.com/images/discover.gif">Discover</label>
-                            <label><input type="radio" name="payment_method" value=""><img src="http://www.skiviez.com/image/data/bromic/payment_icons/American-Express-icon_1.png">Discover</label>
-                            <label for="">Credit Card Number</label>
-                            <input type="number" name="name" placeholder=" XXX-XXX-XXXX">
-                            <label for="">CVV number <a href="#"> ?</a></label>
-                            <input type="number" name="payment_method"  placeholder="XXX">
-                            <label for="">
-                            <input type="radio" name="payment_method" value="">Bank Account</label><br>
-                            <label>Routing Number:<a href="#"> ?</a></label>
-                            <input type="text" name="payment_method" value="" placeholder="XXXXX"></label>
-                            <label for="">Account Number:<a href="#"> ?</a></label>
-                            <input type="text" name="payment_method" value="" placeholder="XXXXX">
-                            <button class="btn-success" type="submit" name="button"><span class="glyphicon glyphicon-plus-sign"placeholder="XXXXXX"></span>Add Funds</button>
-                        </form>
-                    </div>
-                </div>
-
-
-                    <div class="well col-sm-4">
-                        <h1>Your last purchase</h1>
-                        {% if histories %}
-                        <li><strong>Order Date:</strong>{{histories|first.getOrderDate}}</li>
-                        <li><strong>Expected Delivery Date:{{histories|first.getDeliveryDateTime}}</strong></li>
-                        <li><strong>Your Cart:</strong></li>
-                        <ul>
-
-
-                        {% for product in histories|first.getCart %}
-                        <li>{{product.getPurchaseQuantity}} {{product.getName}} <br>
-                            @ ${{product.getPrice}} each = {{product.calculateProductPrice}}</li>
-                        {% endfor %}
-
-                        <h3><strong>Total:</strong> {{histories|first.getTotal}}</h3>
-                        </ul>
-                        {% endif %}
-                    </div>
-
-
-                <div class="well col-sm-4">
-                    <h5>Customer History:</h5>
-                    {% if histories %}
-                        {% for history in histories %}
-
-                        <button class="form-control accordian" type="button" name="button"><p>Order Date {{history.getOrderDate}} Total ${{history.getCartTotal}}</p></button>
-                            <div class="hide">
-                                <h6>Expected delivery date: {{history.getDeliveryDateTime}}</h6>
-
-                                {% for product in history.getCart %}
-                                <ul>
-                                    <li>{{product.getPurchaseQuantity}} {{product.getName}}(s) <br>
-                                        @ ${{product.getPrice}} each = {{product.calculateProductPrice}}</li>
-                                </ul>
-                                {% endfor %}
-                            </div>
-
-                        {% endfor %}
-
-                    {% else %}
-
-                    <h1>you have no history with our company. Buy something <a href="/">HERE</a>
-                    {% endif %}
-                </div>
-            </div>    <!-- end row -->
-
+            <div class="collapse navbar-collapse" id="nav">
+               <ul class="nav navbar-nav navbar-right">
+                  {% if customer %}
+                  <li>
+                     <form class="navbar-form" action='/search_products' method='post'>
+                        <a  href="/profile"><button class="active btn btn-info form-control" type="button" name="button">My Profile <span class="glyphicon glyphicon-glass"></span></button> </a>
+                        <div class="form-group">
+                           <input type="text" class="form-control" placeholder="Search" name='search_input'>
+                           <button type="submit" class="btn btn-default"> Search</button>
+                        </div>
+                     </form>
+                  </li>
+                  <li>
+                     <form class="navbar-form" action="/logOut" method="post">
+                        <button class="btn btn-danger" type="submit" name="button">Log Out</button>
+                     </form>
+                  </li>
+                  {% endif %}
+                  {% if customer is empty %}
+                  <li>
+                     <button class="btn btn-info" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Sign In</button>
+                  </li>
+                  {% endif %}
+               </ul>
             </div>
-=
-        </div>
-    </body>
+         </div>
+      </nav>
+      <div class="container">
+         <br>
+         <div class="jumbotron">
+            <!-- this was h1 -->
+            <p id="logo">Shoppr</p>
+            <div class="customerName">
+               {% if customer %}
+               <p class="hello-customer">Hello, {{ customer.getName }}</p>
+               {% endif %}
+            </div>
+         </div>
+         <br>
+         <div class="row">
+            <div class="well col-sm-4">
+               <button class="form-control accordian" type="button" name="button">Edit my information</button>
+               <div class="hide fold">
+                  <h3>Information for {{customer.getName}}</h3>
+                  <form class="" action="/profile/edit" method="post">
+                     <input type="hidden" name="_method" value="patch">
+                     <h3>Change information for {{customer.getName}}</h3>
+                     <label for="">Edit Name:</label>
+                     <input class="form-control" type="text" name="name" value="{{customer.getName}}">
+                     <label for="">Edit Email:</label>
+                     <input class="form-control" type="text" name="email" value="{{customer.getEmail}}">
+                     <label for="">Edit Address:</label>
+                     <input class="form-control" type="text" name="address" value="{{customer.getAddress}}">
+                     <label for="">Edit Password:</label>
+                     <input class="form-control" type="text" name="password" value="{{customer.getPassword}}">
+                     <label for="">Edit Funds:</label>
+                     <input class="form-control" type="number" name="funds"  value="{{customer.getFunds}}">
+                     <button class="btn btn-success" type="submit" name="button">Update</button>
+                  </form>
+               </div>
+               <button class="form-control accordian" type="button" name="button">Delete my membership</button>
+               <div class="hide fold">
+                  <form action="/profile/delete" method="post">
+                     <h3>Customer Deletes their own account</h3>
+                     <input type="hidden" name="_method" value="delete">
+                     <button class="btn btn-danger" type="delete" name="button">Delete {{customer.getName}}</button>
+                  </form>
+               </div>
+               <button class="form-control accordian" type="button" name="button">Add money to my account</button>
+               <div class="hide fold">
+                  <form class="" action="/profile/addFunds" method="post">
+                     <h3>Add Funds to your Account with a fake credit card</h3>
+                     <label for="">How much would you like to load today?</label>
+                     <input type="number" name="new_funds" value="" placeholder="$0.00" required>
+                     <h4>and how are you paying?</h4>
+                     <label><input type="radio" name="payment_method" value=""><img src="http://i.pbase.com/site/cart/ccVisa.gif">Visa</label>
+                     <label><input type="radio" name="payment_method" value=""><img src="http://findicons.com/files/icons/2250/payment_icon_set/32/mastercard.png">Mastercard</label>
+                     <label><input type="radio" name="payment_method" value=""><img src="https://mxcustomer.com/images/discover.gif">Discover</label>
+                     <label><input type="radio" name="payment_method" value=""><img src="http://www.skiviez.com/image/data/bromic/payment_icons/American-Express-icon_1.png">Discover</label>
+                     <label for="">Credit Card Number</label>
+                     <input type="number" name="name" placeholder=" XXX-XXX-XXXX">
+                     <label for="">CVV number <a href="#"> ?</a></label>
+                     <input type="number" name="payment_method"  placeholder="XXX">
+                     <label for="">
+                     <input type="radio" name="payment_method" value="">Bank Account</label><br>
+                     <label>Routing Number:<a href="#"> ?</a></label>
+                     <input type="text" name="payment_method" value="" placeholder="XXXXX"></label>
+                     <label for="">Account Number:<a href="#"> ?</a></label>
+                     <input type="text" name="payment_method" value="" placeholder="XXXXX">
+                     <button class="btn-success" type="submit" name="button"><span class="glyphicon glyphicon-plus-sign"placeholder="XXXXXX"></span>Add Funds</button>
+                  </form>
+               </div>
+            </div>
+            <div class="well col-sm-4">
+               <h1>Your last purchase</h1>
+               {% if histories %}
+               <li><strong>Order Date:</strong>{{histories|first.getOrderDate}}</li>
+               <li><strong>Expected Delivery Date:{{histories|first.getDeliveryDateTime}}</strong></li>
+               <li><strong>Your Cart:</strong></li>
+               <ul>
+                  {% for product in histories|first.getCart %}
+                  <li>{{product.getPurchaseQuantity}} {{product.getName}} <br>
+                     @ ${{product.getPrice}} each = {{product.calculateProductPrice}}
+                  </li>
+                  {% endfor %}
+                  <h3><strong>Total:</strong> {{histories|first.getTotal}}</h3>
+               </ul>
+               {% endif %}
+            </div>
+            <div class="well col-sm-4">
+               <h5>Customer History:</h5>
+               {% if histories %}
+               {% for history in histories %}
+               <button class="form-control accordian" type="button" name="button">
+                  <p>Order Date {{history.getOrderDate}} Total ${{history.getCartTotal}}</p>
+               </button>
+               <div class="hide">
+                  <h6>Expected delivery date: {{history.getDeliveryDateTime}}</h6>
+                  {% for product in history.getCart %}
+                  <ul>
+                     <li>{{product.getPurchaseQuantity}} {{product.getName}}(s) <br>
+                        @ ${{product.getPrice}} each = {{product.calculateProductPrice}}
+                     </li>
+                  </ul>
+                  {% endfor %}
+               </div>
+               {% endfor %}
+               {% else %}
+               <h1>
+               you have no history with our company. Buy something <a href="/">HERE</a>
+               {% endif %}
+            </div>
+         </div>
+         <!-- end row -->
+      </div>
+      =
+      </div>
+   </body>
 </html>

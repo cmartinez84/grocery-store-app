@@ -8,10 +8,8 @@
 
 
     date_default_timezone_set('America/Los_Angeles');
-    //these two are added to try the redirect on log in failures
     use Silex\Application;
     use Symfony\Component\HttpKernel\HttpKernelInterface;
-
 
     use Symfony\Component\Debug\Debug;
     Debug::enable();
@@ -31,7 +29,6 @@
     {
         $_SESSION['admin']=null;
     }
-
 
     $app = new Silex\Application();
 
@@ -226,7 +223,7 @@
     //this will add create a new customer object and email the customer a randomly generated code to log in with and activate their account. the serialized (php function serialize($customer)) will store customer data in confirmation_stagining table until the cofirmation code is entered in. the customer info will then be unserialized and saved in customer database, if successful.
     $app->post("/customer/add", function() use ($app) {
         $new_customer = new Customer (null, $_POST['name'], $_POST['email'], $_POST['address'], $_POST['password'], $funds=0);
-        $_SESSSION['new_order'] = $new_customer;
+        // $_SESSSION['new_order'] = $new_customer;
         $new_customer->isNewMemberFree();
         return $app['twig']->render('home.html.twig', array('categories' => Category::getAll(), 'products' => Product::getAll(), 'category' => null, 'categoryProducts' => null, 'order' => $_SESSION['order'], 'customer'=> $_SESSION['customer'], 'admin' => $_SESSION['admin']));
     });

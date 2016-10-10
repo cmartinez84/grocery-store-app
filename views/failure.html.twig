@@ -1,74 +1,62 @@
 <!DOCTYPE html>
 <html>
-
-    <body class="bananas">
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span></a>
-                    </div>
-                </div>
-            </nav>
-            <div class="container">
-
-            <br>
-            <div class="jumbotron">
-                <!-- this was h1 -->
-                <p id="logo">Shoppr</p>
-                <div class="customerName">
-
-                        <p class="hello-customer">#bananas</p>
-
-                </div>
-
-            </div>
-
-
-            <!-- <a href="/products">Enter / Modify Products</a> -->
-            <div class="well">
-                <h1>Bananas. Looks like you've either mis-typed your password or email. please try again!</h1>
-                <h4> Not a member? <a class="accordianSignUp">Sign-Up</a> today! <br>Need to enter a confirmation code? <a class="confirmationRollUp"> Click here</a></h4>
-                <!-- sign up div accordian -->
-                <div class="hide signUp">
-                    <h3>Sign-UP</h3>
-                    <form class="" action="/customer/add" method="post">
-                        <label for="">Name:</label>
-                        <input class="form-control" type="text" name="name" value="" placeholder="Charles Day" required>
-                        <label for="">Email:</label>
-                        <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com" required>
-                        <label for="">Address:</label>
-                        <input class="form-control" type="text" name="address" value="" placeholder="8002 White Beach Lane" required>
-                        <label for="">Password:</label>
-                        <input class="form-control" type="password" name="password" placeholder="must be between 6-15 characters" required>
-                        <label for="">Funds:</label>
-                        <input class="form-control" type="number" name="funds"  value="0" disabled>
-                        <button class="btn btn-success form-control" type="submit" name="button">Sign Up</button>
-                    </form>
-                </div>
-                <div class="well">
-                    <form class="form-inline navbar-form" action='/logIn' method='post'>
-                        <div class="form-group">
-                            <label for="">Log In With Your Email:</label>
-                            <input type="text" class="form-control" placeholder="email" name='email' required="">
-                        </div>
-                        <div class="form-group">
-                            <label for="">Password:</label>
-                            <input type="password" class="form-control" placeholder="password" name='password' required="">
-                        </div>
-                        <button class="form-control btn btn-success" type="submit" class="btn btn-default">Go</button>
-                    </form>
-                </div>
-
-
-
-
-            </div>
-
-    </body>
-<!-- </html> -->
+  <body class="bananas">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span></a>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+    <br>
+    <div class="jumbotron">
+      <!-- this was h1 -->
+      <p id="logo">Shoppr</p>
+      <div class="customerName">
+        <p class="hello-customer">#bananas</p>
+      </div>
+    </div>
+    <!-- <a href="/products">Enter / Modify Products</a> -->
+    <div class="well">
+      <h1>Bananas. Looks like you've either mis-typed your password or email. please try again!</h1>
+      <h4> Not a member? <a class="accordianSignUp">Sign-Up</a> today! <br>Need to enter a confirmation code? <a class="confirmationRollUp"> Click here</a></h4>
+      <!-- sign up div accordian -->
+      <div class="hide signUp">
+        <h3>Sign-UP</h3>
+        <form class="" action="/customer/add" method="post">
+          <label for="">Name:</label>
+          <input class="form-control" type="text" name="name" value="" placeholder="Charles Day" required>
+          <label for="">Email:</label>
+          <input class="form-control" type="text" name="email" value="" placeholder="CharlieDay@gmail.com" required>
+          <label for="">Address:</label>
+          <input class="form-control" type="text" name="address" value="" placeholder="8002 White Beach Lane" required>
+          <label for="">Password:</label>
+          <input class="form-control" type="password" name="password" placeholder="must be between 6-15 characters" required>
+          <label for="">Funds:</label>
+          <input class="form-control" type="number" name="funds"  value="0" disabled>
+          <button class="btn btn-success form-control" type="submit" name="button">Sign Up</button>
+        </form>
+      </div>
+      <div class="well">
+        <form class="form-inline navbar-form" action='/logIn' method='post'>
+          <div class="form-group">
+            <label for="">Log In With Your Email:</label>
+            <input type="text" class="form-control" placeholder="email" name='email' required="">
+          </div>
+          <div class="form-group">
+            <label for="">Password:</label>
+            <input type="password" class="form-control" placeholder="password" name='password' required="">
+          </div>
+          <button class="form-control btn btn-success" type="submit" class="btn btn-default">Go</button>
+        </form>
+      </div>
+    </div>
+  </body>
+  <!-- </html> -->
